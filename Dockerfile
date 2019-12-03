@@ -30,7 +30,7 @@ RUN apt-get update \
 	liblzma-dev \
 	libbz2-dev \
 	libpng-dev \
-	libmariadb-dev-compat \
+	libmariadb-dev \
         ## sys deps from bioc_full
 	pkg-config \
 	fortran77-compiler \
@@ -44,7 +44,7 @@ RUN apt-get update \
 	libfftw3-dev \
 	libopenbabel-dev \
 	libopenmpi-dev \
-	libexempi8 \
+	libexempi3 \
 	libxt-dev \
 	libgdal-dev \
 	libjpeg62-turbo-dev \
@@ -52,7 +52,7 @@ RUN apt-get update \
 	libtiff5-dev \
 	libreadline-dev \
 	libgsl0-dev \
-	libgslcblas0 \
+	libgsl2 \
 	libgtk2.0-dev \
 	libgl1-mesa-dev \
 	libglu1-mesa-dev \
@@ -62,7 +62,7 @@ RUN apt-get update \
 	libbz2-dev \
 	libxpm-dev \
 	liblapack-dev \
-	libv8-dev \
+	libv8-3.14-dev \
 	libgtkmm-2.4-dev \
 	libmpfr-dev \
 	libudunits2-dev \
@@ -90,9 +90,9 @@ RUN apt-get update \
 	mpi-default-bin \
 	openmpi-common \
 	openmpi-doc \
-	tcl8.6-dev \
+	tcl8.5-dev \
 	tk-dev \
-	default-jdk \
+	openjdk-8-jdk \
 	imagemagick \
 	tabix \
 	ggobi \
