@@ -152,6 +152,7 @@ RUN mkdir -p /home/bioc/R/library && \
 
 USER root
 
+## TODO: This has to be fixed, R_LIBS_USER
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
 	&& echo "R_LIBS_USER=''" >> /usr/local/lib/R/etc/Renviron.site \
 	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
@@ -159,6 +160,13 @@ RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib
 ADD install.R /tmp/
 
 RUN R -f /tmp/install.R
+
+## DEVEL: Add sys env variables to DEVEL image
+RUN curl -O https://raw.githubusercontent.com/Bioconductor/BBS/master/3.11/R_env_vars.sh \
+	&& cat R_env_vars.sh | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
+	&& cat R_env_vars.sh >> /root/.bashrc \
+	&& rm -rf R_env_vars.sh
+
 
 # Init command for s6-overlay
 CMD ["/init"]
