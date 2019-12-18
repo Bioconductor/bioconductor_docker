@@ -1,8 +1,4 @@
-# DO NOT EDIT FILES CALLED 'Dockerfile'; they are automatically
-# generated. Edit 'Dockerfile.in' and generate the 'Dockerfile'
-# with the 'rake' command.
-
-# The suggested name for this image is: bioconductor/devel_base.
+# The suggested name for this image is: bioconductor/bioconductor_docker:RELEASE_3_10.
 FROM rocker/rstudio:3.6.1
 
 MAINTAINER maintainer@bioconductor.org
@@ -142,18 +138,10 @@ RUN cd /tmp \
 COPY ./deps/xvfb_init /etc/services.d/xvfb/run
 
 # Add bioc user as requested
-RUN useradd -ms /bin/bash -d /home/bioc bioc \
-	&& echo "bioc:bioc" | chpasswd && adduser bioc sudo
-
-USER bioc
-
-RUN mkdir -p /home/bioc/R/library && \
-	echo "R_LIBS=/usr/local/lib/R/host-site-library:~/R/library" | cat > /home/bioc/.Renviron
-
-USER root
+RUN useradd -ms /bin/bash -d /home/bioc -g staff bioc \
+	&& echo "bioc:bioc" | chpasswd
 
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
-	&& echo "R_LIBS_USER=''" >> /usr/local/lib/R/etc/Renviron.site \
 	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
 
 ADD install.R /tmp/
