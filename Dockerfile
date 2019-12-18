@@ -1,7 +1,3 @@
-# DO NOT EDIT FILES CALLED 'Dockerfile'; they are automatically
-# generated. Edit 'Dockerfile.in' and generate the 'Dockerfile'
-# with the 'rake' command.
-
 # The suggested name for this image is: bioconductor/devel_base.
 FROM rocker/rstudio:devel
 
@@ -142,19 +138,13 @@ RUN cd /tmp \
 COPY ./deps/xvfb_init /etc/services.d/xvfb/run
 
 # Add bioc user as requested
-RUN useradd -ms /bin/bash -d /home/bioc bioc \
-	&& echo "bioc:bioc" | chpasswd && adduser bioc sudo
-
-USER bioc
-
-RUN mkdir -p /home/bioc/R/library && \
-	echo "R_LIBS=/usr/local/lib/R/host-site-library:~/R/library" | cat > /home/bioc/.Renviron
+RUN useradd -ms /bin/bash -d /home/bioc -g staff bioc \
+	&& echo "bioc:bioc" | chpasswd
 
 USER root
 
 ## TODO: This has to be fixed, R_LIBS_USER
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
-	&& echo "R_LIBS_USER=''" >> /usr/local/lib/R/etc/Renviron.site \
 	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
 
 ADD install.R /tmp/
@@ -166,7 +156,6 @@ RUN curl -O https://raw.githubusercontent.com/Bioconductor/BBS/master/3.11/R_env
 	&& cat R_env_vars.sh | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
 	&& cat R_env_vars.sh >> /root/.bashrc \
 	&& rm -rf R_env_vars.sh
-
 
 # Init command for s6-overlay
 CMD ["/init"]
