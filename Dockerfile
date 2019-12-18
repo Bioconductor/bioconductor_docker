@@ -1,4 +1,4 @@
-# The suggested name for this image is: bioconductor/devel_base.
+# The suggested name for this image is: bioconductor/bioconductor_docker:devel
 FROM rocker/rstudio:devel
 
 MAINTAINER maintainer@bioconductor.org
@@ -141,9 +141,6 @@ COPY ./deps/xvfb_init /etc/services.d/xvfb/run
 RUN useradd -ms /bin/bash -d /home/bioc -g staff bioc \
 	&& echo "bioc:bioc" | chpasswd
 
-USER root
-
-## TODO: This has to be fixed, R_LIBS_USER
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
 	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
 
