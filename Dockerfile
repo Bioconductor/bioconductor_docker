@@ -1,5 +1,5 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:RELEASE_3_10.
-FROM rocker/rstudio:3.6.1
+FROM rocker/rstudio:3.6.2
 
 MAINTAINER maintainer@bioconductor.org
 
