@@ -13,16 +13,20 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
 <a name="top"></a>
 
+- [Quickstart](#quickstart)
 - [Why Use Containers](#intro)
 - [Current Containers](#current)
-- [Legacy Containers](#legacy)
+- [Deprecation Notice](#deprecation)
+  * [Legacy Containers](#legacy)
+  * [Reason for deprecation](#reason)
+  * [Reporting issues](#issues)
 - [Using Containers](#usage)
   * [Running Containers](#running)
   * [Mounting Additional Volume](#mounting)
 - [Modifying Image Container](#modify)
-- [Default package with Core2 Container](#core)
 - [Acknowledgements](#acknowledgements)
 
+<a name="quickstart"></a>
 
 ## Quickstart
 
@@ -46,6 +50,8 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 	be 'rstudio'.
 
 	The user is logged into the 'bioc' user by default.
+
+<a name="intro"></a>
 
 ## Why use Containers
 
@@ -78,6 +84,8 @@ Our release images and devel images are based on the [Rocker Project](https://ww
 [rocker/rstudio](https://github.com/rocker-org/rocker/tree/master/rstudio)
 image and built when a Biocondcutor release occurs.
 
+<a name="current"></a>
+
 ## Current Containers
 
 For each supported version of Bioconductor, we provide
@@ -89,11 +97,15 @@ For each supported version of Bioconductor, we provide
 Bioconductor's Docker images are stored in [Docker Hub](https://hub.docker.com/u/bioconductor/);
 the source Dockerfiles are in [Github](https://github.com/Bioconductor/bioconductor_docker).
 
+<a name="deprecation"></a>
+
 ## Deprecation Notice
 
 For previous users of docker containers for bioconductor, please note
 that we are deprecating the following images. These images were
 maintained by Bioconductor Core, and also the community.
+
+<a name="legacy"></a>
 
 ### Legacy Containers
 
@@ -146,6 +158,8 @@ First iteration containers
 * bioconductor/release_sequencing
 * bioconductor/release_metabolomics
 
+<a name="reason"></a>
+
 ### Reason for deprecation
 
 The new Bioconductor docker image `bioconductor/bioconductor_docker`
@@ -155,8 +169,10 @@ installation of packages can be done with,
 
 	BiocManager::install(c("package_name", "package_name"))
 
-One of our key goals, was to keep the image size being shipped by the
-Bioconductor team at a manageble size and able
+One of our key goals was, to keep the image size being shipped by the
+Bioconductor team at a manageble size and easy to use.
+
+<a name="issues"></a>
 
 ### Reporting Issues
 
@@ -166,6 +182,8 @@ the [bioc-devel](mailto:bioc-devel@r-project.org) mailing list.
 These issues can be questions about anything related to this piece of
 software like, usage, extending the docker images, enhancements, and
 bug reports.
+
+<a name="usage"></a>
 
 ## Using the containers
 
@@ -217,7 +235,7 @@ Docker Toolbox installed and running.
 
 <a name="running"></a>
 
-#### Running the container
+### Running the container
 
 The above commands can be helpful but the real basics of running a
 Bioconductor docker involves pulling the public image and running the
@@ -263,7 +281,7 @@ the [help page](https://docs.docker.com/reference/run/).
 
 <a name="mounting"></a>
 
-##### Mounting Additional Volume
+### Mounting Additional Volume
 
 One such option for `docker run` is `-v` to mount an additional volume
 to the docker image. This might be useful for say mounting a local R
@@ -310,13 +328,9 @@ There are two ways to modify these images:
 The second way is the recommended way. Both ways are
 [documented here](https://docs.docker.com/userguide/dockerimages/#creating-our-own-images).
 
-<a name="the-full-list"></a>
-
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
-<a name="core"></a>
-
-### Acknowledgements
+## Acknowledgements
 
 Thanks to the
 [rocker](https://github.com/rocker-org/rocker) project for providing the
