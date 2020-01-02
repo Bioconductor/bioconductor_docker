@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends apt-utils \
 	&& apt-get install -y --no-install-recommends \
-        ## Basic deps
+	## Basic deps
 	gdb \
 	libxml2-dev \
 	python-pip \
@@ -27,7 +27,7 @@ RUN apt-get update \
 	libbz2-dev \
 	libpng-dev \
 	libmariadb-dev-compat \
-        ## sys deps from bioc_full
+	## sys deps from bioc_full
 	pkg-config \
 	fortran77-compiler \
 	byacc \
@@ -106,7 +106,7 @@ RUN apt-get update \
 RUN apt-get update \
 	&& apt-get -y --no-install-recommends install python-dev \
 	&& pip install wheel \
-        ## Install sklearn and pandas on python
+	## Install sklearn and pandas on python
 	&& pip install sklearn \
 	pandas \
 	pyyaml \
@@ -116,7 +116,7 @@ RUN apt-get update \
 
 # Install libsbml and xvfb
 RUN cd /tmp \
-        ## libsbml
+	## libsbml
 	&& curl -O https://s3.amazonaws.com/linux-provisioning/libSBML-5.10.2-core-src.tar.gz \
 	&& tar zxf libSBML-5.10.2-core-src.tar.gz \
 	&& cd libsbml-5.10.2 \
@@ -131,15 +131,26 @@ RUN cd /tmp \
 	## Clean libsbml, and tar.gz files
 	&& rm -rf /tmp/libsbml-5.10.2 \
 	&& rm -rf /tmp/libSBML-5.10.2-core-src.tar.gz \
-        ## apt-get clean and remove cache
+	## apt-get clean and remove cache
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY ./deps/xvfb_init /etc/services.d/xvfb/run
 
-# Add bioc user as requested
+##############################
+# Add bioc user
+##############################
 RUN useradd -ms /bin/bash -d /home/bioc -g staff bioc \
-	&& echo "bioc:bioc" | chpasswd
+	&& echo "bioc:bioc" | chpasswd \
+	&& mkdir -p /home/bioc/.rstudio/monitored/user-settings \
+	&& echo 'alwaysSaveHistory="0" \
+	\nloadRData="0" \
+	\nsaveAction="0"' \
+	> /home/bioc/.rstudio/monitored/user-settings/user-settings
+
+# Login to RStudio will be with 'bioc' user by default
+ENV USER bioc
+#############################
 
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
 	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
