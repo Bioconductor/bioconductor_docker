@@ -30,8 +30,8 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
 1. Run container with Bioconductor and RStudio
 
-		docker run -e USER=bioc \
-			-e PASSWORD=mypassword \
+		docker run \
+			-e PASSWORD=bioc \
 			-p 8787:8787 \
 			bioconductor/bioconductor_docker:devel
 
@@ -42,7 +42,10 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 	`https://localhost:8787`. The USER is fixed to always being
 	`bioc`. The password in the above command is given as `bioc` but
 	it can be set to anything. `8787` is the port being mapped between
-	the docker container and your host machine.
+	the docker container and your host machine. NOTE: password cannot
+	be 'rstudio'.
+
+	The user is logged into the 'bioc' user by default.
 
 ## Why use Containers
 
@@ -287,7 +290,6 @@ Running it with RStudio
 		-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
 		-e PASSWORD=password \
 		-p 8787:8787 \
-		--user bioc \
 		bioconductor/bioconductor_docker:devel
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
