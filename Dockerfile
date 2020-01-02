@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends apt-utils \
 	&& apt-get install -y --no-install-recommends \
-        ## Basic deps
+	## Basic deps
 	gdb \
 	libxml2-dev \
 	python-pip \
@@ -27,7 +27,7 @@ RUN apt-get update \
 	libbz2-dev \
 	libpng-dev \
 	libmariadb-dev \
-        ## sys deps from bioc_full
+	## sys deps from bioc_full
 	pkg-config \
 	fortran77-compiler \
 	byacc \
@@ -40,7 +40,7 @@ RUN apt-get update \
 	libfftw3-dev \
 	libopenbabel-dev \
 	libopenmpi-dev \
-	libexempi3 \
+	libexempi8 \
 	libxt-dev \
 	libgdal-dev \
 	libjpeg62-turbo-dev \
@@ -48,7 +48,7 @@ RUN apt-get update \
 	libtiff5-dev \
 	libreadline-dev \
 	libgsl0-dev \
-	libgsl2 \
+	libgslcblas0 \
 	libgtk2.0-dev \
 	libgl1-mesa-dev \
 	libglu1-mesa-dev \
@@ -58,7 +58,7 @@ RUN apt-get update \
 	libbz2-dev \
 	libxpm-dev \
 	liblapack-dev \
-	libv8-3.14-dev \
+	libv8-dev \
 	libgtkmm-2.4-dev \
 	libmpfr-dev \
 	libudunits2-dev \
@@ -86,9 +86,9 @@ RUN apt-get update \
 	mpi-default-bin \
 	openmpi-common \
 	openmpi-doc \
-	tcl8.5-dev \
+	tcl8.6-dev \
 	tk-dev \
-	openjdk-8-jdk \
+	default-jdk \
 	imagemagick \
 	tabix \
 	ggobi \
@@ -106,7 +106,7 @@ RUN apt-get update \
 RUN apt-get update \
 	&& apt-get -y --no-install-recommends install python-dev \
 	&& pip install wheel \
-        ## Install sklearn and pandas on python
+	## Install sklearn and pandas on python
 	&& pip install sklearn \
 	pandas \
 	pyyaml \
@@ -116,7 +116,7 @@ RUN apt-get update \
 
 # Install libsbml and xvfb
 RUN cd /tmp \
-        ## libsbml
+	## libsbml
 	&& curl -O https://s3.amazonaws.com/linux-provisioning/libSBML-5.10.2-core-src.tar.gz \
 	&& tar zxf libSBML-5.10.2-core-src.tar.gz \
 	&& cd libsbml-5.10.2 \
@@ -131,7 +131,7 @@ RUN cd /tmp \
 	## Clean libsbml, and tar.gz files
 	&& rm -rf /tmp/libsbml-5.10.2 \
 	&& rm -rf /tmp/libSBML-5.10.2-core-src.tar.gz \
-        ## apt-get clean and remove cache
+	## apt-get clean and remove cache
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
