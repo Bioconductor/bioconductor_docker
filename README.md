@@ -23,6 +23,27 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 - [Default package with Core2 Container](#core)
 - [Acknowledgements](#acknowledgements)
 
+
+## Quickstart
+
+1. Install Docker
+
+1. Run container with Bioconductor and RStudio
+
+		docker run -e USER=bioc \
+			-e PASSWORD=mypassword \
+			-p 8787:8787 \
+			bioconductor/bioconductor_docker:devel
+
+	This command will run the docker container
+	`bioconductor/bioconductor_docker:devel` on your local machine.
+
+	RStudio will be available on your web browser at
+	`https://localhost:8787`. The USER is fixed to always being
+	`bioc`. The password in the above command is given as `bioc` but
+	it can be set to anything. `8787` is the port being mapped between
+	the docker container and your host machine.
+
 ## Why use Containers
 
 With Bioconductor containers, we hope to enhance
@@ -56,13 +77,13 @@ image and built when a Biocondcutor release occurs.
 
 ## Current Containers
 
-For each supported version of Bioconductor, we provide 
+For each supported version of Bioconductor, we provide
 
 - **bioconductor/bioconductor_docker:RELEASE_X_Y**
 
 - **bioconductor/bioconductor_docker:devel**
 
-Bioconductor's Docker images are stored in [Docker Hub](https://hub.docker.com/u/bioconductor/); 
+Bioconductor's Docker images are stored in [Docker Hub](https://hub.docker.com/u/bioconductor/);
 the source Dockerfiles are in [Github](https://github.com/Bioconductor/bioconductor_docker).
 
 ## Deprecation Notice
@@ -73,25 +94,26 @@ maintained by Bioconductor Core, and also the community.
 
 ### Legacy Containers
 
-These images are NO LONGER MAINTAINED and updated. They will however be available
-to use should a user choose to use them. They are not supported
-anymore by the bioconductor core team.
+These images are NO LONGER MAINTAINED and updated. They will however
+be available to use should a user choose to use them. They are not
+supported anymore by the bioconductor core team.
 
-###### Bioconductor Core Team: bioc-issue-bot@bioconductor.org
+Bioconductor Core Team: bioc-issue-bot@bioconductor.org
+
 * [bioconductor/devel_base2](https://hub.docker.com/r/bioconductor/devel_base2/)
 * [bioconductor/devel_core2](https://hub.docker.com/r/bioconductor/devel_core2/)
 * [bioconductor/release_base2](https://hub.docker.com/r/bioconductor/release_base2/)
 * [bioconductor/release_core2](https://hub.docker.com/r/bioconductor/release_core2/)
 
-###### Steffen Neumann: sneumann@ipb-halle.de
-Maintained as part of the "PhenoMeNal, funded by Horizon2020 grant 654241"
+Steffen Neumann: sneumann@ipb-halle.de, Maintained as part of the "PhenoMeNal, funded by Horizon2020 grant 654241"
 
 * [bioconductor/devel_protmetcore2](https://hub.docker.com/r/bioconductor/devel_protmetcore2/)
 * [bioconductor/devel_metabolomics2](https://hub.docker.com/r/bioconductor/devel_metabolomics2/)
 * [bioconductor/release_protmetcore2](https://hub.docker.com/r/bioconductor/release_protmetcore2/)
 * [bioconductor/release_metabolomics2](https://hub.docker.com/r/bioconductor/release_metabolomics2/)
 
-###### Laurent Gatto: lg390@cam.ac.uk
+Laurent Gatto: lg390@cam.ac.uk
+
 * [bioconductor/devel_mscore2](https://hub.docker.com/r/bioconductor/devel_mscore2/)
 * [bioconductor/devel_protcore2](https://hub.docker.com/r/bioconductor/devel_protcore2/)
 * [bioconductor/devel_proteomics2](https://hub.docker.com/r/bioconductor/devel_proteomics2/)
@@ -99,11 +121,13 @@ Maintained as part of the "PhenoMeNal, funded by Horizon2020 grant 654241"
 * [bioconductor/release_protcore2](https://hub.docker.com/r/bioconductor/release_protcore2/)
 * [bioconductor/release_proteomics2](https://hub.docker.com/r/bioconductor/release_proteomics2/)
 
-#### RGLab: wjiang2@fredhutch.org
+RGLab: wjiang2@fredhutch.org
+
 * [bioconductor/devel_cytometry2](https://hub.docker.com/r/bioconductor/devel_cytometry2/)
 * [bioconductor/release_cytometry2](https://hub.docker.com/r/bioconductor/release_cytometry2/)
 
-#### First iteration containers 
+First iteration containers
+
 * bioconductor/devel_base
 * bioconductor/devel_core
 * bioconductor/devel_flow
@@ -158,35 +182,35 @@ Docker Toolbox installed and running.
 
 ##### List which docker machines are available locally
 
-    docker images
+	docker images
 
 ##### List running containers
 
-    docker ps
+	docker ps
 
 ##### List all containers
 
-    docker ps -a
+	docker ps -a
 
 ##### Resume a stopped container
 
-    docker start <CONTAINER ID>
+	docker start <CONTAINER ID>
 
 ##### Shell into a running container
 
-    docker exec -it <CONTAINER ID> /bin/bash
+	docker exec -it <CONTAINER ID> /bin/bash
 
 ##### Shutdown container
 
-    docker stop <CONTAINER ID>
+	docker stop <CONTAINER ID>
 
 ##### Delete container
 
-    docker rm <CONTAINER ID>
+	docker rm <CONTAINER ID>
 
 ##### Delete image
 
-    docker rmi bioconductor/bioconductor_docker:devel
+	docker rmi bioconductor/bioconductor_docker:devel
 
 <a name="running"></a>
 
@@ -196,13 +220,13 @@ The above commands can be helpful but the real basics of running a
 Bioconductor docker involves pulling the public image and running the
 container.
 
-##### Get a copy of public docker image 
+##### Get a copy of public docker image
 
-    docker pull bioconductor/bioconductor_docker:devel
+	docker pull bioconductor/bioconductor_docker:devel
 
 ##### To run RStudio Server:
 
-    docker run -e PASSWORD=<pickYourPassword> -p 8787:8787 bioconductor/bioconductor_docker:devel
+	docker run -e PASSWORD=<pickYourPassword> -p 8787:8787 bioconductor/bioconductor_docker:devel
 
 You can then open a web browser pointing to your docker host on
 port 8787.  If you're on Linux and using default settings, the docker
@@ -222,11 +246,11 @@ this](https://github.com/rocker-org/rocker/wiki/Sharing-files-with-host-machine)
 
 ##### To run R from the command line:
 
-    docker run -it --user bioc bioconductor/bioconductor_docker:devel R
+	docker run -it --user bioc bioconductor/bioconductor_docker:devel R
 
 ##### To open a Bash shell on the container:
 
-    docker run -it --user bioc bioconductor/bioconductor_docker:devel bash
+	docker run -it --user bioc bioconductor/bioconductor_docker:devel bash
 
 **Note**: The `docker run` command is very powerful and versatile.
 For full documentation, type `docker run --help` or visit
@@ -251,20 +275,20 @@ package would be available for use.
 
 Running it interactively
 
-    docker run \
-        -v /home/my-devel-library:/usr/local/lib/R/host-site-library \
-        -it \
-        --user bioc \
-        bioconductor/bioconductor_docker:devel
-        
+	docker run \
+		-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
+		-it \
+		--user bioc \
+		bioconductor/bioconductor_docker:devel
+
 Running it with RStudio
 
-    docker run \
-        -v /home/my-devel-library:/usr/local/lib/R/host-site-library \
-        -e PASSWORD=password \
-        -p 8787:8787 \
-        --user bioc \
-        bioconductor/bioconductor_docker:devel
+	docker run \
+		-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
+		-e PASSWORD=password \
+		-p 8787:8787 \
+		--user bioc \
+		bioconductor/bioconductor_docker:devel
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
@@ -276,8 +300,8 @@ There are two ways to modify these images:
 
 1. Making changes in a running container and then committing them
    using the `docker commit` command.
-   
-      docker commit <CONTAINER ID> <name for new image> 
+
+	  docker commit <CONTAINER ID> <name for new image>
 
 2. Using a Dockerfile to declare the changes you want to make.
 
@@ -295,7 +319,3 @@ The second way is the recommended way. Both ways are
 Thanks to the
 [rocker](https://github.com/rocker-org/rocker) project for providing the
 R/RStudio Server containers upon which ours are based.
-
-
-
-
