@@ -1,2 +1,0 @@
-Bootstrap: docker
-From: bioconductor/bioconductor_docker:RELEASE_3_10
