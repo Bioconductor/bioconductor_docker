@@ -15,6 +15,7 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
 - [Quickstart](#quickstart)
 - [Why Use Containers](#intro)
+  * [Goals for new containers](#goals)
 - [Current Containers](#current)
 - [Deprecation Notice](#deprecation)
   * [Legacy Containers](#legacy)
@@ -83,6 +84,26 @@ source Dockerfiles are in Github.
 Our release images and devel images are based on the [Rocker Project](https://www.rocker-project.org/) -
 [rocker/rstudio](https://github.com/rocker-org/rocker/tree/master/rstudio)
 image and built when a Biocondcutor release occurs.
+
+<a name="goals"></a>
+
+### Goals for new container architecture
+
+A few of our key goals to migrate to a new set of Docker containers are,
+
+ - to keep the image size being shipped by the Bioconductor team at a
+   manageble size.
+
+ - easy to extend, so developers can just use a single image to
+   inherit and build their docker image.
+
+ - easy to maintain, by streamlining the docker inheritence chain.
+
+ - Adapt a "best practices" outline so that new community contributed
+   docker images get reviewed and follow standards.
+
+ - Adapt a depreaction policy and life cycle for images similar to
+   bioconductor packages.
 
 <a name="current"></a>
 
@@ -164,13 +185,22 @@ First iteration containers
 
 The new Bioconductor docker image `bioconductor/bioconductor_docker`
 makes it possible to easily install any package the user chooses since
-all the system dependencies are built in to this new image. The new
-installation of packages can be done with,
+all the system dependencies are built in to this new image. The
+previous images didn't have all the system dependencies built in to
+the image. The new installation of packages can be done with,
 
 	BiocManager::install(c("package_name", "package_name"))
 
-One of our key goals was, to keep the image size being shipped by the
-Bioconductor team at a manageble size and easy to use.
+Other reasons for deprecation:
+
+ - the chain of inheritance of Docker images was too complex and hard
+   to maintain.
+
+ - Hard to extend because there were multiple flavors of images.
+
+ - Naming convention was making things harder to use.
+
+ - Unmaintained images were not deprecated.
 
 <a name="issues"></a>
 
