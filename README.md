@@ -366,6 +366,80 @@ There are two ways to modify these images:
 The second way is the recommended way. Both ways are
 [documented here](https://docs.docker.com/userguide/dockerimages/#creating-our-own-images).
 
+Example 1:
+
+  My goal is to add a python package 'tensorflow' and to install a
+  Bioconductor package called 'scAlign' on top of the base docker
+  image i.e bioconductor/bioconductor_docker:devel.
+
+  As a first step, my Dockerfile should inherit from the
+  `bioconductor/bioconductor_docker:devel` image, and build from
+  there. Since all docker images are linux enviroments, and this
+  container is specificlly 'debian', I need some knowledge on how to
+  install libraries on linux machines.
+
+  In your new `Dockerfile`, you can have the following commands
+
+	# Docker inheritance
+	FROM bioconductor/bioconductor_docker:devel
+
+	# Update apt-get
+	RUN apt-get update \
+		## Install the python package tensorflow
+		&& pip install tensorflow		\
+		## Remove packages in '/var/cache/' and 'var/lib'
+		## to remove side-effects of apt-get update
+		&& apt-get clean \
+		&& rm -rf /var/lib/apt/lists/*
+
+	# Install required Bioconductor package
+	RUN R -e 'BiocManager::install("scAlign")'
+
+  This `Dockerfile` can be built with the command, (note: you can name
+  it however you want)
+
+	docker build -t bioconductor_docker_tensorflow:devel .
+
+  This will let you use the docker image with tensorflow installed and
+  also `scAlign` package.
+
+	docker run -p 8787:8787 -e PASSWORD=bioc bioconductor_docker_tensorflow:devel
+
+Example 2:
+
+  My goal is to add all the required infrastructure to be able to
+  compile vignettes and knit documents into pdf files. My `Dockerfile`
+  will look like the following for this requirement,
+
+	# This docker image has LaTeX to build the vignettes
+	FROM bioconductor/bioconductor_docker:devel
+
+	# Update apt-get
+	RUN apt-get update \
+		&& apt-get install -y --no-install-recommends apt-utils \
+		&& apt-get install -y --no-install-recommends \
+		texlive \
+		texlive-latex-extra \
+		texlive-fonts-extra \
+		texlive-bibtex-extra \
+		texlive-science \
+		texi2html \
+		texinfo \
+		&& apt-get clean \
+		&& rm -rf /var/lib/apt/lists/*
+
+	## Install BiocStyle
+	RUN R -e 'BiocManager::install("BiocStyle")'
+
+  This `Dockerfile` can be built with the command,
+
+	docker build -t bioconductor_docker_latex:devel .
+
+  This will let you use the docker image as needed to build and
+  compile vignettes for packages.
+
+	docker run -p 8787:8787 -e PASSWORD=bioc bioconductor_docker_latex:devel
+
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
 ## Singularity
