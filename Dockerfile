@@ -146,7 +146,9 @@ RUN useradd -ms /bin/bash -d /home/bioc -g staff bioc \
 	&& echo 'alwaysSaveHistory="0" \
 	\nloadRData="0" \
 	\nsaveAction="0"' \
-	> /home/bioc/.rstudio/monitored/user-settings/user-settings
+	> /home/bioc/.rstudio/monitored/user-settings/user-settings \
+        ## Customize startup message
+	&& sed -i "s|rocker\/rstudio|bioconductor\/bioconductor_docker|g" /etc/cont-init.d/userconf
 
 # Login to RStudio will be with 'bioc' user by default
 ENV USER bioc
