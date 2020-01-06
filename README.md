@@ -25,6 +25,7 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
   * [Running Containers](#running)
   * [Mounting Additional Volume](#mounting)
 - [Modifying Image Container](#modify)
+- [Singularity](#singularity)
 - [Acknowledgements](#acknowledgements)
 
 <a name="quickstart"></a>
@@ -48,9 +49,9 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 	`bioc`. The password in the above command is given as `bioc` but
 	it can be set to anything. `8787` is the port being mapped between
 	the docker container and your host machine. NOTE: password cannot
-	be 'rstudio'.
+	be `rstudio`.
 
-	The user is logged into the 'bioc' user by default.
+	The user is logged into the `bioc` user by default.
 
 <a name="intro"></a>
 
@@ -277,7 +278,9 @@ container.
 
 ##### To run RStudio Server:
 
-	docker run -e PASSWORD=<pickYourPassword> -p 8787:8787 bioconductor/bioconductor_docker:devel
+	docker run -e PASSWORD=<pickYourPassword> \
+		-p 8787:8787 \
+		bioconductor/bioconductor_docker:devel
 
 You can then open a web browser pointing to your docker host on
 port 8787.  If you're on Linux and using default settings, the docker
@@ -292,8 +295,7 @@ like except it cannot be `rstudio`.  Log in to RStudio with the
 username `rstudio` and whatever password was specified.
 
 If you want to run RStudio as a user on your host machine, in order to
-read/write files in a host directory, please [read
-this](https://github.com/rocker-org/rocker/wiki/Sharing-files-with-host-machine).
+read/write files in a host directory, please [read this](https://github.com/rocker-org/rocker/wiki/Sharing-files-with-host-machine).
 
 ##### To run R from the command line:
 
@@ -324,21 +326,27 @@ docker directory. In turn, that path is automatically loaded in the R
 `.libPaths` on the docker image and all of my locally installed
 package would be available for use.
 
-Running it interactively
+* Running it interactively,
 
-	docker run \
-		-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
-		-it \
-		--user bioc \
-		bioconductor/bioconductor_docker:devel
+		docker run \
+			-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
+			-it \
+			--user bioc \
+			bioconductor/bioconductor_docker:devel
 
-Running it with RStudio
+  without the `--user bioc` option, the container is started and
+  logged in as the `root` user.
 
-	docker run \
-		-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
-		-e PASSWORD=password \
-		-p 8787:8787 \
-		bioconductor/bioconductor_docker:devel
+  The `-it` flag gives you an interactive tty (shell/terminal) to the
+  docker container.
+
+* Running it with RStudio interface
+
+		docker run \
+			-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
+			-e PASSWORD=password \
+			-p 8787:8787 \
+			bioconductor/bioconductor_docker:devel
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
@@ -360,8 +368,38 @@ The second way is the recommended way. Both ways are
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
+## Singularity
+
+The latest `bioconductor/bioconductor_docker` images are available on
+Singularity Hub as well. Singularity is a container runtime just like
+docker, and Singularity Hub is the host registry for Singularity
+containers.
+
+You can find the Singularity containers collection on this link
+https://singularity-hub.org/collections/3955.
+
+These images are particularly useful on compute clusters where you
+don't need admin access. You need to have the module `singularity`
+installed https://singularity.lbl.gov/docs-installation (Contact your
+IT department whn in doubt).
+
+Some useful instructions, if you have singularity installed on your
+machine or cluster are:
+
+Inspect available modules
+
+	module available
+
+If singularity is available,
+
+	module load singularity
+
+As far as usage of the containers go, please check the link:
+https://singularity-hub.org/collections/3955/usage, this will give
+usage instructions relevant to the singularity containers.
+
 ## Acknowledgements
 
-Thanks to the
-[rocker](https://github.com/rocker-org/rocker) project for providing the
-R/RStudio Server containers upon which ours are based.
+Thanks to the [rocker](https://github.com/rocker-org/rocker) project
+for providing the R/RStudio Server containers upon which ours are
+based.
