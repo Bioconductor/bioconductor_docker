@@ -106,6 +106,13 @@ A few of our key goals to migrate to a new set of Docker containers are,
  - Adapt a depreaction policy and life cycle for images similar to
    bioconductor packages.
 
+ - Replicate the linux build machines (malbec2) on the
+   `bioconductor/bioconductor_docker:devel` image as closely as
+   possible. While this is not fully possible just yet, this image can
+   be used by maintainers to reproduce the errors they see on the
+   Bioconductor linux build machine and used as a helpful debugging
+   tool.
+
 <a name="current"></a>
 
 ## Current Containers
