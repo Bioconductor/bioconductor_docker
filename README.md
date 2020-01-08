@@ -297,6 +297,11 @@ username `rstudio` and whatever password was specified.
 If you want to run RStudio as a user on your host machine, in order to
 read/write files in a host directory, please [read this](https://github.com/rocker-org/rocker/wiki/Sharing-files-with-host-machine).
 
+NOTE: if you forget to add the tag `devel` or `RELEASE_X_Y` while
+using the `bioconductor/bioconductor_docker` image, it will
+automatically use the `latest` tag which points to the latest RELEASE
+version of Bioconductor.
+
 ##### To run R from the command line:
 
 	docker run -it --user bioc bioconductor/bioconductor_docker:devel R
@@ -441,6 +446,7 @@ Example 2:
 	docker run -p 8787:8787 -e PASSWORD=bioc bioconductor_docker_latex:devel
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
+
 
 ## Singularity
 
