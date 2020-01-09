@@ -1,5 +1,7 @@
 # Docker containers for Bioconductor
 
+[![Docker Build Status](https://img.shields.io/docker/cloud/build/bioconductor/bioconductor_docker.svg)](https://hub.docker.com/r/bioconductor/bioconductor_docker/builds/)
+
 [Docker](https://www.docker.com) allows software to be packaged into
 containers: self-contained environments that contain everything
 needed to run the software. Containers can be run anywhere
