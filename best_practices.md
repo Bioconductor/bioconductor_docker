@@ -89,7 +89,7 @@ contributions.
    packages on top of it as users can install these packages
    themselves.
 
-1. Please add a MAINAINER field in the Dockerfile like below,
+1. Please add a MAINTAINER field in the Dockerfile like below,
 
 		LABEL maintainer="maintainer@email.com"
 
