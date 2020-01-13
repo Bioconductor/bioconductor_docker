@@ -14,7 +14,7 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
 <a name="top"></a>
 
-- [Quickstart](#quickstart)
+- [Quick start](#quickstart)
 - [Why Use Containers](#intro)
   * [Goals for new containers](#goals)
 - [Current Containers](#current)
@@ -31,7 +31,7 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
 <a name="quickstart"></a>
 
-## Quickstart
+## Quick start
 
 1. Install Docker
 
@@ -79,11 +79,11 @@ With Bioconductor containers, we hope to enhance
 Our aim is to provide up-to-date containers for the current release
 and devel versions of Bioconductor, and some older
 versions. Bioconductor’s Docker images are stored in Docker Hub; the
-source Dockerfiles are on Github.
+source Dockerfile(s) are on Github.
 
 Our release images and devel images are based on the [Rocker Project](https://www.rocker-project.org/) -
 [rocker/rstudio](https://github.com/rocker-org/rocker/tree/master/rstudio)
-image and built when a Biocondcutor release occurs.
+image and built when a Bioconductor release occurs.
 
 <a name="goals"></a>
 
@@ -122,7 +122,7 @@ For each supported version of Bioconductor, we provide
 - **bioconductor/bioconductor_docker:devel**
 
 Bioconductor's Docker images are stored in [Docker Hub](https://hub.docker.com/u/bioconductor/);
-the source Dockerfiles are in [Github](https://github.com/Bioconductor/bioconductor_docker).
+the source Dockerfile(s) are in [Github](https://github.com/Bioconductor/bioconductor_docker).
 
 <a name="deprecation"></a>
 
@@ -206,7 +206,7 @@ Other reasons for deprecation:
 
  - Naming convention was making things harder to use.
 
- - Unmaintained images were not deprecated.
+ - Images which were not maintained were not deprecated.
 
 <a name="issues"></a>
 
@@ -283,7 +283,7 @@ container.
 
 ##### To run RStudio Server:
 
-	docker run -e PASSWORD=<pickYourPassword> \
+	docker run -e PASSWORD=<password> \
 		-p 8787:8787 \
 		bioconductor/bioconductor_docker:devel
 

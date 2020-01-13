@@ -71,7 +71,7 @@ contributions.
 
 1. Docker images should be based on the
    `bioconductor/bioconductor_docker` images, so that they can inherit
-   all the installed packages and customizations.
+   all the installed packages and customization.
 
 1. Images should have a Dockerfile which is clearly defined and
    documented.
@@ -98,7 +98,7 @@ contributions.
 
 		[![Docker Build Status](https://img.shields.io/docker/cloud/build/bioconductor/bioconductor_docker.svg)](https://hub.docker.com/r/bioconductor/bioconductor_docker/builds/)
 
-1. The `RELEASE_X_Y` image should be mainatained without a build
+1. The `RELEASE_X_Y` image should be maintained without a build
    failure. Similar to the packages the RELEASE_X_Y images should not
    be an active development repository except for bug fixes.
 
@@ -113,7 +113,7 @@ We expect Docker images to follow the same deprecation policy as
 
 1. `docker build` fails.
 
-	The image must build sucessfully at each Bioconductor release. All
+	The image must build successfully at each Bioconductor release. All
     efforts will be made to keep the image in Bioconductor if the
     maintainer is actively attempting to fix.
 
