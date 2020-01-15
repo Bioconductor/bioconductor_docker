@@ -1,13 +1,14 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
 FROM rocker/rstudio:devel
 
+# Version is 3.11.0 because this is the first iteration of the bioconductor devel Dockerfile
 LABEL name="bioconductor/bioconductor_docker" \
-	version="devel" \
-	url="https://github.com/Bioconductor/bioconductor_docker" \
-	vendor="Bioconductor Project" \
-	maintainer="maintainer@bioconductor.org" \
-	description="Bioconductor docker image with system dependencies to install all* packages." \
-	license="Artistic 2.0"
+      version="3.11.0" \
+      url="https://github.com/Bioconductor/bioconductor_docker" \
+      vendor="Bioconductor Project" \
+      maintainer="maintainer@bioconductor.org" \
+      description="Bioconductor docker image with system dependencies to install most packages." \
+      license="Artistic-2.0"
 
 # nuke cache dirs before installing pkgs; tip from Dirk E fixes broken img
 RUN rm -f /var/lib/dpkg/available && rm -rf  /var/cache/apt/*
