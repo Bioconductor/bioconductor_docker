@@ -9,15 +9,12 @@ contributions.
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
-- [Best practices and standards for Bioconductor Docker Images](#best-practices-and-standards-for-bioconductor-docker-images)
-    - [How to contribute](#how-to-contribute)
-    - [Best Practices and Standards for a Docker image](#best-practices-and-standards-for-a-docker-image)
-    - [Deprecation policy](#deprecation-policy)
-        - [Criteria for Package deprecation](#criteria-for-package-deprecation)
-        - [End of Life process](#end-of-life-process)
-        - [Reversing End of Life](#reversing-end-of-life)
-    - [Release Cycle and Support](#release-cycle-and-support)
-    - [Acknowledgements](#acknowledgements)
+- [How to contribute a new Docker image](#how-to-contribute-a-new-docker-image)
+- [Best Practices and Standards for a Docker image and Dockerfile](#best-practices-and-standards-for-a-docker-image-and-dockerfile)
+- [Deprecation policy](#deprecation-policy)
+    - [Criteria for image deprecation](#criteria-for-image-deprecation)
+    - [End of Life process](#end-of-life-process)
+    - [Reversing End of Life](#reversing-end-of-life)
 
 <!-- markdown-toc end -->
 ## How to contribute a new Docker image
