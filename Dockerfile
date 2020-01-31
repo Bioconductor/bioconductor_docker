@@ -2,7 +2,7 @@
 FROM rocker/rstudio:3.6.2
 
 LABEL name="bioconductor/bioconductor_docker" \
-      version="3.10.0" \
+      version="3.10.1" \
       url="https://github.com/Bioconductor/bioconductor_docker" \
       vendor="Bioconductor Project" \
       maintainer="maintainer@bioconductor.org" \
@@ -142,23 +142,6 @@ RUN cd /tmp \
 	&& rm -rf /var/lib/apt/lists/*
 
 COPY ./deps/xvfb_init /etc/services.d/xvfb/run
-
-##############################
-# Add bioc user
-##############################
-RUN useradd -ms /bin/bash -d /home/bioc -g staff bioc \
-	&& echo "bioc:bioc" | chpasswd \
-	&& mkdir -p /home/bioc/.rstudio/monitored/user-settings \
-	&& echo 'alwaysSaveHistory="0" \
-	\nloadRData="0" \
-	\nsaveAction="0"' \
-	> /home/bioc/.rstudio/monitored/user-settings/user-settings \
-        ## Customize startup message
-	&& sed -i "s|rocker\/rstudio|bioconductor\/bioconductor_docker|g" /etc/cont-init.d/userconf
-
-# Login to RStudio will be with 'bioc' user by default
-ENV USER bioc
-#############################
 
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
 	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
