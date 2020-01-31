@@ -47,12 +47,12 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
 	RStudio will be available on your web browser at
 	`https://localhost:8787`. The USER is fixed to always being
-	`bioc`. The password in the above command is given as `bioc` but
+	`rstudio`. The password in the above command is given as `bioc` but
 	it can be set to anything. `8787` is the port being mapped between
 	the docker container and your host machine. NOTE: password cannot
 	be `rstudio`.
 
-	The user is logged into the `bioc` user by default.
+	The user is logged into the `rstudio` user by default.
 
 <a name="intro"></a>
 
@@ -341,7 +341,7 @@ package would be available for use.
 		docker run \
 			-v /home/my-devel-library:/usr/local/lib/R/host-site-library \
 			-it \
-			--user bioc \
+			--user rstudio \
 			bioconductor/bioconductor_docker:devel
 
   without the `--user bioc` option, the container is started and
