@@ -1,14 +1,20 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
 FROM rocker/rstudio:devel
 
-# Version is 3.11.0 because this is the first iteration of the bioconductor devel Dockerfile
+## Set Dockerfile version number
+## This parameter should be incremented each time there is a change in the Dockerfile
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.2
+
 LABEL name="bioconductor/bioconductor_docker" \
-      version="3.11.1" \
+      version=$BIOCONDUCTOR_DOCKER_VERSION \
       url="https://github.com/Bioconductor/bioconductor_docker" \
       vendor="Bioconductor Project" \
       maintainer="maintainer@bioconductor.org" \
       description="Bioconductor docker image with system dependencies to install most packages." \
       license="Artistic-2.0"
+
+RUN echo BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION >> /etc/environment \
+	&& echo BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION >> /root/.bashrc
 
 # nuke cache dirs before installing pkgs; tip from Dirk E fixes broken img
 RUN rm -f /var/lib/dpkg/available && rm -rf  /var/cache/apt/*
