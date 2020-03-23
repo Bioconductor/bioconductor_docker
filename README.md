@@ -267,11 +267,11 @@ this](https://github.com/rocker-org/rocker/wiki/Sharing-files-with-host-machine)
 
 ##### To run R from the command line:
 
-	docker run -it --user bioc bioconductor/bioconductor_docker:RELEASE_3_10 R
+	docker run -it --user rstudio bioconductor/bioconductor_docker:RELEASE_3_10 R
 
 ##### To open a Bash shell on the container:
 
-	docker run -it --user bioc bioconductor/bioconductor_docker:RELEASE_3_10 bash
+	docker run -it --user rstudio bioconductor/bioconductor_docker:RELEASE_3_10 bash
 
 **Note**: The `docker run` command is very powerful and versatile.
 For full documentation, type `docker run --help` or visit
@@ -299,7 +299,7 @@ Running it interactively
 	docker run \
 		-v /home/my-RELEASE_3_10-library:/usr/local/lib/R/host-site-library \
 		-it \
-		--user bioc \
+		--user rstudio \
 		bioconductor/bioconductor_docker:RELEASE_3_10
 
 Running it with RStudio
