@@ -3,7 +3,7 @@ FROM rocker/rstudio:devel
 
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.4
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.5
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -157,11 +157,11 @@ ADD install.R /tmp/
 
 RUN R -f /tmp/install.R
 
-## DEVEL: Add sys env variables to DEVEL image
-RUN curl -O https://raw.githubusercontent.com/Bioconductor/BBS/master/3.11/R_env_vars.sh \
-	&& cat R_env_vars.sh | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
-	&& cat R_env_vars.sh >> /root/.bashrc \
-	&& rm -rf R_env_vars.sh
+# DEVEL: Add sys env variables to DEVEL image
+RUN curl -O https://raw.githubusercontent.com/Bioconductor/BBS/master/3.11/Renviron.bioc \
+	&& cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
+	&& cat Renviron.bioc >> /root/.bashrc \
+	&& rm -rf Renviron.bioc
 
 # Init command for s6-overlay
 CMD ["/init"]
