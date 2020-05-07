@@ -1,9 +1,9 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/rstudio:devel
+FROM rockerdev/rstudio:4.0.0-ubuntu18.04
 
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.9
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.10
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -39,7 +39,6 @@ RUN apt-get update \
 	liblzma-dev \
 	libbz2-dev \
 	libpng-dev \
-	libmariadb-dev-compat \
 	## sys deps from bioc_full
 	pkg-config \
 	fortran77-compiler \
@@ -48,15 +47,14 @@ RUN apt-get update \
 	curl \
 	## This section installs libraries
 	libpng-dev \
+	libpcre2-dev \
 	libnetcdf-dev \
 	libhdf5-serial-dev \
 	libfftw3-dev \
 	libopenbabel-dev \
 	libopenmpi-dev \
-	libexempi8 \
 	libxt-dev \
 	libgdal-dev \
-	libjpeg62-turbo-dev \
 	libcairo2-dev \
 	libtiff5-dev \
 	libreadline-dev \
@@ -78,6 +76,7 @@ RUN apt-get update \
 	libmodule-build-perl \
 	libapparmor-dev \
 	libgeos-dev \
+	libproj-dev \
 	libprotoc-dev \
 	librdf0-dev \
 	libmagick++-dev \
@@ -127,6 +126,16 @@ RUN apt-get update \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
+## FIXME
+## These two libraries don't install in the above section--WHY?
+RUN apt-get update \
+	&& apt-get -y --no-install-recommends install \
+	libjpeg-dev \
+	libjpeg-turbo8-dev \
+	libjpeg8-dev \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
+
 # Install libsbml and xvfb
 RUN cd /tmp \
 	## libsbml
@@ -156,12 +165,6 @@ RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib
 ADD install.R /tmp/
 
 RUN R -f /tmp/install.R
-
-# DEVEL: Add sys env variables to DEVEL image
-RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
-	&& cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
-	&& cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
-	&& rm -rf Renviron.bioc
 
 # Init command for s6-overlay
 CMD ["/init"]
