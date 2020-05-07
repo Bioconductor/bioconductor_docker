@@ -3,26 +3,26 @@ echo "Build bioconductor_docker image"
 ###############################################
 ## Step 0: Set up variables and clone
 ## Rocker repo
-ROCKER_REPO=https://github.com/rocker-org/rocker-versioned
+ROCKER_REPO=https://github.com/rocker-org/rocker-versioned2
 
 ## git clone rocker
 git clone --depth 1 $ROCKER_REPO
 
 ###############################################
-## 1. docker build rocker r-ver:devel repo
+## 1. docker build rocker r-ver: repo
 
-cd rocker-versioned/r-ver/
+cd rocker-versioned2/
 
-docker build -t rocker/r-ver:devel -f  devel.Dockerfile .
+docker build -t rockerdev/r-ver:4.0.0-ubuntu18.04 -f dockerfiles/Dockerfile_r-ver_4.0.0-ubuntu18.04 .
 
 ###############################################
 ## 2. docker build rocker rstudio:devel
 
-cd $GITHUB_WORKSPACE; cd rocker-versioned/rstudio
+#cd $GITHUB_WORKSPACE; cd rocker-versioned2/#rstudio
 
-echo "*** Building rocker/rstudio *** \n"
+echo "*** Building rockerdev/rstudio:4.0.0-ubuntu18.04 *** \n"
 
-docker build -t rocker/rstudio:devel -f  devel.Dockerfile .
+docker build -t rockerdev/rstudio:4.0.0-ubuntu18.04 -f dockerfiles/Dockerfile_rstudio_4.0.0-ubuntu18.04 .
 
 ###############################################
 ## 3. docker build bioconductor_docker:devel
