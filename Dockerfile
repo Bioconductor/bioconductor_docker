@@ -1,9 +1,9 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/rstudio:devel
+FROM rockerdev/rstudio:4.0.0-ubuntu18.04
 
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.9
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.0
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -39,7 +39,6 @@ RUN apt-get update \
 	liblzma-dev \
 	libbz2-dev \
 	libpng-dev \
-	libmariadb-dev-compat \
 	## sys deps from bioc_full
 	pkg-config \
 	fortran77-compiler \
@@ -48,15 +47,16 @@ RUN apt-get update \
 	curl \
 	## This section installs libraries
 	libpng-dev \
+	libpcre2-dev \
 	libnetcdf-dev \
 	libhdf5-serial-dev \
 	libfftw3-dev \
 	libopenbabel-dev \
 	libopenmpi-dev \
-	libexempi8 \
 	libxt-dev \
-	libgdal-dev \
-	libjpeg62-turbo-dev \
+	libudunits2-dev \
+	libgeos-dev \
+	libproj-dev \
 	libcairo2-dev \
 	libtiff5-dev \
 	libreadline-dev \
@@ -74,10 +74,8 @@ RUN apt-get update \
 	libv8-dev \
 	libgtkmm-2.4-dev \
 	libmpfr-dev \
-	libudunits2-dev \
 	libmodule-build-perl \
 	libapparmor-dev \
-	libgeos-dev \
 	libprotoc-dev \
 	librdf0-dev \
 	libmagick++-dev \
@@ -124,6 +122,24 @@ RUN apt-get update \
 	pandas \
 	pyyaml \
 	cwltool \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
+
+## FIXME
+## These two libraries don't install in the above section--WHY?
+RUN apt-get update \
+	&& apt-get -y --no-install-recommends install \
+	libmariadb-dev-compat \
+	libjpeg-dev \
+	libjpeg-turbo8-dev \
+	libjpeg8-dev \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
+
+## FIXME
+RUN apt-get update \
+	&& apt-get -y --no-install-recommends install \
+	libgdal-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
