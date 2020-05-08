@@ -13,6 +13,18 @@ git clone --depth 1 $ROCKER_REPO
 
 cd rocker-versioned2/
 
+#################################################################
+## NOTE: This needs to change when it comes time for RELEASE_3_12
+##
+## The R_VERSION in the dockerfile for r-ver needs to be changed to
+## 'ENV R_VERSION=patched' during this release cycle.
+##
+## This will be done with the help of "sed"
+
+sed -r -i 's/ENV R_VERSION=4.0.0/ENV R_VERSION=patched/g' dockerfiles/Dockerfile_r-ver_4.0.0-ubuntu18.04
+
+#################################################################
+
 docker build -t rockerdev/r-ver:4.0.0-ubuntu18.04 -f dockerfiles/Dockerfile_r-ver_4.0.0-ubuntu18.04 .
 
 ###############################################
