@@ -3,7 +3,7 @@ FROM rockerdev/rstudio:4.0.0-ubuntu18.04
 
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.10
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.11
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
