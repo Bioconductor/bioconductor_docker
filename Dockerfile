@@ -1,9 +1,9 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rockerdev/rstudio:4.0.0-ubuntu18.04
+FROM rocker/rstudio:4.0.0-ubuntu18.04
 
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.10
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.11.11
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -63,6 +63,7 @@ RUN apt-get update \
 	libgtk2.0-dev \
 	libgl1-mesa-dev \
 	libglu1-mesa-dev \
+	libglpk-dev \
 	libgmp3-dev \
 	libhdf5-dev \
 	libncurses-dev \
