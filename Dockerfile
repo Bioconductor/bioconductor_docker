@@ -4,7 +4,7 @@ FROM rocker/rstudio:4.0.2
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
 
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.13
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.14
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -13,9 +13,6 @@ LABEL name="bioconductor/bioconductor_docker" \
       maintainer="maintainer@bioconductor.org" \
       description="Bioconductor docker image with system dependencies to install most packages." \
       license="Artistic-2.0"
-
-RUN echo BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION >> /etc/environment \
-	&& echo BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION >> /root/.bashrc
 
 # nuke cache dirs before installing pkgs; tip from Dirk E fixes broken img
 RUN rm -f /var/lib/dpkg/available && rm -rf  /var/cache/apt/*
@@ -174,7 +171,10 @@ RUN R -f /tmp/install.R
 RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
 	&& cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
 	&& cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
+	&& echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
 	&& rm -rf Renviron.bioc
+
+ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
 
 # Init command for s6-overlay
 CMD ["/init"]
