@@ -82,6 +82,8 @@ contributions.
    check https://www.fromlatest.io if you have any
    questions regarding how to optimize the Dockerfile.
 
+1. The DESCRIPTION file should contain a field `BiocType: Docker`
+
 1. The README.md file will act as the vignette for the images. The
    README.md should have a clear reasoning on *what* this Dockerfile
    provides, i.e additional tools or packages on top of
