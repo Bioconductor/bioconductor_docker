@@ -52,6 +52,8 @@ contributions.
 1. The repository should have an open source license in the
    LICENSE.txt file. Core Bioconductor packages are typically licensed
    under Artistic-2.0.
+   
+1. The DESCRIPTION file should contain a field `BiocType: Docker`
 
 1. At the time of RELEASE, `bioconductor/bioconductor_docker` will
    provide a new RELEASE_X_Y branch. The core team will
@@ -81,8 +83,6 @@ contributions.
    layer without removing the original installtion layer. Please 
    check https://www.fromlatest.io if you have any
    questions regarding how to optimize the Dockerfile.
-
-1. The DESCRIPTION file should contain a field `BiocType: Docker`
 
 1. The README.md file will act as the vignette for the images. The
    README.md should have a clear reasoning on *what* this Dockerfile
