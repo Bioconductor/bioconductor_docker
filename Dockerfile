@@ -4,7 +4,7 @@ FROM rocker/rstudio:devel
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
 
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.13.6
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.13.7
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -37,6 +37,7 @@ RUN apt-get update \
 	liblzma-dev \
 	libbz2-dev \
 	libpng-dev \
+	libgit2-dev \
 	## sys deps from bioc_full
 	pkg-config \
 	fortran77-compiler \
