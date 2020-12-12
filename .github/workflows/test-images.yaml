@@ -13,9 +13,9 @@ jobs:
   test-built-containers:
     strategy:
       matrix:
-        container_tag: [devel, RELEASE_3_12]
+        container-tag: [devel, RELEASE_3_12]
     runs-on: ubuntu-latest
-    container: bioconductor/bioconductor_docker:${{container_tag}}
+    container: bioconductor/bioconductor_docker:${{ matrix.container-tag }}
 
     steps:
       - name: Canary package installs from default repositories
