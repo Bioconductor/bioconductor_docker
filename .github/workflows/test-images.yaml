@@ -1,3 +1,5 @@
+name: test-images-install
+
 on:
   workflow_run:
     workflows: ["weekly-bioconductor-docker-devel-builder"]
