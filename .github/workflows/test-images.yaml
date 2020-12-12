@@ -1,0 +1,24 @@
+name: test-images-install
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["weekly-bioconductor-docker-devel-builder"]
+    types:
+      - completed
+  schedule:
+    - cron: '* */6 * * *'
+
+jobs:
+  test-built-containers:
+    strategy:
+      matrix:
+        container-tag: [devel, RELEASE_3_12]
+    runs-on: ubuntu-latest
+    container: bioconductor/bioconductor_docker:${{ matrix.container-tag }}
+
+    steps:
+      - name: Canary package installs from default repositories
+        run: |
+          BiocManager::install(c('SummarizedExperiment','usethis','data.table','igraph','GEOquery'))
+        shell: Rscript {0}
