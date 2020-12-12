@@ -1,10 +1,11 @@
 name: test-images-install
 
 on:
-  # workflow_run:
-  #   workflows: ["weekly-bioconductor-docker-devel-builder"]
-  #   types:
-  #     - completed
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["weekly-bioconductor-docker-devel-builder"]
+    types:
+      - completed
   schedule:
     - cron: '* */6 * * *'
 
