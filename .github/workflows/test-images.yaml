@@ -22,7 +22,7 @@ jobs:
         run: |
           BiocManager::install(c('SummarizedExperiment','usethis','data.table','igraph','GEOquery'))
         shell: Rscript {0}
-      - name: Check gert package
+      - name: Check gert package and libgit2 functionality
         # checks for presence of libgit2, also
         run: |
           BiocManager::install('gert')
