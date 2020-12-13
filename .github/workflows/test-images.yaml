@@ -27,4 +27,4 @@ jobs:
         run: |
           BiocManager::install('gert')
           Rscript -e 'require("gert")'
-        shell: Rscript{0}
+        shell: Rscript {0}
