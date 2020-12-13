@@ -28,5 +28,5 @@ jobs:
         # checks for presence of libgit2, also
         run: |
           BiocManager::install('gert')
-          Rscript -e 'require("gert")'
+          require('gert')
         shell: Rscript {0}
