@@ -4,7 +4,7 @@ FROM rocker/rstudio:4.0.3
 ## Set Dockerfile version number
 ## This parameter should be incremented each time there is a change in the Dockerfile
 
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.29
+ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.30
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -168,8 +168,7 @@ ADD install.R /tmp/
 
 RUN R -f /tmp/install.R
 
-RUN echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-
+RUN echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site
 
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
 
