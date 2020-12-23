@@ -2,9 +2,14 @@
 FROM rocker/rstudio:devel
 
 ## Set Dockerfile version number
-## This parameter should be incremented each time there is a change in the Dockerfile
+ARG BIOCONDUCTOR_VERSION=3.13
 
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.13.8
+##### IMPORTANT ########
+## The PATCH version number should be incremented each time
+## there is a change in the Dockerfile.
+ARG BIOCONDUCTOR_PATCH=9
+########################
+ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -169,13 +174,16 @@ ADD install.R /tmp/
 RUN R -f /tmp/install.R
 
 # DEVEL: Add sys env variables to DEVEL image
+# Variables in Renviron.site are made available inside of R.
 RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
 	&& cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
 	&& cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
+	&& echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
 	&& echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
 	&& rm -rf Renviron.bioc
 
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
+ENV BIOCONDUCTOR_VERSION=$BIOCONDUCTOR_VERSION
 
 # Init command for s6-overlay
 CMD ["/init"]
