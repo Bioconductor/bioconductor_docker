@@ -45,7 +45,7 @@ cd $GITHUB_WORKSPACE;
 echo "*** Building bioconductor/bioconductor_docker *** \n"
 
 ## increment version number with sed
-sed -r -i 's/(^ARG BIOCONDUCTOR_DOCKER_VERSION=[0-9]+\.[0-9]+\.)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
+sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
 
 ## Git login
 git config user.email "bioc-issue-bot@bioconductor.org"
