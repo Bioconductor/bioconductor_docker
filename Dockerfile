@@ -2,9 +2,14 @@
 FROM rocker/rstudio:4.0.3
 
 ## Set Dockerfile version number
-## This parameter should be incremented each time there is a change in the Dockerfile
+ARG BIOCONDUCTOR_VERSION=3.12
 
-ARG BIOCONDUCTOR_DOCKER_VERSION=3.12.30
+##### IMPORTANT ########
+## The PATCH version number should be incremented each time
+## there is a change in the Dockerfile.
+ARG BIOCONDUCTOR_PATCH=31
+########################
+ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
@@ -168,9 +173,11 @@ ADD install.R /tmp/
 
 RUN R -f /tmp/install.R
 
-RUN echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site
+RUN echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
+	&& echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site
 
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
+ENV BIOCONDUCTOR_VERSION=$BIOCONDUCTOR_VERSION
 
 # Init command for s6-overlay
 CMD ["/init"]
