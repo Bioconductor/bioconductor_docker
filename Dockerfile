@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.13
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=15
+ARG BIOCONDUCTOR_PATCH=16
 ########################
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -127,7 +127,7 @@ RUN apt-get update \
 	&& add-apt-repository universe \
 	&& apt-get update \
 	&& apt-get -y --no-install-recommends install python2 python-dev \
-	&& curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py \
+	&& curl https://bootstrap.pypa.io/2.7/get-pip.py --output get-pip.py \
 	&& python2 get-pip.py \
 	&& pip2 install wheel \
 	## Install sklearn and pandas on python
