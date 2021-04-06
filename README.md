@@ -44,7 +44,7 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 	`bioconductor/bioconductor_docker:devel` on your local machine.
 
 	RStudio will be available on your web browser at
-	`https://localhost:8787`. The USER is fixed to always being
+	`http://localhost:8787`. The USER is fixed to always being
 	`rstudio`. The password in the above command is given as `bioc` but
 	it can be set to anything. `8787` is the port being mapped between
 	the docker container and your host machine. NOTE: password cannot
