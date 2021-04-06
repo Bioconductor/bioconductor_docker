@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.13
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=23
+ARG BIOCONDUCTOR_PATCH=24
 ########################
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -118,6 +118,7 @@ RUN apt-get update \
 	xfonts-100dpi \
 	xfonts-75dpi \
 	biber \
+	libsbml5-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -150,24 +151,9 @@ RUN apt-get update \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-# # Install libsbml and xvfb
-RUN cd /tmp \
-	## libsbml
-	&& curl -O https://s3.amazonaws.com/linux-provisioning/libSBML-5.10.2-core-src.tar.gz \
-	&& tar zxf libSBML-5.10.2-core-src.tar.gz \
-	&& cd libsbml-5.10.2 \
-	&& ./configure --enable-layout \
-	&& make \
-	&& make install \
-	## Clean libsbml, and tar.gz files
-	&& rm -rf /tmp/libsbml-5.10.2 \
-	&& rm -rf /tmp/libSBML-5.10.2-core-src.tar.gz \
-	## apt-get clean and remove cache
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
-
+## Add host-site-library
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
-	&& echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
+    && echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
 
 ADD install.R /tmp/
 
@@ -175,13 +161,18 @@ RUN R -f /tmp/install.R
 
 # DEVEL: Add sys env variables to DEVEL image
 # Variables in Renviron.site are made available inside of R.
+# Add libsbml CFLAGS
 RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
 	&& cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
 	&& cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
 	&& echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-	&& echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
+        && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
+        && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
+        && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
 	&& rm -rf Renviron.bioc
 
+ENV LIBSBML_CFLAGS="-I/usr/include"
+ENV LIBSBML_LIBS="-lsbml"
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
 ENV BIOCONDUCTOR_VERSION=$BIOCONDUCTOR_VERSION
 
