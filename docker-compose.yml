@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  bioc:
+    image: "bioconductor/bioconductor_docker:devel"
+    ports:
+      - "8787:8787"
+    environment:
+      - PASSWORD=bioc
+    volumes:
+      - ${HOME}/R/bioconductor_docker/3.13:/usr/local/lib/R/host-site-library 
+    
