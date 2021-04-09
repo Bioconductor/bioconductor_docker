@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.13
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=29
+ARG BIOCONDUCTOR_PATCH=30
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -151,8 +151,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 ## Add host-site-library
-RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
-    && echo "options(defaultPackages=c(getOption('defaultPackages'),'BiocManager'))" >> /usr/local/lib/R/etc/Rprofile.site
+RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site
 
 ADD install.R /tmp/
 
