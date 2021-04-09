@@ -273,14 +273,8 @@ directory,
 docker-compose up 
 ```
 
-To run in the background, use the `-d` or `--detach` flag,
-
-```
-docker-compose up -d
-```
-
-The RStudio image is launched at `http://localhost:8787`. Using
-`docker-compose`, the user can launch the image with a single command.
+Using `docker-compose`, the user can launch the image with a single
+command. The RStudio image is launched at `http://localhost:8787`.
 
 The `docker-composer.yaml` includes settings so that the user doesn't
 have to worry about setting the port, password (default is `bioc`), or
@@ -307,6 +301,24 @@ stored in the same location as well.
 volumes:
 	- ${HOME}/R/bioconductor_docker/3.13:/usr/local/lib/R/host-site-library
 	- ${HOME}/R/data:/home/rstudio
+```
+
+
+To run in the background, use the `-d` or `--detach` flag,
+
+```
+docker-compose up -d
+```
+
+If the image is run in a detached state, the `container-name` can be
+used to exec into the terminal if the user wishes `root` access in a
+terminal, without using RStudio.
+
+Within the `root` user, additional system dependencies can be
+installed to make the image fit the needs of the user.
+
+```
+docker exec -it bioc-3.13 bash
 ```
 
 For more information on how to use `docker-compose`, use the
