@@ -1,14 +1,15 @@
 # Docker containers for Bioconductor
 
-[Docker](https://docs.docker.com/engine/docker-overview/) packages software
+[Docker](https:/docs.docker.com/engine/docker-overview/) packages software
 into self-contained environments, called containers, that include necessary
 dependencies to run. Containers can run on any operating system including
 Windows and Mac (using modern Linux kernels) via the
 [Docker engine](https://docs.docker.com/engine/).
 
 Containers can also be deployed in the cloud using
-[Amazon Elastic Container Service](https://aws.amazon.com/ecs/)
-or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
+[Amazon Elastic Container Service](https://aws.amazon.com/ecs/),
+[Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/)
+or [Microsoft Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/)
 
 <a name="top"></a>
 
@@ -22,6 +23,10 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
   * [Using docker-compose](#dockercompose)
 - [Modifying Image Container](#modify)
 - [Singularity](#singularity)
+- [Microsoft Azure Container Instances](#msft)
+  * [Using containers hosted on Microsoft Container Registry](#mcr)
+  * [Use Azure Container Instances to run bioconductor images on-demand on Azure](#aci)
+- [How to contribute](#contribute)
 - [Deprecation Notice](#deprecation)
   * [Legacy Containers](#legacy)
   * [Reason for deprecation](#reason)
@@ -29,7 +34,6 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 - [Acknowledgements](#acknowledgements)
 
 <a name="quickstart"></a>
-
 ## Quick start
 
 1. Install Docker
@@ -54,7 +58,6 @@ or [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 	The user is logged into the `rstudio` user by default.
 
 <a name="intro"></a>
-
 ## Why use Containers
 
 With Bioconductor containers, we hope to enhance
@@ -85,7 +88,6 @@ Our release images and devel images are based on the [Rocker Project](https://ww
 image and built when a Bioconductor release occurs.
 
 <a name="goals"></a>
-
 ### Goals for new container architecture
 
 A few of our key goals to migrate to a new set of Docker containers are,
@@ -111,7 +113,6 @@ A few of our key goals to migrate to a new set of Docker containers are,
    Bioconductor Linux build machine and as a helpful debugging tool.
 
 <a name="current"></a>
-
 ## Current Containers
 
 For each supported version of Bioconductor, we provide
@@ -124,7 +125,6 @@ Bioconductor's Docker images are stored in [Docker Hub](https://hub.docker.com/u
 the source Dockerfile(s) are in [Github](https://github.com/Bioconductor/bioconductor_docker).
 
 <a name="usage"></a>
-
 ## Using the containers
 
 A well organized guide to popular docker commands can be found
@@ -174,7 +174,6 @@ Docker Toolbox installed and running.
 	docker rmi bioconductor/bioconductor_docker:devel
 
 <a name="running"></a>
-
 ### Running the container
 
 The above commands can be helpful but the real basics of running a
@@ -226,7 +225,6 @@ the [help page](https://docs.docker.com/reference/run/).
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
 <a name="mounting"></a>
-
 ### Mounting Additional Volume
 
 One such option for `docker run` is `-v` to mount an additional volume
@@ -270,7 +268,7 @@ To run the docker-compose file `docker-compose.yaml` from the same
 directory,
 
 ```
-docker-compose up 
+docker-compose up
 ```
 
 Using `docker-compose`, the user can launch the image with a single
@@ -327,7 +325,6 @@ For more information on how to use `docker-compose`, use the
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
 <a name="modify"></a>
-
 ## Modifying the images
 
 There are two ways to modify these images:
@@ -335,7 +332,7 @@ There are two ways to modify these images:
 1. Making changes in a running container and then committing them
    using the `docker commit` command.
 
-	  docker commit <CONTAINER ID> <name for new image>
+		docker commit <CONTAINER ID> <name for new image>
 
 2. Using a Dockerfile to declare the changes you want to make.
 
@@ -418,6 +415,7 @@ Example 2:
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
+<a name="singularity"></a>
 ## Singularity
 
 The latest `bioconductor/bioconductor_docker` images are available on
@@ -444,10 +442,275 @@ If Singularity is available,
 	module load singularity
 
 Please check this link for specific usage instructions relevant to Singularity
-containers: https://singularity-hub.org/collections/3955/usage
+containers and their usage https://www.rocker-project.org/use/singularity/.
+
+<a name="msft"></a>
+## Microsoft Azure Container Instances
+
+If you are a Microsoft Azure user, you have an option to run your
+containers using images hosted on [Microsoft Container Registry](https://github.com/microsoft/ContainerRegistry).
+
+> Microsoft Container Registry (MCR) is the primary Registry for all Microsoft Published docker images that offers a reliable and trustworthy delivery of container images with a syndicated catalog
+
+<a name="mcr"></a>
+### Using containers hosted on Microsoft Container Registry
+
+You can learn more about the `bioconductor_docker` image hosted on
+Micosoft Container Registry
+[here](https://hub.docker.com/_/microsoft-bioconductor/).
+
+Pull the `bioconductor_docker` image from Microsoft Container
+Registry, specifying your `tag` of choice.  Check
+[here](https://hub.docker.com/_/microsoft-bioconductor-bioconductor-docker)
+for the list of tags under "Full Tag Listing":
+
+	docker pull mcr.microsoft.com/bioconductor/bioconductor_docker:<tag>
+
+To pull the latest image:
+
+	docker pull mcr.microsoft.com/bioconductor/bioconductor_docker:latest
+
+**Example: Run RStudio interactively from your docker container**
+
+To run RStudio in a web browser session, run the following and access
+it from `127.0.0.1:8787`. The default user name is "rstudio" and you
+can specify your password as the example below (here, it is set to
+'bioc'):
+
+	docker run --name bioconductor_docker_rstudio \
+		-v ~/host-site-library:/usr/local/lib/R/host-site-library \
+		-e PASSWORD='bioc'                               \
+		-p 8787:8787                                     \
+		mcr.microsoft.com/bioconductor/bioconductor_docker:latest
+
+To run RStudio on your terminal:
+
+	docker run --name bioconductor_docker_rstudio \
+		-it                                            \
+		-v ~/host-site-library:/usr/local/lib/R/host-site-library \
+		-e PASSWORD='bioc'                               \
+		-p 8787:8787                                     \
+		mcr.microsoft.com/bioconductor/bioconductor_docker:latest R
+
+<p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
+
+<a name="aci"></a>
+### Use Azure Container Instances to run bioconductor images on-demand on Azure
+
+[Azure Container Instances or ACI](https://azure.microsoft.com/en-us/services/container-instances/#features)
+provide a way to run Docker containers on-demand in a managed,
+serverless Azure environment. To learn more, check out the
+documentation
+[here](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-overview).
+
+### Run bioconductor images using ACI
+
+**Prerequisites**:
+1. [An Azure account and a
+   subscription](https://docs.microsoft.com/en-us/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing)
+   you can create resources in
+
+2. [Azure
+   CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+
+3. Create a [resource
+   group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+   within your subscription
+
+You can run [Azure CLI or "az cli"
+commands](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
+to create, stop, restart or delete container instances running any
+bioconductor image - either official images by bioconductor or images
+available on [Microsoft Container
+Registry](https://hub.docker.com/_/microsoft-bioconductor).  To get
+started, ensure you have an Azure account and a subscription or
+[create a free account](https://azure.microsoft.com/en-us/free/).
+
+Follow [this
+tutorial](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart)
+to get familiar with Azure Container Instances.
+
+To run the bioconductor image hosted on Microsoft Container Registry
+or MCR, create a new resource group in your Azure subscription. Then
+run the following command using Azure CLI. You can customize any or
+all of the inputs. This command is adapted to run on an Ubuntu
+machine:
+
+	az container create \
+		--resource-group resourceGroupName \
+		--name mcr-bioconductor \
+		--image mcr.microsoft.com/bioconductor/bioconductor_docker \
+		--cpu 2 \
+		--memory 4 \
+		--dns-name-label mcr-bioconductor \
+		--ports 8787 \
+		--environment-variables 'PASSWORD'='bioc'
+
+When completed, run this command to get the fully qualified domain name(FQDN):
+
+	az container show \
+		--resource-group resourceGroupName \
+		--name mcr-bioconductor \
+		--query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" \
+		--out table
+
+Here we expose port `8787` on this publicly accessible FQDN. You may
+have to choose a different "dns-name-label" to avoid conflicts. By
+default, the username for RStudio is "rstudio" (similar to the
+official bioconductor docker image). Here we set the password for
+RStudio to 'bioc' in the environment variable configuration. The
+`--cpu` and `--memory` (in GB) configurations can also be customized
+to your needs. By default, ACI have 1 cpu core and 1.5GB of memory
+assigned.
+
+To learn more about what you can configure and customize when creating
+an ACI, run:
+
+	az container create --help
+
+#### Mount Azure File Share to persist analysis data between sessions
+
+To ensure that the data persists between different analysis sessions
+when using Azure Container Instances, you can use the feature to
+[mount Azure file share to your container instance](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-volume-azure-files). In this example, we will create
+an ACI that mounts the "/home/rstudio" directory in RStudio to an
+[Azure File Share](https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction).
+
+**Prerequisites**:
+
+1. [An Azure account and a subscription](https://docs.microsoft.com/en-us/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing) you can create resources in
+
+2. [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+
+3. Create a [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+   within your subscription
+
+Now, run the following Azure CLI commands to:
+
+1. Create an [Azure
+   Storage](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-create?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-cli)
+   account
+
+2. Create an [Azure file
+   share](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-use-files-cli)
+
+3. Get the [storage account
+   key](https://docs.microsoft.com/en-us/cli/azure/storage/account/keys?view=azure-cli-latest)
+
+```
+# Change these four parameters as needed
+ACI_PERS_RESOURCE_GROUP=resourceGroupName
+ACI_PERS_STORAGE_ACCOUNT_NAME=storageAccountName
+ACI_PERS_LOCATION=eastus
+ACI_PERS_SHARE_NAME=fileShareName
+
+# Step1: Create the storage account with the parameters
+az storage account create \
+	--resource-group $ACI_PERS_RESOURCE_GROUP \
+	--name $ACI_PERS_STORAGE_ACCOUNT_NAME \
+	--location $ACI_PERS_LOCATION \
+	--sku Standard_LRS
+
+# Step2: Create the file share
+az storage share create \
+	--name $ACI_PERS_SHARE_NAME \
+	--account-name $ACI_PERS_STORAGE_ACCOUNT_NAME
+
+# Step3: Get the storage account key
+STORAGE_KEY=$(az storage account keys list \
+	--resource-group $ACI_PERS_RESOURCE_GROUP \
+	--account-name $ACI_PERS_STORAGE_ACCOUNT_NAME \
+	--query "[0].value" --output tsv)
+echo $STORAGE_KEY
+```
+
+Here is an example command to mount an Azure file share to an ACI running bioconductor. This command is adapted to run on an Ubuntu machine:
+
+	az container create \
+		--resource-group resourceGroupName \
+		--name mcr-bioconductor-fs \
+		--image mcr.microsoft.com/bioconductor/bioconductor_docker \
+		--dns-name-label mcr-bioconductor-fs \
+		--cpu 2 \
+		--memory 4 \
+		--ports 8787 \
+		--environment-variables 'PASSWORD'='bioc' \
+		--azure-file-volume-account-name storageAccountName \
+		--azure-file-volume-account-key $STORAGE_KEY \
+		--azure-file-volume-share-name fileShareName \
+		--azure-file-volume-mount-path /home/rstudio
+
+When completed, run this command to get the fully qualified domain name or FQDN:
+
+	az container show \
+		--resource-group resourceGroupName \
+		--name mcr-bioconductor-fs \
+		--query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" \
+		--out table
+
+Here we expose port 8787 on this publicly accessible FQDN. You may
+have to choose a different "dns-name-label" to avoid conflicts. By
+default, the username for RStudio is "rstudio" (similar to the
+official bioconductor docker image). Here we set the password for
+RStudio to 'bioc' in the environment variable configuration. The
+"--cpu" and "--memory" (in GB) configurations can also be customized
+to your needs. By default, ACI have 1 cpu core and 1.5GB of memory
+assigned. Here, we also mount RStudio "/home/rstudio" directory to a
+persistent Azure file share named "fileShareName" in the storage
+account specified. When you stop or restart an ACI, this data will not
+be lost.
+
+#### Stop, Start, Restart or Delete containers running on ACI
+
+You can run Azure CLI commands to [stop, start,
+restart](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-stop-start)
+or
+[delete](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart#clean-up-resources)
+container instances on Azure. You can find all the commands and
+options
+[here](https://docs.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#commands).
+
+Replace `containerName` and `resourceGroupName` in the following CLI commands.
+
+##### Stop the container instance
+
+	az container stop -n containerName -g resourceGroupName
+
+
+##### Start the container instance
+
+	az container start -n containerName -g resourceGroupName
+
+##### Restart the container instance
+
+	az container restart -n containerName -g resourceGroupName
+
+##### Delete the container instance
+
+	az container delete -n containerName -g resourceGroupName
+
+To not be prompted for confirmation for deleting the ACI:
+
+	az container delete -n containerName -g resourceGroupName -y
+
+To troubleshoot any issues when using Azure Container Instances, try
+out the recommendations
+[here](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-troubleshooting). For
+feedback or further issues, contact us via
+[email](mailto:genomics@microsoft.com).
+
+<p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
+
+<a name="contribute"></a>
+## How to Contribute
+
+There is a comprehensive list of best practices and standards on how
+community members can contribute images
+[here](https://github.com/Bioconductor/bioconductor_docker/blob/master/best_practices.md).
+
+link: https://github.com/Bioconductor/bioconductor_docker/blob/master/best_practices.md
 
 <a name="deprecation"></a>
-
 ## Deprecation Notice
 
 For previous users of docker containers for Bioconductor, please note
@@ -455,7 +718,6 @@ that we are deprecating the following images. These images were
 maintained by Bioconductor Core, and also the community.
 
 <a name="legacy"></a>
-
 ### Legacy Containers
 
 These images are NO LONGER MAINTAINED and updated. They will however
@@ -508,7 +770,6 @@ First iteration containers
 * bioconductor/release_metabolomics
 
 <a name="reason"></a>
-
 ### Reason for deprecation
 
 The new Bioconductor Docker image `bioconductor/bioconductor_docker`
@@ -531,7 +792,6 @@ Other reasons for deprecation:
  - Images which were not maintained were not deprecated.
 
 <a name="issues"></a>
-
 ### Reporting Issues
 
 Please report issues with the new set of images on [GitHub Issues](https://github.com/Bioconductor/bioconductor_docker/issues) or
@@ -541,6 +801,7 @@ These issues can be questions about anything related to this piece of
 software such as, usage, extending Docker images, enhancements, and
 bug reports.
 
+<a name="acknowledgements"></a>
 ## Acknowledgements
 
 Thanks to the [rocker](https://github.com/rocker-org/rocker) project
