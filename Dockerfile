@@ -1,13 +1,13 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/rstudio:devel
+FROM rocker/rstudio:4.1.0
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.13
+ARG BIOCONDUCTOR_VERSION=3.14
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=32
+ARG BIOCONDUCTOR_PATCH=0
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -15,7 +15,7 @@ LABEL name="bioconductor/bioconductor_docker" \
       url="https://github.com/Bioconductor/bioconductor_docker" \
       vendor="Bioconductor Project" \
       maintainer="maintainer@bioconductor.org" \
-      description="Bioconductor docker image with system dependencies to install most packages." \
+      description="Bioconductor docker image with system dependencies to install all packages." \
       license="Artistic-2.0"
 
 # nuke cache dirs before installing pkgs; tip from Dirk E fixes broken img

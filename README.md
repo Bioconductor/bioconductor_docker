@@ -281,8 +281,8 @@ the volume to save libraries.
 The library path, where all the packages are installed are
 automatically configured to use the volume
 `$HOME/R/bioconductor_docker/<bioconductor_version>`, in the case of
-the Bioconductor version 3.13, it would be
-`$HOME/R/bioconductor_docker/3.13`. This location is mounted on to the
+the Bioconductor version 3.14, it would be
+`$HOME/R/bioconductor_docker/3.14`. This location is mounted on to the
 path, `/usr/local/lib/R/host-site-library`, which is the first value
 in your search path for packages if you check `.libPaths()`.
 
@@ -297,7 +297,7 @@ stored in the same location as well.
 
 ```
 volumes:
-	- ${HOME}/R/bioconductor_docker/3.13:/usr/local/lib/R/host-site-library
+	- ${HOME}/R/bioconductor_docker/3.14:/usr/local/lib/R/host-site-library
 	- ${HOME}/R/data:/home/rstudio
 ```
 
@@ -316,7 +316,7 @@ Within the `root` user, additional system dependencies can be
 installed to make the image fit the needs of the user.
 
 ```
-docker exec -it bioc-3.13 bash
+docker exec -it bioc-3.14 bash
 ```
 
 For more information on how to use `docker-compose`, use the
