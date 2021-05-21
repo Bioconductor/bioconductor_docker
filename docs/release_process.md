@@ -159,3 +159,18 @@ BiocManager::install(to_install)
 
 ### RELEASE_3_13
 
+28 packages fail to install in the RELEASE_3_13 
+
+```
+> to_install
+ [1] "affyPara"             "bioCancer"            "canceR"              
+ [4] "categoryCompare"      "CeTF"                 "ChemmineOB"          
+ [7] "CompGO"               "ctgGEM"               "CytoTree"            
+[10] "DEGraph"              "fedup"                "gpuMagic"            
+[13] "igvR"                 "methyAnalysis"        "MOGAMUN"             
+[16] "NCIgraph"             "netDx"                "PAA"                 
+[19] "phemd"                "RCy3"                 "RCyjs"               
+[22] "regutools"            "sojourner"            "spatialHeatmap"      
+[25] "SwimR"                "TimiRGeN"             "transomics2cytoscape"
+[28] "Travel"   
+```
