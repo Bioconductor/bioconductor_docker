@@ -1,64 +1,42 @@
 # Release process of _bioconductor_docker_ images
 
 Notes to capture the release process of the
-_bioconductor/bioconductor_docker_ image for RELEASE_3_11.
+_bioconductor/bioconductor_docker_ image for RELEASE_3_13.
 
 ## General
 
-This release includes a major change in the base hierarchy of the
-docker images for bioconductor. The *rocker* project is changing their
-base image from `debain` to `ubuntu 18.04` and `ubuntu 20.04`.
-
-To be more consistent with the linux build machine we made the choice
-of going with the `rockerdev/rstudio:4.0.0-ubuntu18.04` image. Both
-the docker image and the linux build machine will now be running on
-ubuntu 18.04.
+The image is based on `rocker/rstudio:4.1.0`, which is based on
+`ubuntu 20.04`
 
 The rockerdev project is located here,
 https://hub.docker.com/r/rockerdev/rstudio/tags
 
 Although the latest Dockerfile's are available, the images under
-rocker's dockerhub repo are still missing. To look at the
-Dockerfile(s), follow the link
+rocker's dockerhub repo are missing. To look at the Dockerfile(s),
+follow the link
 https://github.com/rocker-org/rocker-versioned2/tree/master/dockerfiles
-
-## Issues with rocker images
-
-There is a *permissions* issue with mounted libraries on
-`rockerdev/rstudio:4.0.0-ubuntu18.04` image. The group id is given as
-a "user" to the mounted volumes. This prevents the `rstudio` user from
-getting access to the mounted volume. For bioconductor, this
-specifically means that we do not have access to write mounted volumes
-to `host-site-library`.
-
-The issue is filed in the rocker github repo here,
-https://github.com/rocker-org/rocker-versioned/issues/208.
 
 ## Steps to update *devel*
 
 1. Before making any changes to the `master` branch, create a
-   RELEASE_3_11 branch with
+   RELEASE_3_13 branch with
 
-			 git branch RELEASE_3_11
+			 git branch RELEASE_3_13
 
 1. *Update version number* of `BIOCONDUCTOR_DOCKER_VERSION` to latest
    `X.Y.Z`, where `X.Y` represent the Bioconductor version of devel.
 
-	 - For Bioconductor 3.12, the `BIOCONDUCTOR_DOCKER_VERSION` will
-       be `3.12.0`.
+	 - For Bioconductor 3.14, the `BIOCONDUCTOR_DOCKER_VERSION` will
+       be `3.14.0`.
 
 1. Change the `install.R` file to reflect the latest verison of
-   Bioconductor in `BiocManager::install(version='3.12')`.
+   Bioconductor in `BiocManager::install(version='3.14')`.
 
 1. Try to rebuild the image with,
 
 			  docker build -t bioconductor/bioconductor_docker:devel
 
 	 There were a few issues with the system libraries,
-
-	- The following libraries do not have presence in the Ubuntu 18.04
-      repository.
-		 - libexempi8
 
 	- The following libraries do not INSTALL in the main `apt-get
       install` block, but install in the subsequent block. This might
@@ -71,24 +49,28 @@ https://github.com/rocker-org/rocker-versioned/issues/208.
     and to triage which packages DO NOT install on the new devel
     image.
 
-## Steps to update *RELEASE_3_11*
+## Steps to update *RELEASE_3_13*
 
-1. Checkout the RELEASE_3_11 branch, `git checkout RELEASE_3_11`.
+1. Checkout the RELEASE_3_13 branch, 
+
+		`git checkout RELEASE_3_11`
 
 1. The `BIOCONDUCTOR_DOCKER_VERSION` number of the branch just gets
    incremented in the **Z** by 1. Since it is the same Bioc version as
    the previous devel.
+   
+1. Make sure the correct rocker/rstudio:<version> is being used. If
+   there are doubts about this check the
+   http://bioconductor.org/checkResults/devel/bioc-LATEST/ (devel) and
+   http://bioconductor.org/checkResults/release/bioc-LATEST/ (release)
+   versions of R on the build machines. They should match.
 
 1. Try to rebuild the image with
 
-		   docker build -t bioconductor/bioconductor_docker:RELEASE_3_11 .
+		   docker build -t bioconductor/bioconductor_docker:RELEASE_3_13 .
 
 	 There were a few issues with the system libraries, (same as the
      above with devel
-
-	- The following libraries do not have presence in the Ubuntu 18.04
-      repository.
-		 - libexempi8
 
 	- The following libraries do not INSTALL in the main `apt-get
       install` block, but install in the subsequent block. This might
@@ -97,7 +79,8 @@ https://github.com/rocker-org/rocker-versioned/issues/208.
 		 - libmariadb-dev-compat
 		 - libjpeg62-dev
 
-1. There are no changes in the `install.R` file.
+1. There are no changes in the `install.R` file, except to install
+   BiocManager 3.13
 
 1. Remove the following lines in the Dockerfile , i.e, no devel build
    variables in the RELEASE branch
@@ -174,74 +157,5 @@ BiocManager::install(to_install)
 
 ## Failing packages
 
-### RELEASE_3_11
+### RELEASE_3_13
 
-List of package failures
-
-- "BridgeDbR": ‘rJava’ is not available for package ‘BridgeDbR’
-
-- "CAMTHC": ‘rJava’ is not available for package ‘CAMTHC’
-
-- "ccfindR": ‘Rmpi’ is not available for package ‘ccfindR’
-
-- "debCAM": ‘rJava’ is not available for package ‘debCAM’
-
-- "ENVISIONQuery":  ‘rJava’ is not available for package ‘ENVISIONQuery’
-
-- "gaggle": ‘rJava’ is not available for package ‘gaggle’
-
-- "gpuMagic": No GPU available
-
-/usr/bin/ld: cannot find -lOpenCL
-collect2: error: ld returned 1 exit status
-/usr/local/lib/R/share/make/shlib.mk:6: recipe for target 'gpuMagic.so' failed
-make: *** [gpuMagic.so] Error 1
-
-- "MSGFplus"
-
-Warning in fun(libname, pkgname) : NAs introduced by coercion
-Error: package or namespace load failed for ‘MSGFplus’:
- .onLoad failed in loadNamespace() for 'MSGFplus', details:
-  call: if (as.numeric(sub(".*\"\\d\\.(\\d).*", "\\1", javaVersion[1])) <
-  error: missing value where TRUE/FALSE needed
-Error: loading failed
-Execution halted
-ERROR: loading failed
-* removing ‘/usr/local/lib/R/site-library/MSGFplus’
-
-"mzR"
-
-"paxtoolsr":  ‘rJava’ is not available for package ‘paxtoolsr’
-
-"ReQON": ‘rJava’ is not available for package 'ReQON'
-
-"RGMQL": 'rJava' is not available for package
-
-"rmelting": 'rJava' is not available for package
-
-"sarks": 'rJava'
-
-"SELEX": 'rJava'
-
-"xps": Doesn't install
-
-- "rjava":
-
-Makefile.all:35: recipe for target 'libjri.so' failed
-make[2]: *** [libjri.so] Error 1
-make[2]: Leaving directory '/tmp/Rtmpjr0Jfo/R.INSTALL582562afe30e/rJava/jri/src'
-Makefile.all:19: recipe for target 'src/JRI.jar' failed
-make[1]: *** [src/JRI.jar] Error 2
-make[1]: Leaving directory '/tmp/Rtmpjr0Jfo/R.INSTALL582562afe30e/rJava/jri'
-Makevars:14: recipe for target 'jri' failed
-make: *** [jri] Error 2
-ERROR: compilation failed for package ‘rJava’
-
-### DEVEL
-
-* Mostly rJava issues
-
- [1] "BridgeDbR"     "ccfindR"       "debCAM"        "ENVISIONQuery"
- [5] "gaggle"        "gpuMagic"      "MSGFplus"      "paxtoolsr"
- [9] "ReQON"         "RGMQL"         "RMassBank"     "rmelting"
-[13] "sarks"         "scAlign"       "SELEX"         "xps"
