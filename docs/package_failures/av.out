@@ -1,0 +1,25 @@
+* installing *source* package ‘av’ ...
+** package ‘av’ successfully unpacked and MD5 sums checked
+** using staged installation
+Using PKG_CFLAGS=
+Using PKG_LIBS=-lavfilter
+-----------------------------[ ANTICONF ]----------------------------------
+Configuration failed to find the libavfilter library. Try installing:
+ * deb: libavfilter-dev (Debian, Ubuntu 18.04 and up)
+ * rpm: ffmpeg-devel (https://rpmfusion.org) (Fedora, CentOS, RHEL)
+ * csw: ffmpeg_dev (Solaris)
+ * brew: ffmpeg (MacOS)
+For Ubuntu Trusty (14.04) and Xenial (16.04) use this PPA:
+   sudo add-apt-repository -y ppa:cran/ffmpeg-3
+   sudo apt-get update
+   sudo apt-get install -y libavfilter-dev
+If libavfilter is already installed, check that 'pkg-config' is in your
+PATH and PKG_CONFIG_PATH contains a libavfilter.pc file. If pkg-config
+is unavailable you can set INCLUDE_DIR and LIB_DIR manually via:
+R CMD INSTALL --configure-vars='INCLUDE_DIR=... LIB_DIR=...'
+---------------------------[ ERROR MESSAGE ]--------------------------------
+<stdin>:1:10: fatal error: libavfilter/version.h: No such file or directory
+compilation terminated.
+----------------------------------------------------------------------------
+ERROR: configuration failed for package ‘av’
+* removing ‘/usr/local/lib/R/host-site-library/av’

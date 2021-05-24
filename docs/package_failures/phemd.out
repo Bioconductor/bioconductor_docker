@@ -1,0 +1,2 @@
+ERROR: dependency ‘destiny’ is not available for package ‘phemd’
+* removing ‘/usr/local/lib/R/host-site-library/phemd’

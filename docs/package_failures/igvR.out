@@ -1,0 +1,2 @@
+ERROR: dependency ‘BrowserViz’ is not available for package ‘igvR’
+* removing ‘/usr/local/lib/R/host-site-library/igvR’

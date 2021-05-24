@@ -1,0 +1,10 @@
+* installing *source* package ‘terra’ ...
+** package ‘terra’ successfully unpacked and MD5 sums checked
+** using staged installation
+configure: CC: gcc
+configure: CXX: g++ -std=gnu++11
+checking for gdal-config... no
+no
+configure: error: gdal-config not found or not executable.
+ERROR: configuration failed for package ‘terra’
+* removing ‘/usr/local/lib/R/host-site-library/terra’

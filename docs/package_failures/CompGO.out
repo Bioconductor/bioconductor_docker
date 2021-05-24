@@ -1,0 +1,2 @@
+ERROR: dependency ‘RDAVIDWebService’ is not available for package ‘CompGO’
+* removing ‘/usr/local/lib/R/host-site-library/CompGO’

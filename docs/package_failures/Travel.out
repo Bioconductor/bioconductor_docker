@@ -1,0 +1,97 @@
+* installing *source* package ‘Travel’ ...
+** using staged installation
+** libs
+make[1]: Entering directory '/tmp/RtmpVn0tFq/R.INSTALLc691e469f47/Travel/src'
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c Cpp_interface.cpp -o Cpp_interface.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c RcppExports.cpp -o RcppExports.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c altfile_operations.cpp -o altfile_operations.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c altmmap_operations.cpp -o altmmap_operations.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c altrep_manager.cpp -o altrep_manager.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Cache_block.cpp -o class_Cache_block.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Filesystem_cache_copier.cpp -o class_Filesystem_cache_copier.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Filesystem_file_data.cpp -o class_Filesystem_file_data.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Memory_mapped.cpp -o class_Memory_mapped.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Protect_guard.cpp -o class_Protect_guard.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Subset_index.cpp -o class_Subset_index.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Timer.cpp -o class_Timer.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c class_Unique_buffer.cpp -o class_Unique_buffer.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c examples.cpp -o examples.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c filesystem_manager.cpp -o filesystem_manager.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c filesystem_operations_dokan.cpp -o filesystem_operations_dokan.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c filesystem_operations_fuse.cpp -o filesystem_operations_fuse.o
+Package fuse was not found in the pkg-config search path.
+Perhaps you should add the directory containing `fuse.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'fuse' found
+filesystem_operations_fuse.cpp:4:10: fatal error: fuse_lowlevel.h: No such file or directory
+    4 | #include <fuse_lowlevel.h>
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [/usr/local/lib/R/etc/Makeconf:177: filesystem_operations_fuse.o] Error 1
+make[1]: Leaving directory '/tmp/RtmpVn0tFq/R.INSTALLc691e469f47/Travel/src'
+ERROR: compilation failed for package ‘Travel’
+* removing ‘/usr/local/lib/R/host-site-library/Travel’

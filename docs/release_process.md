@@ -163,14 +163,18 @@ BiocManager::install(to_install)
 
 ```
 > to_install
- [1] "affyPara"             "bioCancer"            "canceR"              
- [4] "categoryCompare"      "CeTF"                 "ChemmineOB"          
- [7] "CompGO"               "ctgGEM"               "CytoTree"            
-[10] "DEGraph"              "fedup"                "gpuMagic"            
-[13] "igvR"                 "methyAnalysis"        "MOGAMUN"             
-[16] "NCIgraph"             "netDx"                "PAA"                 
-[19] "phemd"                "RCy3"                 "RCyjs"               
-[22] "regutools"            "sojourner"            "spatialHeatmap"      
-[25] "SwimR"                "TimiRGeN"             "transomics2cytoscape"
-[28] "Travel"   
+ [1] "affyPara"             "bioCancer"            "canceR"
+ [4] "categoryCompare"      "CeTF"                 "ChemmineOB"
+ [7] "CompGO"               "ctgGEM"               "CytoTree"
+[10] "DEGraph"              "fedup"                "gpuMagic"
+[13] "igvR"                 "methyAnalysis"        "MOGAMUN"
+[16] "NCIgraph"             "netDx"                "PAA"
+[19] "phemd"                "RCy3"                 "RCyjs"
+[22] "regutools"            "sojourner"            "spatialHeatmap"
+[25] "SwimR"                "TimiRGeN"             "transomics2cytoscape" 
+[28] "Travel"
 ```
+
+There is a new folder added from this release which shows, why each
+package is failing. This is not constantly updated. 
+

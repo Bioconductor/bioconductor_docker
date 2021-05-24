@@ -1,0 +1,2 @@
+ERROR: dependency ‘AnnotationFuncs’ is not available for package ‘bioCancer’
+* removing ‘/usr/local/lib/R/host-site-library/bioCancer’

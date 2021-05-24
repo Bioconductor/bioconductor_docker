@@ -1,0 +1,2 @@
+ERROR: dependency ‘destiny’ is not available for package ‘ctgGEM’
+* removing ‘/usr/local/lib/R/host-site-library/ctgGEM’

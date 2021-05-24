@@ -1,0 +1,21 @@
+* installing *source* package ‘affyPara’ ...
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Warning message:
+In fun(libname, pkgname) : couldn't connect to display ":0"
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+Warning in fun(libname, pkgname) : couldn't connect to display ":0"
+Error: package or namespace load failed for ‘affyPara’:
+ .onLoad failed in loadNamespace() for 'affyPara', details:
+  call: assign(".affyParaInternalEnv", .affyParaInternalEnv, envir = topenv(parent.frame()))
+  error: cannot add binding of '.affyParaInternalEnv' to the base environment
+Error: loading failed
+Execution halted
+ERROR: loading failed
+* removing ‘/usr/local/lib/R/host-site-library/affyPara’

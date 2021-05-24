@@ -1,0 +1,2 @@
+ERROR: dependency ‘heatmap.plus’ is not available for package ‘SwimR’
+* removing ‘/usr/local/lib/R/host-site-library/SwimR’
