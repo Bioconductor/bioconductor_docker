@@ -1,0 +1,19 @@
+* installing *source* package ‘TimiRGeN’ ...
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Warning message:
+In fun(libname, pkgname) : couldn't connect to display ":0"
+** help
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+Warning in fun(libname, pkgname) : couldn't connect to display ":0"
+** testing if installed package can be loaded from final location
+Warning in fun(libname, pkgname) : couldn't connect to display ":0"
+** testing if installed package keeps a record of temporary installation path
+* DONE (TimiRGeN)

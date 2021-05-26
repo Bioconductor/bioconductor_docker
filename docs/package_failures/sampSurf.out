@@ -1,0 +1,2 @@
+ERROR: dependency ‘rasterVis’ is not available for package ‘sampSurf’
+* removing ‘/usr/local/lib/R/host-site-library/sampSurf’

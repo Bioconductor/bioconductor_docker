@@ -1,7 +1,6 @@
 * installing *source* package ‘Travel’ ...
 ** using staged installation
 ** libs
-make[1]: Entering directory '/tmp/RtmpVn0tFq/R.INSTALLc691e469f47/Travel/src'
 g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG `pkg-config fuse --cflags` -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c Cpp_interface.cpp -o Cpp_interface.o
 Package fuse was not found in the pkg-config search path.
 Perhaps you should add the directory containing `fuse.pc'
@@ -91,7 +90,6 @@ filesystem_operations_fuse.cpp:4:10: fatal error: fuse_lowlevel.h: No such file 
     4 | #include <fuse_lowlevel.h>
       |          ^~~~~~~~~~~~~~~~~
 compilation terminated.
-make[1]: *** [/usr/local/lib/R/etc/Makeconf:177: filesystem_operations_fuse.o] Error 1
-make[1]: Leaving directory '/tmp/RtmpVn0tFq/R.INSTALLc691e469f47/Travel/src'
+make: *** [/usr/local/lib/R/etc/Makeconf:177: filesystem_operations_fuse.o] Error 1
 ERROR: compilation failed for package ‘Travel’
 * removing ‘/usr/local/lib/R/host-site-library/Travel’

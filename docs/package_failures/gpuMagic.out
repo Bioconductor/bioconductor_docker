@@ -1,7 +1,6 @@
 * installing *source* package ‘gpuMagic’ ...
 ** using staged installation
 ** libs
-make[1]: Entering directory '/tmp/RtmpiKHESg/R.INSTALL9aa5aa37b72/gpuMagic/src'
 g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG -I/usr/local/lib/R/include -I../inst/include/OpenCL_header -DCL_TARGET_OPENCL_VERSION=220 -DCL_USE_DEPRECATED_OPENCL_1_2_APIS  -DCL_SILENCE_DEPRECATION -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c C_Interface.cpp -o C_Interface.o
 g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG -I/usr/local/lib/R/include -I../inst/include/OpenCL_header -DCL_TARGET_OPENCL_VERSION=220 -DCL_USE_DEPRECATED_OPENCL_1_2_APIS  -DCL_SILENCE_DEPRECATION -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c R_functionRegistration.cpp -o R_functionRegistration.o
 g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG -I/usr/local/lib/R/include -I../inst/include/OpenCL_header -DCL_TARGET_OPENCL_VERSION=220 -DCL_USE_DEPRECATED_OPENCL_1_2_APIS  -DCL_SILENCE_DEPRECATION -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c Tools.cpp -o Tools.o
@@ -10,7 +9,6 @@ g++ -std=gnu++11 -I"/usr/local/lib/R/include" -DNDEBUG -I/usr/local/lib/R/includ
 g++ -std=gnu++11 -shared -L/usr/local/lib/R/lib -L/usr/local/lib -o gpuMagic.so C_Interface.o R_functionRegistration.o Tools.o kernelManager.o openArray.o -lOpenCL -L/usr/local/lib/R/lib -lR
 /usr/bin/ld: cannot find -lOpenCL
 collect2: error: ld returned 1 exit status
-make[1]: *** [/usr/local/lib/R/share/make/shlib.mk:10: gpuMagic.so] Error 1
-make[1]: Leaving directory '/tmp/RtmpiKHESg/R.INSTALL9aa5aa37b72/gpuMagic/src'
+make: *** [/usr/local/lib/R/share/make/shlib.mk:10: gpuMagic.so] Error 1
 ERROR: compilation failed for package ‘gpuMagic’
 * removing ‘/usr/local/lib/R/host-site-library/gpuMagic’

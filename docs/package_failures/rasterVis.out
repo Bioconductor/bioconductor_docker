@@ -1,0 +1,2 @@
+ERROR: dependency ‘terra’ is not available for package ‘rasterVis’
+* removing ‘/usr/local/lib/R/host-site-library/rasterVis’

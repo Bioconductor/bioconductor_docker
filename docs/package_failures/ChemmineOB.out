@@ -17,14 +17,12 @@ checking how to run the C preprocessor... gcc -E
 configure: creating ./config.status
 config.status: creating src/Makevars
 ** libs
-make[1]: Entering directory '/tmp/RtmpZW9ssa/R.INSTALL99b18496cc5/ChemmineOB/src'
 g++ -std=gnu++14 -I"/usr/local/lib/R/include" -DNDEBUG -I/usr/include/openbabel3  -I/usr/include/eigen3  -DUSE_BOOST -DHAVE_EIGEN  -I/usr/local/include/eigen3 -I/usr/local/include/openbabel3    -I'/usr/local/lib/R/host-site-library/BH/include' -I'/usr/local/lib/R/site-library/Rcpp/include' -I/usr/local/include   -fpic  -g -O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c ChemmineOB.cpp -o ChemmineOB.o
 In file included from ChemmineOB.cpp:1624:
 /usr/include/openbabel3/openbabel/math/align.h:26:10: fatal error: Eigen/Core: No such file or directory
    26 | #include <Eigen/Core>
       |          ^~~~~~~~~~~~
 compilation terminated.
-make[1]: *** [/usr/local/lib/R/etc/Makeconf:177: ChemmineOB.o] Error 1
-make[1]: Leaving directory '/tmp/RtmpZW9ssa/R.INSTALL99b18496cc5/ChemmineOB/src'
+make: *** [/usr/local/lib/R/etc/Makeconf:177: ChemmineOB.o] Error 1
 ERROR: compilation failed for package ‘ChemmineOB’
 * removing ‘/usr/local/lib/R/host-site-library/ChemmineOB’
