@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.13
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=33
+ARG BIOCONDUCTOR_PATCH=34
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -117,7 +117,8 @@ RUN apt-get update \
 	xfonts-100dpi \
 	xfonts-75dpi \
 	biber \
-	libsbml5-dev \
+        libsbml5-dev \
+        libzmq3-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
