@@ -27,16 +27,16 @@ cd rocker-versioned2/
 
 #################################################################
 
-docker build -t rocker/r-ver:devel -f dockerfiles/Dockerfile_r-ver_devel .
+docker build -t rocker/r-ver:4.1.0 -f dockerfiles/Dockerfile_r-ver_4.1.0 .
 
 ###############################################
 ## 2. docker build rocker rstudio:devel
 
 #cd $GITHUB_WORKSPACE; cd rocker-versioned2/#rstudio
 
-echo "*** Building rocker/rstudio:4.0.2 *** \n"
+echo "*** Building rocker/rstudio:4.1.0 *** \n"
 
-docker build -t rocker/rstudio:devel -f dockerfiles/Dockerfile_rstudio_devel .
+docker build -t rocker/rstudio:4.1.0 -f dockerfiles/Dockerfile_rstudio_4.1.0 .
 
 ###############################################
 ## 3. docker build bioconductor_docker:devel
