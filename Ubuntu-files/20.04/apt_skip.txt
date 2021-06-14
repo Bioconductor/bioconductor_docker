@@ -1,0 +1,48 @@
+# APT skip
+build-essential
+clustalo
+fuse
+gfortran
+git
+gobjc
+gsfonts-x11
+infernal
+kallisto
+libavfilter-dev
+libcurl4-openssl-dev
+libeigen3-dev
+libfribidi-dev
+libfuse-dev
+libgmp-dev                      # BD uses libgmp3-dev
+libgraphviz-dev
+libgsl-dev                      # BD uses libgsl0-dev
+libicu-dev
+librsvg2-dev
+libssl-dev
+libtiff-dev                     # BD uses libtiff5-dev
+libx11-dev
+manpages-dev
+mlocate
+mpi-default-dev                 # BD uses mpi-default-bin
+ocl-icd-opencl-dev
+pandoc
+pandoc-citeproc
+t1-xfree86-nonfree
+tcl-dev                         # BD uses tcl8.6-dev
+texi2html
+texinfo
+texlive
+texlive-bibtex-extra
+texlive-fonts-extra
+texlive-font-utils
+texlive-lang-european
+texlive-latex-extra
+texlive-luatex
+texlive-pstricks
+texlive-science
+tree
+ttf-xfree86-nonfree
+ttf-xfree86-nonfree-syriac
+xfonts-base                     # BD uses xfonts-100dpi and xfonts-75dpi
+xfonts-scalable
+zlib1g-dev
