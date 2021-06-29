@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.14
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=4
+ARG BIOCONDUCTOR_PATCH=5
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -136,7 +136,6 @@ RUN apt-get update \
 	&& pip2 install sklearn \
 	pandas \
 	pyyaml \
-	cwltool \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf get-pip.py
