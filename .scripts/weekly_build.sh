@@ -27,7 +27,7 @@ cd rocker-versioned2/
 
 #################################################################
 
-docker build -t rocker/r-ver:4.1.0 -f dockerfiles/Dockerfile_r-ver_4.1.0 .
+docker build -t rocker/r-ver:4.1.0 -f dockerfiles/r-ver_4.1.0.Dockerfile .
 
 ###############################################
 ## 2. docker build rocker rstudio:devel
@@ -36,7 +36,7 @@ docker build -t rocker/r-ver:4.1.0 -f dockerfiles/Dockerfile_r-ver_4.1.0 .
 
 echo "*** Building rocker/rstudio:4.1.0 *** \n"
 
-docker build -t rocker/rstudio:4.1.0 -f dockerfiles/Dockerfile_rstudio_4.1.0 .
+docker build -t rocker/rstudio:4.1.0 -f dockerfiles/rstudio_4.1.0.Dockerfile .
 
 ###############################################
 ## 3. docker build bioconductor_docker:devel
@@ -64,4 +64,3 @@ docker push bioconductor/bioconductor_docker:devel
 
 ## Finish
 echo "Done"
-
