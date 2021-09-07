@@ -1,0 +1,34 @@
+# APT skip
+build-essential
+clustalo                        # for LowMACA
+default-jdk                     # Rocker
+firefox                         # for packages using utils::browseURL()
+#fuse                            # for Travel
+gfortran                        # Rocker
+git
+gobjc
+infernal                        # for inferrnal
+kallisto                        # for rkal
+#libavfilter-dev                 # for av/spacialHeatmap
+libbz2-dev                      # Rocker
+libcairo2-dev                   # Rocker
+libcurl4-openssl-dev            # Rocker
+libfribidi-dev                  # for EnhancedVolcano--is this still needed?
+#libfuse-dev                     # for Travel
+libgraphviz-dev                 # for Rgraphviz
+libicu-dev                      # Rocker
+libjpeg-dev                     # Rocker
+liblzma-dev                     # Rocker
+#libmono-system-data4.0-cil      # for rawr
+libpcre2-dev                    # Rocker
+libpng-dev                      # Rocker
+libreadline-dev                 # Rocker
+librsvg2-dev                    # for rsvg
+libssl-dev                      # for openssl, mongolite
+libtiff-dev                     # Rocker
+libx11-dev
+libxt-dev                       # Rocker
+#mono-runtime                    # for rawr
+#ocl-icd-opencl-dev              # for gpuMagic
+python3-minimal
+zlib1g-dev                      # Rocker
