@@ -22,21 +22,21 @@ cd rocker-versioned2/
 ##
 ## This will be done with the help of "sed"
 
-#sed -r -i 's/ENV R_VERSION=4.0.2/ENV R_VERSION=patched/g' dockerfiles/Dockerfile_r-ver_4.0.2
+#sed -r -i 's/ENV R_VERSION=4.0.2/ENV R_VERSION=patched/g' dockerfiles/r-ver_4.0.2.Dockerfile
 
 
 #################################################################
 
-docker build -t rocker/r-ver:4.1.0 -f dockerfiles/r-ver_4.1.0.Dockerfile .
+docker build -t rocker/r-ver:4.1.1 -f dockerfiles/r-ver_4.1.1.Dockerfile .
 
 ###############################################
 ## 2. docker build rocker rstudio:devel
 
 #cd $GITHUB_WORKSPACE; cd rocker-versioned2/#rstudio
 
-echo "*** Building rocker/rstudio:4.1.0 *** \n"
+echo "*** Building rocker/rstudio:4.1.1 *** \n"
 
-docker build -t rocker/rstudio:4.1.0 -f dockerfiles/rstudio_4.1.0.Dockerfile .
+docker build -t rocker/rstudio:4.1.1 -f dockerfiles/rstudio_4.1.1.Dockerfile .
 
 ###############################################
 ## 3. docker build bioconductor_docker:devel
