@@ -1,0 +1,4 @@
+# APT required 
+curl
+libzmq3-dev
+python3-pip
