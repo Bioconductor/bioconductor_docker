@@ -124,15 +124,10 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 ## Python installations
-RUN apt-get update \
-        ## Install sklearn and pandas on python
-        && pip3 install sklearn \
+RUN pip3 install sklearn \
         pandas \
-        pyyaml \
- 	&& apt-get clean \
- 	&& rm -rf /var/lib/apt/lists/*
+        pyyaml
  
-
 ## FIXME
 ## These two libraries don't install in the above section--WHY?
 RUN apt-get update \
