@@ -120,6 +120,8 @@ RUN apt-get update \
 	biber \
         libsbml5-dev \
         libzmq3-dev \
+        ## python3 dev
+        python3-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
