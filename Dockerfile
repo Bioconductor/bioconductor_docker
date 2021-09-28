@@ -120,26 +120,16 @@ RUN apt-get update \
 	biber \
         libsbml5-dev \
         libzmq3-dev \
+        ## python3 dev
+        python3-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
 ## Python installations
-RUN apt-get update \
-	&& apt-get install -y software-properties-common \
-	&& add-apt-repository universe \
-	&& apt-get update \
-	&& apt-get -y --no-install-recommends install python2 python-dev \
-	&& curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py \
-	&& python2 get-pip.py \
-	&& pip2 install wheel \
-	## Install sklearn and pandas on python
-	&& pip2 install sklearn \
-	pandas \
-	pyyaml \
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf get-pip.py
-
+RUN pip3 install sklearn \
+        pandas \
+        pyyaml
+ 
 ## FIXME
 ## These two libraries don't install in the above section--WHY?
 RUN apt-get update \
