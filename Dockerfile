@@ -1,5 +1,5 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/rstudio:4.1.0
+FROM rocker/rstudio:4.1.1
 
 ## Set Dockerfile version number
 ARG BIOCONDUCTOR_VERSION=3.13
@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.13
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=36
+ARG BIOCONDUCTOR_PATCH=37
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -120,26 +120,14 @@ RUN apt-get update \
 	biber \
         libsbml5-dev \
         libzmq3-dev \
+        python3-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
 ## Python installations
-RUN apt-get update \
-	&& apt-get install -y software-properties-common \
-	&& add-apt-repository universe \
-	&& apt-get update \
-	&& apt-get -y --no-install-recommends install python2 python-dev \
-	&& curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py \
-	&& python2 get-pip.py \
-	&& pip2 install wheel \
-	## Install sklearn and pandas on python
-	&& pip2 install sklearn \
-	pandas \
-	pyyaml \
-	cwltool \
-	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf get-pip.py
+RUN pip3 install sklearn \
+        pandas \
+        pyyaml
 
 ## FIXME
 ## These two libraries don't install in the above section--WHY?
