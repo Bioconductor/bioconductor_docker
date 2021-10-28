@@ -2,7 +2,7 @@ version: "3.9"
 services:
   bioc:
     container_name: bioc-3.14
-    image: "bioconductor/bioconductor_docker:devel"
+    image: "bioconductor/bioconductor_docker:RELEASE_3_14"
     ports:
       - "8787:8787"
     environment:

@@ -1,2 +1,2 @@
 Bootstrap: docker
-From: bioconductor/bioconductor_docker:devel
+From: bioconductor/bioconductor_docker:RELEASE_3_14
