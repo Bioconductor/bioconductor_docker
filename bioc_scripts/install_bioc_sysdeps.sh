@@ -52,7 +52,6 @@ apt-get install -y --no-install-recommends \
 	libgmp3-dev \
 	libhdf5-dev \
 	libncurses-dev \
-	libbz2-dev \
 	libxpm-dev \
 	liblapack-dev \
 	libv8-dev \
@@ -117,7 +116,7 @@ apt-get -y --no-install-recommends install \
 	libmariadb-dev-compat \
 	libjpeg-dev \
 	libjpeg-turbo8-dev \
-	libjpeg8-dev \
+	libjpeg8-dev
 
 ## Python installations
 pip3 install sklearn pandas pyyaml
