@@ -12,7 +12,7 @@ apt-get install -y --no-install-recommends apt-utils
 
 ## Basic Deps
 apt-get install -y --no-install-recommends \
-    gdb \
+	gdb \
 	libxml2-dev \
 	python3-pip \
 	libz-dev \
@@ -27,7 +27,8 @@ apt-get install -y --no-install-recommends \
 	fortran77-compiler \
 	byacc \
 	automake \
-	curl
+	curl \
+	cmake
 
 ## This section installs libraries
 apt-get install -y --no-install-recommends \
@@ -75,15 +76,12 @@ apt-get install -y --no-install-recommends \
 	libcgi-pm-perl \
 	libdbi-perl \
 	libdbd-mysql-perl \
-	libxml-simple-perl \
-	libmysqlclient-dev \
-	default-libmysqlclient-dev \
-	libgdal-dev
+	libxml-simple-perl
 
 ## new libs
 apt-get install -y --no-install-recommends \
-    libglpk-dev \
-    libeigen3-dev
+	libglpk-dev \
+	libeigen3-dev
 
 ## Databases and other software
 apt-get install -y --no-install-recommends \
@@ -107,19 +105,33 @@ apt-get install -y --no-install-recommends \
 	xfonts-100dpi \
 	xfonts-75dpi \
 	biber \
-    libsbml5-dev \
-    libzmq3-dev \
-    python3-dev
+	libsbml5-dev \
+	libzmq3-dev \
+	python3-dev
 
 ## More additional resources
+## libavfilter-dev - <infinityFlow, host of other packages>
+## mono-runtime - <rawrr, MsBackendRawFileReader>
+## libfuse-dev - <Travel>
+## ocl-icd-opencl-dev - <gpuMagic> - but machine needs to be a GPU--otherwise it's useless
 apt-get -y --no-install-recommends install \
 	libmariadb-dev-compat \
 	libjpeg-dev \
 	libjpeg-turbo8-dev \
-	libjpeg8-dev
+	libjpeg8-dev \
+	libavfilter-dev \
+	libfuse-dev \
+	mono-runtime \
+	ocl-icd-opencl-dev
 
 ## Python installations
 pip3 install sklearn pandas pyyaml
+
+## libgdal is needed for sf
+apt-get install -y --no-install-recommends \
+	libgdal-dev \
+	default-libmysqlclient-dev \
+	libmysqlclient-dev
 
 ## clean up
 apt-get clean
