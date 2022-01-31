@@ -8,6 +8,7 @@ ARG BIOCONDUCTOR_VERSION=3.15
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
 ARG BIOCONDUCTOR_PATCH=15
+
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
