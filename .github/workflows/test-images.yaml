@@ -13,7 +13,7 @@ jobs:
   test-built-containers:
     strategy:
       matrix:
-        container-tag: [devel, RELEASE_3_13]
+        container-tag: [devel, RELEASE_3_14]
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:${{ matrix.container-tag }}
 
