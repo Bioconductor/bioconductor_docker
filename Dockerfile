@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.14
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=30
+ARG BIOCONDUCTOR_PATCH=31
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -97,8 +97,8 @@ RUN apt-get update \
 	default-libmysqlclient-dev \
 	libgdal-dev \
 	## new libs
-        libglpk-dev \
-        libeigen3-dev \
+	libglpk-dev \
+	libeigen3-dev \
 	## Databases and other software
 	sqlite \
 	openmpi-bin \
@@ -118,18 +118,18 @@ RUN apt-get update \
 	xfonts-100dpi \
 	xfonts-75dpi \
 	biber \
-        libsbml5-dev \
-        libzmq3-dev \
-        ## python3 dev
-        python3-dev \
+	libsbml5-dev \
+	libzmq3-dev \
+	## python3 dev
+	python3-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
 ## Python installations
 RUN pip3 install sklearn \
-        pandas \
-        pyyaml
- 
+	pandas \
+	pyyaml
+
 ## FIXME
 ## These two libraries don't install in the above section--WHY?
 RUN apt-get update \
@@ -138,6 +138,10 @@ RUN apt-get update \
 	libjpeg-dev \
 	libjpeg-turbo8-dev \
 	libjpeg8-dev \
+	libavfilter-dev \
+	libfuse-dev \
+	mono-runtime \
+	ocl-icd-opencl-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -151,9 +155,9 @@ RUN R -f /tmp/install.R
 # Variables in Renviron.site are made available inside of R.
 # Add libsbml CFLAGS
 RUN echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-        && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-        && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
-        && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site 
+	&& echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
+	&& echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
+	&& echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site
 
 ENV LIBSBML_CFLAGS="-I/usr/include"
 ENV LIBSBML_LIBS="-lsbml"
