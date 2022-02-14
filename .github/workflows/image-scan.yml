@@ -1,0 +1,31 @@
+name: Docker Vulnerability Scan 
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: $cron-daily
+  push:
+    branches: master
+
+env:
+
+  IMAGE_NAME: ${{ github.repository }}
+  DEVEL_TAG: devel
+  RELEASE_TAG: latest
+
+jobs:
+  
+  scan:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: azure/container-scan@v0
+      name: devel image scan
+      with:
+        image-name: bioconductor/bioconductor_docker:${{ env.DEVEL_TAG }}
+
+    - uses: azure/container-scan@v0
+      name: current release image scan
+      with:
+        image-name: bioconductor/bioconductor_docker:${{ env.RELEASE_TAG }}
