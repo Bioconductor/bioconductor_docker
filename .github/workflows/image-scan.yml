@@ -3,7 +3,7 @@ name: Docker Vulnerability Scan
 on: 
   workflow_dispatch:
   schedule:
-    - cron: $cron-daily
+    - cron: "0 0 * * *"
   push:
     branches: master
 
