@@ -15,17 +15,24 @@ env:
 
 jobs:
   
-  scan:
+  scan-devel:
   
+    name: devel vulnerability scan
     runs-on: ubuntu-latest
 
     steps:
     - uses: azure/container-scan@v0
-      name: devel image scan
+      name: devel scan
       with:
-        image-name: bioconductor/bioconductor_docker:${{ env.DEVEL_TAG }}
+        image-name: ${{ github.repository }}:${{ env.DEVEL_TAG }}
 
+  scan-release:
+  
+    name: release vulnerability scan
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: azure/container-scan@v0
-      name: current release image scan
+      name: release scan
       with:
-        image-name: bioconductor/bioconductor_docker:${{ env.RELEASE_TAG }}
+        image-name: ${{ github.repository }}:${{ env.RELEASE_TAG }}
