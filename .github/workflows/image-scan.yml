@@ -9,9 +9,9 @@ on:
 
 env:
 
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: bioconductor/bioconductor_docker
   DEVEL_TAG: devel
-  RELEASE_TAG: latest
+  RELEASE_TAG: RELEASE_3_14
 
 jobs:
   
@@ -24,7 +24,7 @@ jobs:
     - uses: azure/container-scan@v0
       name: devel scan
       with:
-        image-name: ${{ github.repository }}:${{ env.DEVEL_TAG }}
+        image-name: ${{ env.IMAGE_NAME }}:${{ env.DEVEL_TAG }}
 
   scan-release:
   
@@ -35,4 +35,4 @@ jobs:
     - uses: azure/container-scan@v0
       name: release scan
       with:
-        image-name: ${{ github.repository }}:${{ env.RELEASE_TAG }}
+        image-name: ${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
