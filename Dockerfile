@@ -139,11 +139,17 @@ RUN apt-get update \
 	libfuse-dev \
 	mono-runtime \
 	ocl-icd-opencl-dev \
-	libgdal-dev \
-	default-libmysqlclient-dev \
-	libmysqlclient-dev
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
+
+
+RUN apt-get update \
+        && apt-get -y --no-install-recommends install \
+        libgdal-dev \
+        default-libmysqlclient-dev \
+        libmysqlclient-dev \
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
 
 ## Add host-site-library
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site
