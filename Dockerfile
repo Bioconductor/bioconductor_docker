@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.14
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=31
+ARG BIOCONDUCTOR_PATCH=32
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -93,9 +93,6 @@ RUN apt-get update \
 	libdbi-perl \
 	libdbd-mysql-perl \
 	libxml-simple-perl \
-	libmysqlclient-dev \
-	default-libmysqlclient-dev \
-	libgdal-dev \
 	## new libs
 	libglpk-dev \
 	libeigen3-dev \
@@ -144,6 +141,15 @@ RUN apt-get update \
 	ocl-icd-opencl-dev \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
+
+
+RUN apt-get update \
+        && apt-get -y --no-install-recommends install \
+        libgdal-dev \
+        default-libmysqlclient-dev \
+        libmysqlclient-dev \
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
 
 ## Add host-site-library
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site
