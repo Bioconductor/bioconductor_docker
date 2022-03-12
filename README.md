@@ -1,6 +1,6 @@
 [![license](https://img.shields.io/badge/license-Artistic--2.0-blue)](https://opensource.org/licenses/Artistic-2.0)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
+[![Weekly devel build status](https://img.shields.io/github/workflow/status/bioconductor/bioconductor_docker/weekly-bioconductor-docker-devel-builder/master)](https://github.com/Bioconductor/bioconductor_docker/actions/workflows/weekly-devel-builder.yml)
 
 # Docker containers for Bioconductor
 
@@ -115,6 +115,14 @@ A few of our key goals to migrate to a new set of Docker containers are,
    possible. While this is not fully possible just yet, this image can
    be used by maintainers who wish to reproduce errors seen on the
    Bioconductor Linux build machine and as a helpful debugging tool.
+
+- Make Bioconductor package binaries available to all users of the 
+  this container. Users can now install Bioconductor packages as binaries
+  by simply doing, `AnVIL::install(<character vector of packages>)`.
+  This speeds up installation of Bioconductor packages by avoiding compilation.
+
+  To see the latest status of the Bioconductor binary repository, check with
+  `AnVIL:::repository_stats()`.
 
 <a name="current"></a>
 ## Current Containers
