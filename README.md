@@ -1,3 +1,7 @@
+[![license](https://img.shields.io/badge/license-Artistic--2.0-blue)](https://opensource.org/licenses/Artistic-2.0)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+
 # Docker containers for Bioconductor
 
 [Docker](https:/docs.docker.com/engine/docker-overview/) packages software
