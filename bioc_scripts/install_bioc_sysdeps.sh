@@ -125,7 +125,8 @@ apt-get -y --no-install-recommends install \
 	ocl-icd-opencl-dev
 
 ## Python installations
-pip3 install sklearn pandas pyyaml
+pip3 install pandas pyyaml
+#     sklearn \
 
 ## libgdal is needed for sf
 apt-get install -y --no-install-recommends \
