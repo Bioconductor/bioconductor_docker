@@ -21,9 +21,6 @@ LABEL name="bioconductor/bioconductor_docker" \
 
 ##  Add Bioconductor Requirements
 ADD bioc_scripts /tmp/bioc_scripts
-# ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
-# ADD bioc_scripts/install.R /tmp/
-# ADD bioc_scripts/add_bioc_devel_env_variables.sh /tmp/
 
 ## Add host-site-library
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
