@@ -1,5 +1,5 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/rstudio:devel
+FROM rocker/rstudio:4.2.0
 
 ## Set Dockerfile version number
 ARG BIOCONDUCTOR_VERSION=3.15
@@ -7,7 +7,7 @@ ARG BIOCONDUCTOR_VERSION=3.15
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=24
+ARG BIOCONDUCTOR_PATCH=25
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -30,17 +30,13 @@ RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib
 ADD bioc_scripts/install.R /tmp/
 RUN R -f /tmp/install.R
 
-# DEVEL: Add sys env variables to DEVEL image
 # Variables in Renviron.site are made available inside of R.
 # Add libsbml CFLAGS
-RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
-    && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
-    && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
-    && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
+RUN  echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
     && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
     && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
-    && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
-    && rm -rf Renviron.bioc
+    && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site
+
 
 ENV LIBSBML_CFLAGS="-I/usr/include"
 ENV LIBSBML_LIBS="-lsbml"
