@@ -1,7 +1,7 @@
 # Release process of _bioconductor_docker_ images
 
 Notes to capture the release process of the
-_bioconductor/bioconductor_docker_ image for RELEASE_3_13.
+_bioconductor/bioconductor_docker_ image for RELEASE_3_15.
 
 ## General
 
@@ -19,18 +19,18 @@ https://github.com/rocker-org/rocker-versioned2/tree/master/dockerfiles
 ## Steps to update *devel*
 
 1. Before making any changes to the `master` branch, create a
-   RELEASE_3_13 branch with
+   RELEASE_3_15 branch with
 
-			 git branch RELEASE_3_13
+			 git branch RELEASE_3_15
 
 1. *Update version number* of `BIOCONDUCTOR_DOCKER_VERSION` to latest
    `X.Y.Z`, where `X.Y` represent the Bioconductor version of devel.
 
-	 - For Bioconductor 3.14, the `BIOCONDUCTOR_DOCKER_VERSION` will
-       be `3.14.0`.
+	 - For Bioconductor 3.16, the `BIOCONDUCTOR_DOCKER_VERSION` will
+       be `3.16.0`.
 
 1. Change the `install.R` file to reflect the latest verison of
-   Bioconductor in `BiocManager::install(version='3.14')`.
+   Bioconductor in `BiocManager::install(version='devel')`.
 
 1. Try to rebuild the image with,
 
@@ -51,11 +51,11 @@ https://github.com/rocker-org/rocker-versioned2/tree/master/dockerfiles
     and to triage which packages DO NOT install on the new devel
     image.
 
-## Steps to update *RELEASE_3_13*
+## Steps to update *RELEASE_3_15*
 
-1. Checkout the RELEASE_3_13 branch, 
+1. Checkout the RELEASE_3_15 branch, 
 
-		`git checkout RELEASE_3_11`
+		`git checkout RELEASE_3_15`
 
 1. The `BIOCONDUCTOR_DOCKER_VERSION` number of the branch just gets
    incremented in the **Z** by 1. Since it is the same Bioc version as
@@ -69,7 +69,7 @@ https://github.com/rocker-org/rocker-versioned2/tree/master/dockerfiles
 
 1. Try to rebuild the image with
 
-		   docker build -t bioconductor/bioconductor_docker:RELEASE_3_13 .
+		   docker build -t bioconductor/bioconductor_docker:RELEASE_3_15 .
 
 	 There were a few issues with the system libraries, (same as the
      above with devel
