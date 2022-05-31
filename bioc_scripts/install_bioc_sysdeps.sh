@@ -107,7 +107,8 @@ apt-get install -y --no-install-recommends \
 	biber \
 	libsbml5-dev \
 	libzmq3-dev \
-	python3-dev
+	python3-dev \
+	python3.8-venv
 
 ## More additional resources
 ## libavfilter-dev - <infinityFlow, host of other packages>
