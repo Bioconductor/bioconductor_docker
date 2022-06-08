@@ -107,7 +107,8 @@ apt-get install -y --no-install-recommends \
 	biber \
 	libsbml5-dev \
 	libzmq3-dev \
-	python3-dev
+	python3-dev \
+	python3.8-venv
 
 ## More additional resources
 ## libavfilter-dev - <infinityFlow, host of other packages>
@@ -125,7 +126,7 @@ apt-get -y --no-install-recommends install \
 	ocl-icd-opencl-dev
 
 ## Python installations
-pip3 install pandas pyyaml scikit-learn
+pip3 install scikit-learn pandas pyyaml
 
 ## libgdal is needed for sf
 apt-get install -y --no-install-recommends \

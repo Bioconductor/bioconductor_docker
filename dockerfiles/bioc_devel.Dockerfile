@@ -1,13 +1,13 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/rstudio:devel
+FROM rocker/rstudio:4.2.0
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.15
+ARG BIOCONDUCTOR_VERSION=3.16
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=23
+ARG BIOCONDUCTOR_PATCH=7
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
