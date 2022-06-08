@@ -36,6 +36,9 @@ RUN bash /tmp/bioc_scripts/install_bioc_sysdeps.sh
 # 3. DEVEL: Add sys env variables to DEVEL image
 RUN bash /tmp/bioc_scripts/add_bioc_devel_env_variables.sh
 
+# 4. Install conda
+RUN bash /tmp/bioc_scripts/install-conda.sh
+
 # Add Env variables for specific packages
 ENV LIBSBML_CFLAGS="-I/usr/include"
 ENV LIBSBML_LIBS="-lsbml"
