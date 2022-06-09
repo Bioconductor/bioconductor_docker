@@ -1,8 +1,8 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
-FROM rocker/ml:devel
+FROM rocker/ml:4.2.0
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.15
+ARG BIOCONDUCTOR_VERSION=3.16
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
@@ -38,6 +38,7 @@ RUN bash /tmp/bioc_scripts/add_bioc_devel_env_variables.sh
 
 # 4. Install conda
 RUN bash /tmp/bioc_scripts/install-conda.sh
+ENV PATH="/opt/conda/bin:${PATH}"
 
 # Add Env variables for specific packages
 ENV LIBSBML_CFLAGS="-I/usr/include"
