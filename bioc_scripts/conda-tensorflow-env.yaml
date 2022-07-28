@@ -1,0 +1,13 @@
+name: conda-tensorflow-env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - anaconda
+  - pip
+  - git
+  ## Scientific Computing
+  - numpy
+  - scipy
+  - tensorflow-gpu
