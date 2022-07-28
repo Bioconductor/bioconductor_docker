@@ -98,7 +98,8 @@ apt-get install -y --no-install-recommends \
 	ggobi \
 	graphviz \
 	protobuf-compiler \
-	jags
+	jags \
+	libhiredis-dev
 
 ## Additional resources
 apt-get install -y --no-install-recommends \
