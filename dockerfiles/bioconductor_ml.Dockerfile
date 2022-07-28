@@ -8,7 +8,6 @@ ARG BIOCONDUCTOR_VERSION=3.16
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
 ARG BIOCONDUCTOR_PATCH=0
-
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -23,15 +22,17 @@ LABEL name="bioconductor/bioconductor_docker" \
 ADD bioc_scripts /tmp/bioc_scripts
 
 ## Add host-site-library
+## Set PIP_USER=false
 RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
     && echo "BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION}" >> /usr/local/lib/R/etc/Renviron.site \
-    && echo "BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION}" >> /usr/local/lib/R/etc/Renviron.site
+    && echo "BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION}" >> /usr/local/lib/R/etc/Renviron.site \
+    && echo "PIP_USER=false" >> /usr/local/lib/R/etc/Renviron.site
 
 # 1. Install Bioconductor system depdencies
 RUN bash /tmp/bioc_scripts/install_bioc_sysdeps.sh
 
 # 2. Install specific version of BiocManager and libraries
-# RUN R -f /tmp/bioc_scripts/install.R
+RUN R -f /tmp/bioc_scripts/install.R
 
 # 3. DEVEL: Add sys env variables to DEVEL image
 RUN bash /tmp/bioc_scripts/add_bioc_devel_env_variables.sh
