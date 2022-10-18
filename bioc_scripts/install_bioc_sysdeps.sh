@@ -66,7 +66,8 @@ apt-get install -y --no-install-recommends \
 	libsasl2-dev \
 	libpoppler-cpp-dev \
 	libprotobuf-dev \
-	libpq-dev
+	libpq-dev \
+	libarchive-dev
 
 ## software - perl extentions and modules
 apt-get install -y --no-install-recommends \
