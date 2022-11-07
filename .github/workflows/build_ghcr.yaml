@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'r-ver', tag: '4.2.1'}
-          - {image: 'rstudio', tag: '4.2.1'}
+          - {image: 'r-ver', tag: 'devel'}
+          - {image: 'rstudio', tag: 'devel'}
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
