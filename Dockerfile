@@ -4,7 +4,7 @@ ARG BASE_TAG=devel
 FROM $BASE_IMAGE:$BASE_TAG
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.16
+ARG BIOCONDUCTOR_VERSION=3.17
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
