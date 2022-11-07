@@ -1,9 +1,18 @@
 name: Build container image for GHCR
 on:
   push: {}
+  workflow_dispatch:
+  schedule:
+    - cron: '0 18 * * 5'
 
 jobs:
-  buildbiocrstudio:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        base:
+          - {image: 'r-ver', tag: '4.2.1'}
+          - {image: 'rstudio', tag: '4.2.1'}
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
@@ -20,13 +29,16 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/bioconductor/rstudio
+          images: ghcr.io/bioconductor/${{ matrix.base.image }}
           tags: |
             type=raw,value={{branch}}
 
       - name: Build and push container image to GHCR
         uses: docker/build-push-action@v3
         with:
+          build-args: |
+            BASE_IMAGE=rocker/${{ matrix.base.image }}
+            BASE_TAG=${{ matrix.base.tag }}
           file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
