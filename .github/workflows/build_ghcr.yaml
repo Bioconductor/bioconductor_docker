@@ -29,7 +29,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/bioconductor/${{ matrix.base.image }}
+          images: ghcr.io/${{ github.actor }}/${{ matrix.base.image }}
           tags: |
             type=raw,value={{branch}}
 
