@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'r-ver', tag: '4.2.1'}
-          - {image: 'rstudio', tag: '4.2.1'}
+          - {image: 'r-ver', tag: '4.2.2'}
+          - {image: 'rstudio', tag: '4.2.2'}
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/bioconductor/${{ matrix.base.image }}
+          images: ghcr.io/${{ github.actor }}/${{ matrix.base.image }}
           tags: |
             type=raw,value={{branch}}
 
