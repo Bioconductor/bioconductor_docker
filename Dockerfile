@@ -36,7 +36,7 @@ RUN R -f /tmp/install.R
 # Variables in Renviron.site are made available inside of R.
 # Add libsbml CFLAGS
 RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
-    && sed -i 's/IS_BIOC_BUILD_MACHINE=true/IS_BIOC_BUILD_MACHINE=false/g' Renviron.bioc \
+    && sed -i '/^IS_BIOC_BUILD_MACHINE/d' Renviron.bioc \
     && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
     && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
     && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
