@@ -20,6 +20,10 @@ LABEL name="bioconductor/bioconductor_docker" \
       description="Bioconductor docker image with system dependencies to install all packages." \
       license="Artistic-2.0"
 
+## Do not use binary repositories during container creation
+## Avoid using binaries produced for older version of same container
+ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
+
 ##  Add Bioconductor system dependencies
 ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
 RUN bash /tmp/install_bioc_sysdeps.sh
@@ -48,6 +52,9 @@ ENV LIBSBML_CFLAGS="-I/usr/include"
 ENV LIBSBML_LIBS="-lsbml"
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
 ENV BIOCONDUCTOR_VERSION=$BIOCONDUCTOR_VERSION
+
+## Use binary repos after
+ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=TRUE
 
 # Init command for s6-overlay
 CMD ["/init"]
