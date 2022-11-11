@@ -10,7 +10,6 @@ ARG BIOCONDUCTOR_VERSION=3.17
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
 ARG BIOCONDUCTOR_PATCH=0
-
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -36,6 +35,7 @@ RUN R -f /tmp/install.R
 # Variables in Renviron.site are made available inside of R.
 # Add libsbml CFLAGS
 RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
+    && sed -i '/^IS_BIOC_BUILD_MACHINE/d' Renviron.bioc \
     && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
     && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
     && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
