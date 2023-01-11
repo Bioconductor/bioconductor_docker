@@ -55,12 +55,17 @@ git config user.name "bioc-docker-bot"
 ## Git commit
 git commit -am "Weekly version bump and rebuild of bioconductor_docker:devel"
 
-## docker build, login and push
-docker build -t bioconductor/bioconductor_docker:devel .
+## Setup QEMU for ARM64
+docker run --privileged --rm tonistiigi/binfmt --install arm64
 
+## Setup buildx for multi-platform builds
+docker buildx create --use
+
+## Login to DockerHub
 docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
 
-docker push bioconductor/bioconductor_docker:devel
+## Docker build and push
+docker buildx build -t bioconductor/bioconductor_docker:devel --platform linux/amd64,linux/arm64 --push .
 
 ## Finish
 echo "Done"
