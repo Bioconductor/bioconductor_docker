@@ -11,10 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'r-ver', tag: '4.2.2', outname: 'r-ver', platform: 'amd64'}
-          - {image: 'rstudio', tag: '4.2.2', outname: 'bioconductor', platform: 'amd64'}
-          - {image: 'r-ver', tag: '4.2.2', outname: 'r-ver', platform: 'arm64'}
-          - {image: 'rstudio', tag: 'latest-daily', outname: 'bioconductor', platform: 'arm64'}
+          - {image: 'r-ver', amdtag: '4.2.2', armtag: '4.2.2', outname: 'r-ver'}
+          - {image: 'rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor'}
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
@@ -47,16 +45,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
-          platforms: linux/${{matrix.base.platform}}
+          platforms: linux/amd64,linux/arm64
 
       - name: Build and push container image to GHCR
         uses: docker/build-push-action@v3
         with:
           build-args: |
             BASE_IMAGE=rocker/${{ matrix.base.image }}
-            BASE_TAG=${{ matrix.base.tag }}
+            arm64_tag=${{ matrix.base.armtag }}
+            amd64_tag=${{ matrix.base.amdtag }}
           file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/${{matrix.base.platform}}
+          platforms: linux/amd64,linux/arm64
