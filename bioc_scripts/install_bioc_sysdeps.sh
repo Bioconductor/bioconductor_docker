@@ -67,7 +67,10 @@ apt-get install -y --no-install-recommends \
 	libpoppler-cpp-dev \
 	libprotobuf-dev \
 	libpq-dev \
-	libarchive-dev
+	libarchive-dev \
+	coinor-libcgl-dev \
+	coinor-libsymphony-dev \
+	coinor-libsymphony-doc
 
 ## software - perl extentions and modules
 apt-get install -y --no-install-recommends \
