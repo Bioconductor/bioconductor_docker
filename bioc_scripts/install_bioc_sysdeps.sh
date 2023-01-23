@@ -70,7 +70,8 @@ apt-get install -y --no-install-recommends \
 	libarchive-dev \
 	coinor-libcgl-dev \
 	coinor-libsymphony-dev \
-	coinor-libsymphony-doc
+	coinor-libsymphony-doc \
+	libpoppler-glib-dev
 
 ## software - perl extentions and modules
 apt-get install -y --no-install-recommends \
