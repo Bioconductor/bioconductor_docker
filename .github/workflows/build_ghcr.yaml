@@ -13,6 +13,8 @@ jobs:
         base:
           - {image: 'r-ver', amdtag: '4.2.2', armtag: '4.2.2', outname: 'r-ver'}
           - {image: 'rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor'}
+          - {image: 'tidyverse', amdtag: '4.2.2', armtag: 'N/A', outname: 'tidyverse'}
+          - {image: 'ml-verse', amdtag: '4.2.2', armtag: 'N/A', outname: 'ml-verse'}
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
@@ -58,3 +60,17 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+        if: matrix.base.armtag != 'N/A'
+
+      - name: Build and push container image to GHCR
+        uses: docker/build-push-action@v3
+        with:
+          build-args: |
+            BASE_IMAGE=rocker/${{ matrix.base.image }}
+            amd64_tag=${{ matrix.base.amdtag }}
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64
+        if: matrix.base.armtag == 'N/A'
