@@ -6,7 +6,7 @@ FROM ${BASE_IMAGE}:${arm64_tag} AS base-arm64
 
 FROM ${BASE_IMAGE}:${amd64_tag} AS base-amd64
 
-ARG TARGETARCH
+ARG TARGETARCH=amd64
 FROM base-$TARGETARCH AS base
 
 ## Set platform env variable

@@ -12,7 +12,7 @@ jobs:
       matrix:
         base:
           - {image: 'r-ver', amdtag: '4.2.2', armtag: '4.2.2', outname: 'r-ver'}
-          - {image: 'rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor'}
+          - {image: 'rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor_docker'}
           - {image: 'tidyverse', amdtag: '4.2.2', armtag: 'N/A', outname: 'tidyverse'}
           - {image: 'ml-verse', amdtag: '4.2.2', armtag: 'N/A', outname: 'ml-verse'}
     name: Build branch images
@@ -35,20 +35,35 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Login to Dockerhub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Extract metadata for container image
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/${{ github.repository_owner }}/${{ matrix.base.outname }}
+          images: ${{ github.repository_owner }}/${{ matrix.base.outname }}
           tags: |
             type=raw,value={{branch}}
+
+      - name: Set comma-separated list with all repository names
+        id: images
+        run: |
+          IMG=${{ steps.meta.outputs.tags }}
+          REPOLIST="docker.io/$IMG,ghcr.io/$IMG"
+          SUB="_docker"
+          # Also add alternative without _docker when in name
+          echo list=$(if [[ $REPOLIST == *$SUB* ]]; then echo "$REPOLIST,$(echo $REPOLIST | sed 's/_docker//g')"; else echo $REPOLIST; fi) >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
           platforms: linux/amd64,linux/arm64
 
-      - name: Build and push container image to GHCR
+      - name: Build and push container image to all repos both arm64 and amd64
         uses: docker/build-push-action@v3
         with:
           build-args: |
@@ -57,12 +72,12 @@ jobs:
             amd64_tag=${{ matrix.base.amdtag }}
           file: Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.images.outputs.list }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
         if: matrix.base.armtag != 'N/A'
 
-      - name: Build and push container image to GHCR
+      - name: Build and push container image to all repos amd64 only
         uses: docker/build-push-action@v3
         with:
           build-args: |
@@ -70,7 +85,7 @@ jobs:
             amd64_tag=${{ matrix.base.amdtag }}
           file: Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.images.outputs.list }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
         if: matrix.base.armtag == 'N/A'
