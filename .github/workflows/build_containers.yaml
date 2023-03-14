@@ -1,6 +1,9 @@
 name: Build container image for GHCR
 on:
-  push: {}
+  push:
+    branches:
+      - devel
+      - RELEASE_*
   workflow_dispatch:
   schedule:
     - cron: '0 18 * * 5'

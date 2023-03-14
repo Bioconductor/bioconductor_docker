@@ -5,34 +5,26 @@ on:
   schedule:
     - cron: "0 0 * * *"
   push:
-    branches: master
+    branches:
+      - devel
+      - RELEASE_*
 
 env:
 
   IMAGE_NAME: bioconductor/bioconductor_docker
-  DEVEL_TAG: devel
-  RELEASE_TAG: RELEASE_3_14
-
 jobs:
   
-  scan-devel:
+  scan-images:
   
     name: devel vulnerability scan
     runs-on: ubuntu-latest
 
     steps:
+    - name: Extract branch name
+      id: branch
+      run: echo "name=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+
     - uses: azure/container-scan@v0
       name: devel scan
       with:
-        image-name: ${{ env.IMAGE_NAME }}:${{ env.DEVEL_TAG }}
-
-  scan-release:
-  
-    name: release vulnerability scan
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: azure/container-scan@v0
-      name: release scan
-      with:
-        image-name: ${{ env.IMAGE_NAME }}:${{ env.RELEASE_TAG }}
+        image-name: ${{ env.IMAGE_NAME }}:${{ steps.branch.outputs.name }}
