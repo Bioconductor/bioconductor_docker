@@ -13,7 +13,7 @@ FROM base-$TARGETARCH AS base
 ENV PLATFORM=${TARGETPLATFORM}
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.16
+ARG BIOCONDUCTOR_VERSION=3.17
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
@@ -34,21 +34,14 @@ LABEL name="bioconductor/bioconductor_docker" \
 ## Avoid using binaries produced for older version of same container
 ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
 
-##  Add Bioconductor system dependencies
-ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
-RUN bash /tmp/install_bioc_sysdeps.sh
-
-## Add host-site-library
-RUN echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site
-
-## Install specific version of BiocManager
-ADD bioc_scripts/install.R /tmp/
-RUN R -f /tmp/install.R
-
-# DEVEL: Add sys env variables to DEVEL image
+# Add Bioconductor system dependencies
+# Add host-site-library# DEVEL: Add sys env variables to DEVEL image
 # Variables in Renviron.site are made available inside of R.
 # Add libsbml CFLAGS
-RUN curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
+ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
+RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
+    && echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
+    && curl -O http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
     && sed -i '/^IS_BIOC_BUILD_MACHINE/d' Renviron.bioc \
     && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
     && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \

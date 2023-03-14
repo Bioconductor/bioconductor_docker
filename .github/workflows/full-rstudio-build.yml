@@ -47,6 +47,7 @@ jobs:
         sudo rm -rf /usr/local/julia1.8.5
         sudo rm -rf /opt/microsoft/msedge
         sudo rm -rf /usr/lib/llvm-14
+        sudo rm -rf /opt/az
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2

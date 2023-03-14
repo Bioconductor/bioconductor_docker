@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+BIOC_VERSION=${1:-"3.17"}
+
 # This is to avoid the error
 # 'debconf: unable to initialize frontend: Dialog'
 export DEBIAN_FRONTEND=noninteractive
