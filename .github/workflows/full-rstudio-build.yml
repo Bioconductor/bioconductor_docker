@@ -17,6 +17,9 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    strategy:
+      matrix:
+        arch: [arm64, amd64]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     outputs:
@@ -27,13 +30,29 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
 
+    - name: Free up space
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache/*
+        sudo rm -rf /usr/local/.ghcup
+        sudo rm -rf /usr/lib/google-cloud-sdk
+        sudo rm -rf /usr/lib/firefox
+        sudo rm -rf /opt/microsoft/powershell
+        sudo rm -rf /usr/lib/jvm
+        sudo rm -rf /usr/local/graalvm
+        sudo rm -rf /etc/skel/.rustup /home/runner/.rustup /home/runneradmin/.rustup
+        sudo rm -rf /usr/lib/llvm-13
+        sudo rm -rf /usr/local/julia1.8.5
+        sudo rm -rf /opt/microsoft/msedge
+        sudo rm -rf /usr/lib/llvm-14
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
       with:
         platforms: arm64
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      if: matrix.arch == 'arm64'
 
     - name: Login to GHCR
       uses: docker/login-action@v2
@@ -54,7 +73,7 @@ jobs:
       with:
         images: ${{ github.repository_owner }}/${{ github.event.inputs.outname }}
         tags: |
-          type=raw,value=${{ github.event.inputs.rver }}
+          type=raw,value=${{ github.event.inputs.rver }}-${{ matrix.arch }}
 
     - name: Set comma-separated list with all repository names
       id: images
@@ -66,47 +85,46 @@ jobs:
         # Also add alternative without _docker when in name
         echo list=$(if [[ $REPOLIST == *$SUB* ]]; then echo "$REPOLIST,$(echo $REPOLIST | sed 's/_docker//g')"; else echo $REPOLIST; fi) >> $GITHUB_OUTPUT
 
-        ROCKER_REPO=https://github.com/rocker-org/rocker-versioned2
-
         ## git clone rocker
-        git clone --depth 1 $ROCKER_REPO
-
+        git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
+        sed -i 's#rocker/r-ver:${{ github.event.inputs.rver }}#ghcr.io/${{ github.repository_owner }}/rocker-r-ver:${{ github.event.inputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
       with:
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/${{ matrix.arch }}
 
     - name: Build and load r-ver
       uses: docker/build-push-action@v3
       with:
         file: rocker-versioned2/dockerfiles/r-ver_${{ github.event.inputs.rver }}.Dockerfile
-        load: true
-        push: false
-        tags: rocker/r-ver:${{ github.event.inputs.rver }}
-        platforms: linux/amd64,linux/arm64
+        context: rocker-versioned2
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/rocker-r-ver:${{ github.event.inputs.rver }}-${{ matrix.arch }}
+        platforms: linux/${{ matrix.arch }}
 
     - name: Build and load rstudio
       uses: docker/build-push-action@v3
       with:
         file: rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
-        load: true
-        push: false
-        tags: bioctemp/rstudio:${{ github.event.inputs.rver }}
-        platforms: linux/amd64,linux/arm64
+        context: rocker-versioned2
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/rocker-rstudio:${{ github.event.inputs.rver }}-${{ matrix.arch }}
+        platforms: linux/${{ matrix.arch }}
 
     - name: Build and push container image to all repos both arm64 and amd64
       uses: docker/build-push-action@v3
       with:
         build-args: |
-          BASE_IMAGE=bioctemp/rstudio
-          arm64_tag=${{ github.event.inputs.rver }}
-          amd64_tag=${{ github.event.inputs.rver }}
+          BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/rocker-rstudio
+          arm64_tag=${{ github.event.inputs.rver }}-${{ matrix.arch }}
+          amd64_tag=${{ github.event.inputs.rver }}-${{ matrix.arch }}
         file: Dockerfile
+        context: .
         push: true
         tags: ${{ steps.images.outputs.list }}
         labels: ${{ steps.meta.outputs.labels }}
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/${{ matrix.arch }}
 
   test-built-containers:
     needs: build
