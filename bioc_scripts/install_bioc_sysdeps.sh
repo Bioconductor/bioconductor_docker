@@ -142,6 +142,10 @@ apt-get install -y --no-install-recommends \
 	default-libmysqlclient-dev \
 	libmysqlclient-dev
 
+Rscript -e 'install.packages("BiocManager", repos="https://cran.rstudio.com")'
+Rscript -e "BiocManager::install(version='$BIOC_VERSION', update=TRUE, ask=FALSE)"
+Rscript -e "BiocManager::install(c('devtools'))"
+
 ## clean up
 apt-get clean
 apt-get autoremove -y
