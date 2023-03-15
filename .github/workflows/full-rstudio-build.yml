@@ -89,6 +89,7 @@ jobs:
         ## git clone rocker
         git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
         sed -i 's#rocker/r-ver:${{ github.event.inputs.rver }}#ghcr.io/${{ github.repository_owner }}/rocker-r-ver:${{ github.event.inputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
+        sed -i 's#install_quarto.sh#install_quarto.sh || true#g' rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
