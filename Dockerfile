@@ -1,16 +1,13 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
 ARG BASE_IMAGE=rocker/rstudio
 ARG arm64_tag=latest
-ARG amd64_tag=4.2.2
+ARG amd64_tag=latest
 FROM ${BASE_IMAGE}:${arm64_tag} AS base-arm64
 
 FROM ${BASE_IMAGE}:${amd64_tag} AS base-amd64
 
 ARG TARGETARCH=amd64
 FROM base-$TARGETARCH AS base
-
-## Set platform env variable
-ENV PLATFORM=${TARGETPLATFORM}
 
 ## Set Dockerfile version number
 ARG BIOCONDUCTOR_VERSION=3.17
@@ -21,14 +18,6 @@ ARG BIOCONDUCTOR_VERSION=3.17
 ARG BIOCONDUCTOR_PATCH=31
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
-
-LABEL name="bioconductor/bioconductor_docker" \
-      version=$BIOCONDUCTOR_DOCKER_VERSION \
-      url="https://github.com/Bioconductor/bioconductor_docker" \
-      vendor="Bioconductor Project" \
-      maintainer="maintainer@bioconductor.org" \
-      description="Bioconductor docker image with system dependencies to install all packages." \
-      license="Artistic-2.0"
 
 ## Do not use binary repositories during container creation
 ## Avoid using binaries produced for older version of same container
@@ -51,6 +40,26 @@ RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
     && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
     && rm -rf Renviron.bioc
 
+ARG TARGETARCH=amd64
+
+FROM base-$TARGETARCH AS final
+COPY --from=base / /
+
+LABEL name="bioconductor/bioconductor_docker" \
+      version=$BIOCONDUCTOR_DOCKER_VERSION \
+      url="https://github.com/Bioconductor/bioconductor_docker" \
+      vendor="Bioconductor Project" \
+      maintainer="maintainer@bioconductor.org" \
+      description="Bioconductor docker image with system dependencies to install all packages." \
+      license="Artistic-2.0"
+
+# Reset args in last layer
+ARG BIOCONDUCTOR_VERSION=3.17
+ARG BIOCONDUCTOR_PATCH=31
+ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
+
+## Set env variables
+ENV PLATFORM=${TARGETPLATFORM}
 ENV LIBSBML_CFLAGS="-I/usr/include"
 ENV LIBSBML_LIBS="-lsbml"
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
