@@ -184,3 +184,21 @@ jobs:
           cd /tmp/contents
           tar -xvf /tmp/image.tar
           sudo ls tmp/* | xargs -i bash -c "echo 'cat {}' && cat {}"
+
+      - name: Push patch bump
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 50
+          shell: bash
+          command: |
+            set -x
+            git config --global --add safe.directory "$GITHUB_WORKSPACE"
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git pull origin main || git reset --hard origin/main
+            sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
+            git add Dockerfile
+            git commit -m "Bump BIOCONDUCTOR_PATCH"
+            git push
+            
