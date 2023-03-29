@@ -10,7 +10,7 @@ ARG TARGETARCH=amd64
 FROM base-$TARGETARCH AS base
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.17
+ARG BIOCONDUCTOR_VERSION=3.16
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
