@@ -14,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'r-ver', amdtag: '4.2.2', armtag: '4.2.2', outname: 'r-ver'}
-          - {image: 'rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor_docker'}
-          - {image: 'tidyverse', amdtag: '4.2.2', armtag: 'N/A', outname: 'tidyverse'}
-          - {image: 'ml-verse', amdtag: '4.2.2', armtag: 'N/A', outname: 'ml-verse'}
+          - {image: 'r-ver', amdtag: '4.2.3', armtag: '4.2.3', outname: 'r-ver'}
+          - {image: 'rstudio', amdtag: '4.2.3', armtag: 'latest-daily', outname: 'bioconductor_docker'}
+          - {image: 'tidyverse', amdtag: '4.2.3', armtag: 'N/A', outname: 'tidyverse'}
+          - {image: 'ml-verse', amdtag: '4.2.3', armtag: 'N/A', outname: 'ml-verse'}
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
