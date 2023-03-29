@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+BIOC_VERSION=${1:-"3.17"}
+
 # This is to avoid the error
 # 'debconf: unable to initialize frontend: Dialog'
 export DEBIAN_FRONTEND=noninteractive
@@ -139,6 +141,10 @@ apt-get install -y --no-install-recommends \
 	libgdal-dev \
 	default-libmysqlclient-dev \
 	libmysqlclient-dev
+
+Rscript -e 'install.packages("BiocManager", repos="https://cran.rstudio.com")'
+Rscript -e "BiocManager::install(version='$BIOC_VERSION', update=TRUE, ask=FALSE)"
+Rscript -e "BiocManager::install(c('devtools'))"
 
 ## clean up
 apt-get clean

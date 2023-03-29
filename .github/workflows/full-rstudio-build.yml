@@ -1,0 +1,204 @@
+# This is a basic workflow to help you get started with Actions
+name: Full rocker & bioc build
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  workflow_dispatch:
+    inputs:
+      rver:
+        default: "devel"
+      outname:
+        default: "bioconductor_docker"
+  schedule:
+    - cron: '0 18 * * 5'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v3
+
+    - name: Free up space
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /opt/hostedtoolcache/*
+        sudo rm -rf /usr/local/.ghcup
+        sudo rm -rf /usr/lib/google-cloud-sdk
+        sudo rm -rf /usr/lib/firefox
+        sudo rm -rf /opt/microsoft/powershell
+        sudo rm -rf /usr/lib/jvm
+        sudo rm -rf /usr/local/graalvm
+        sudo rm -rf /etc/skel/.rustup /home/runner/.rustup /home/runneradmin/.rustup
+        sudo rm -rf /usr/lib/llvm-13
+        sudo rm -rf /usr/local/julia1.8.5
+        sudo rm -rf /opt/microsoft/msedge
+        sudo rm -rf /usr/lib/llvm-14
+        sudo rm -rf /opt/az
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      with:
+        platforms: arm64
+      if: matrix.arch == 'arm64'
+
+    - name: Login to GHCR
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Login to Dockerhub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Extract metadata for container image
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ github.repository_owner }}/${{ github.event.inputs.outname }}
+        tags: |
+          type=raw,value=${{ github.event.inputs.rver }}-${{ matrix.arch }}
+
+    - name: Set comma-separated list with all repository names
+      id: images
+      run: |
+        IMG=${{ steps.meta.outputs.tags }}
+        REPOLIST="docker.io/$IMG,ghcr.io/$IMG"
+        echo ghcr=$(echo "ghcr.io/$IMG") >> $GITHUB_OUTPUT
+        SUB="_docker"
+        # Also add alternative without _docker when in name
+        echo list=$(if [[ $REPOLIST == *$SUB* ]]; then echo "$REPOLIST,$(echo $REPOLIST | sed 's/_docker//g')"; else echo $REPOLIST; fi) >> $GITHUB_OUTPUT
+
+        ## git clone rocker
+        git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
+        sed -i 's#rocker/r-ver:${{ github.event.inputs.rver }}#ghcr.io/${{ github.repository_owner }}/rocker-r-ver:${{ github.event.inputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
+        sed -i 's#install_quarto.sh#install_quarto.sh || true#g' rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      with:
+        platforms: linux/${{ matrix.arch }}
+
+    - name: Build and load r-ver
+      uses: docker/build-push-action@v3
+      with:
+        file: rocker-versioned2/dockerfiles/r-ver_${{ github.event.inputs.rver }}.Dockerfile
+        context: rocker-versioned2
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/rocker-r-ver:${{ github.event.inputs.rver }}-${{ matrix.arch }}
+        platforms: linux/${{ matrix.arch }}
+
+    - name: Build and load rstudio
+      uses: docker/build-push-action@v3
+      with:
+        file: rocker-versioned2/dockerfiles/rstudio_${{ github.event.inputs.rver }}.Dockerfile
+        context: rocker-versioned2
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/rocker-rstudio:${{ github.event.inputs.rver }}-${{ matrix.arch }}
+        platforms: linux/${{ matrix.arch }}
+
+    - name: Build and push container image to all repos both arm64 and amd64
+      uses: docker/build-push-action@v3
+      with:
+        build-args: |
+          BASE_IMAGE=ghcr.io/${{ github.repository_owner }}/rocker-rstudio
+          arm64_tag=${{ github.event.inputs.rver }}-${{ matrix.arch }}
+          amd64_tag=${{ github.event.inputs.rver }}-${{ matrix.arch }}
+        file: Dockerfile
+        context: .
+        push: true
+        tags: ${{ steps.images.outputs.list }}
+        labels: ${{ steps.meta.outputs.labels }}
+        platforms: linux/${{ matrix.arch }}
+
+  test-built-containers:
+    strategy:
+      matrix:
+        arch: [arm64, amd64]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Get image name
+        id: image
+        run: |
+          IMG=$(echo "${{ github.repository_owner }}/${{ github.event.inputs.outname }}:${{ github.event.inputs.rver }}-${{ matrix.arch }}")
+          echo name=$IMG >> $GITHUB_OUTPUT
+          cat << EOF > test.Dockerfile
+          FROM $IMG as test
+          USER root
+          RUN mkdir -p /tmp/bioc_test && \
+              apt list --installed | tee /tmp/bioc_test/aptlist && \
+              Rscript -e "BiocManager::install(c('SummarizedExperiment','usethis','data.table','igraph','GEOquery'))" 2>&1 | tee /tmp/bioc_test/packages_install && \
+              Rscript -e "BiocManager::install('gert'); require('gert')" 2>&1 | tee /tmp/bioc_test/gert_install
+          FROM scratch as export
+          COPY --from=test /tmp/bioc_test /tmp
+          EOF
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
+        if: matrix.arch == 'arm64'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          platforms: linux/${{ matrix.arch }}
+
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test via build
+        id: dockerbuild
+        uses: docker/build-push-action@v4
+        with:
+          file: test.Dockerfile
+          context: .
+          push: false
+          load: false
+          outputs: type=tar,dest=/tmp/image.tar
+          tags: ${{ steps.image.outputs.name }}
+      
+      - run: |
+          mkdir -p /tmp/contents
+          cd /tmp/contents
+          tar -xvf /tmp/image.tar
+          sudo ls tmp/* | xargs -i bash -c "echo 'cat {}' && cat {}"
+
+      - name: Push patch bump
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 50
+          shell: bash
+          command: |
+            set -x
+            git config --global --add safe.directory "$GITHUB_WORKSPACE"
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git pull origin main || git reset --hard origin/main
+            sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
+            git add Dockerfile
+            git commit -m "Bump BIOCONDUCTOR_PATCH"
+            git push
+            
