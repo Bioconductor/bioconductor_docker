@@ -23,6 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Free root space
+        uses: almahmoud/free-root-space@main
+        with:
+          verbose: true
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
