@@ -28,24 +28,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v3
 
-    - name: Free up space
-      run: |
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /usr/local/lib/android
-        sudo rm -rf /opt/ghc
-        sudo rm -rf /opt/hostedtoolcache/*
-        sudo rm -rf /usr/local/.ghcup
-        sudo rm -rf /usr/lib/google-cloud-sdk
-        sudo rm -rf /usr/lib/firefox
-        sudo rm -rf /opt/microsoft/powershell
-        sudo rm -rf /usr/lib/jvm
-        sudo rm -rf /usr/local/graalvm
-        sudo rm -rf /etc/skel/.rustup /home/runner/.rustup /home/runneradmin/.rustup
-        sudo rm -rf /usr/lib/llvm-13
-        sudo rm -rf /usr/local/julia1.8.5
-        sudo rm -rf /opt/microsoft/msedge
-        sudo rm -rf /usr/lib/llvm-14
-        sudo rm -rf /opt/az
+    - name: Free root space
+      uses: almahmoud/free-root-space@main
+      with:
+        verbose: true
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
@@ -70,9 +56,9 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ${{ github.repository_owner }}/${{ github.event.inputs.outname }}
+        images: ${{ github.repository_owner }}/${{ github.event.inputs.outname || 'bioconductor_docker' }}
         tags: |
-          type=raw,value=${{ github.event.inputs.rver }}-${{ matrix.arch }}
+          type=raw,value=${{ github.event.inputs.rver || 'devel' }}-${{ matrix.arch }}
 
     - name: Set comma-separated list with all repository names
       id: images
