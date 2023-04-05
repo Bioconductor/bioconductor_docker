@@ -45,8 +45,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set comma-separated list with all repository names
-      id: images
+    - name: Prep rocker rocker files
       run: bash .github/scripts/rocker_prep.sh ${{ steps.defs.outputs.rver }} ${{ steps.defs.outputs.biocver }} ${{ steps.defs.outputs.rockerintermediateprefix }} ${{ matrix.arch }}
 
     - name: Set up Docker Buildx
@@ -98,9 +97,16 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set comma-separated list with all repository names
-      id: images 
-      run: bash .github/scripts/rocker_prep.sh ${{ steps.defs.outputs.rver }} ${{ steps.defs.outputs.biocver }} ${{ steps.defs.outputs.rockerintermediateprefix }} ${{ matrix.arch }}
+    - name: Prep rocker rocker files
+      run: |
+        bash .github/scripts/rocker_prep.sh ${{ steps.defs.outputs.rver }} ${{ steps.defs.outputs.biocver }} ${{ steps.defs.outputs.rockerintermediateprefix }} ${{ matrix.arch }}
+        
+
+    - name: Move some tidyverse builds to docker for arm64 to avoid timeout
+      run: |
+        head -n44 rocker-versioned2/scripts/install_tidyverse.sh >> rocker-versioned2/scripts/install_rstudio.sh
+        sed -i "\|RUN /rocker_scripts/install_rstudio.sh|i COPY scripts /rocker_scripts" rocker-versioned2/dockerfiles/rstudio_${{ steps.defs.outputs.rver }}.Dockerfile
+      if: matrix.arch == 'arm64'
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -151,8 +157,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set comma-separated list with all repository names
-      id: images
+    - name: Prep rocker rocker files
       run: bash .github/scripts/rocker_prep.sh ${{ steps.defs.outputs.rver }} ${{ steps.defs.outputs.biocver }} ${{ steps.defs.outputs.rockerintermediateprefix }} ${{ matrix.arch }}
 
     - name: Set up Docker Buildx
@@ -203,8 +208,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Set comma-separated list with all repository names
-      id: images
+    - name: Prep rocker rocker files
       run: |
         ## git clone rocker
         git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
