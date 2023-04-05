@@ -14,10 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'r-ver', amdtag: '4.2.2', armtag: '4.2.2', outname: 'r-ver'}
-          - {image: 'rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor_docker'}
-          - {image: 'tidyverse', amdtag: '4.2.2', armtag: 'N/A', outname: 'tidyverse'}
-          - {image: 'ml-verse', amdtag: '4.2.2', armtag: 'N/A', outname: 'ml-verse'}
+          - {image: 'rocker/r-ver', amdtag: '4.2.2', armtag: '4.2.2', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', amdtag: '4.2.2', armtag: 'latest-daily', outname: 'bioconductor_docker'}
+          - {image: 'rocker/tidyverse', amdtag: '4.2.2', armtag: 'N/A', outname: 'tidyverse'}
+          - {image: 'rocker/ml-verse', amdtag: '4.2.2', armtag: 'N/A', outname: 'ml-verse'}
+
     name: Build branch images
     runs-on: ubuntu-latest
     steps:
@@ -61,10 +62,21 @@ jobs:
         id: images
         run: |
           IMG=${{ steps.meta.outputs.tags }}
-          REPOLIST="docker.io/$IMG,ghcr.io/$IMG"
-          SUB="_docker"
-          # Also add alternative without _docker when in name
-          echo list=$(if [[ $REPOLIST == *$SUB* ]]; then echo "$REPOLIST,$(echo $REPOLIST | sed 's/_docker//g')"; else echo $REPOLIST; fi) >> $GITHUB_OUTPUT
+          REPOLIST="docker.io/$IMG"
+          REPOLIST="ghcr.io/$IMG,$REPOLIST"
+          # Add tag with tag 3.xx as well as RELEASE_3_xx
+          if [[ $IMG = *"RELEASE_"* ]]; then
+            REPOLIST="$(echo $REPOLIST | sed 's/:RELEASE_3_/:3./g'),$REPOLIST"
+          fi
+          # Add tag with R version (based on amd64)
+          docker pull ${{ matrix.base.image }}:${{ matrix.base.amdtag }}
+          RVER=$(docker inspect ${{ matrix.base.image }}:${{ matrix.base.amdtag }} | jq -r '.[].Config.Env[]|select(match("^R_VERSION"))|.[index("=")+1:]')
+          REPOLIST="$(echo $REPOLIST | sed "s/,/-R-$RVER,/g")-R-$RVER,$REPOLIST"
+                    # Also add alternative without _docker when in name
+          if [[ $REPOLIST == *"_docker"* ]]; then
+            REPOLIST="$(echo $REPOLIST | sed 's/_docker//g'),$REPOLIST"
+          fi
+          echo list=$REPOLIST >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -75,7 +87,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           build-args: |
-            BASE_IMAGE=rocker/${{ matrix.base.image }}
+            BASE_IMAGE=${{ matrix.base.image }}
             arm64_tag=${{ matrix.base.armtag }}
             amd64_tag=${{ matrix.base.amdtag }}
           file: Dockerfile
@@ -89,7 +101,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           build-args: |
-            BASE_IMAGE=rocker/${{ matrix.base.image }}
+            BASE_IMAGE=${{ matrix.base.image }}
             amd64_tag=${{ matrix.base.amdtag }}
           file: Dockerfile
           push: true
