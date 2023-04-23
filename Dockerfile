@@ -15,7 +15,7 @@ ARG BIOCONDUCTOR_VERSION=3.16
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=31
+ARG BIOCONDUCTOR_PATCH=32
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -54,8 +54,8 @@ LABEL name="bioconductor/bioconductor_docker" \
       license="Artistic-2.0"
 
 # Reset args in last layer
-ARG BIOCONDUCTOR_VERSION=3.17
-ARG BIOCONDUCTOR_PATCH=31
+ARG BIOCONDUCTOR_VERSION=3.16
+ARG BIOCONDUCTOR_PATCH=32
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 ## Set env variables
