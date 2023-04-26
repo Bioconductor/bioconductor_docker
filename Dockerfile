@@ -10,12 +10,12 @@ ARG TARGETARCH=amd64
 FROM base-$TARGETARCH AS base
 
 ## Set Dockerfile version number
-ARG BIOCONDUCTOR_VERSION=3.17
+ARG BIOCONDUCTOR_VERSION=3.18
 
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=33
+ARG BIOCONDUCTOR_PATCH=0
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -54,8 +54,8 @@ LABEL name="bioconductor/bioconductor_docker" \
       license="Artistic-2.0"
 
 # Reset args in last layer
-ARG BIOCONDUCTOR_VERSION=3.17
-ARG BIOCONDUCTOR_PATCH=33
+ARG BIOCONDUCTOR_VERSION=3.18
+ARG BIOCONDUCTOR_PATCH=0
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 ## Set env variables

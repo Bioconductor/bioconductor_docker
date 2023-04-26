@@ -9,7 +9,7 @@ on:
       rver:
         default: "devel"
       biocver:
-        default: "3.17"
+        default: "3.18"
       outname:
         default: "bioconductor_docker"
   schedule:
@@ -57,7 +57,7 @@ jobs:
       run: |
         echo outname=$(echo ${{ github.event.inputs.outname || 'bioconductor_docker' }}) >> $GITHUB_OUTPUT
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
-        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.17' }}) >> $GITHUB_OUTPUT
+        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.18' }}) >> $GITHUB_OUTPUT
         echo registryuser=$(echo ${{ github.repository_owner }} | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
         echo rockerintermediateprefix=$(echo "ghcr.io/${{ github.repository_owner }}/rocker" | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
 

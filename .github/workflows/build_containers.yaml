@@ -14,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: '4.3.0', armtag: '4.3.0', outname: 'r-ver'}
-          - {image: 'rocker/rstudio', amdtag: '4.3.0', armtag: 'N/A', outname: 'bioconductor_docker'}
-          - {image: 'rocker/tidyverse', amdtag: '4.3.0', armtag: 'N/A', outname: 'tidyverse'}
-          - {image: 'rocker/ml-verse', amdtag: '4.3.0', armtag: 'N/A', outname: 'ml-verse'}
+          - {image: 'ghcr.io/bioconductor/rocker-r-ver', amdtag: 'devel-amd64', armtag: 'devel-arm64', outname: 'r-ver'}
+          - {image: 'ghcr.io/bioconductor/rocker-rstudio', amdtag: 'devel-amd64', armtag: 'devel-arm64', outname: 'bioconductor_docker'}
+          - {image: 'ghcr.io/bioconductor/rocker-tidyverse', amdtag: 'devel-amd64', armtag: 'N/A', outname: 'tidyverse'}
+          - {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', armtag: 'N/A', outname: 'ml-verse'}
 
     name: Build branch images
     runs-on: ubuntu-latest
