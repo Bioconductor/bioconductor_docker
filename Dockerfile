@@ -6,6 +6,7 @@ FROM ${BASE_IMAGE}:${arm64_tag} AS base-arm64
 
 FROM ${BASE_IMAGE}:${amd64_tag} AS base-amd64
 
+# Set automatically when building with --platform
 ARG TARGETARCH=amd64
 FROM base-$TARGETARCH AS base
 
@@ -57,6 +58,9 @@ LABEL name="bioconductor/bioconductor_docker" \
 ARG BIOCONDUCTOR_VERSION=3.17
 ARG BIOCONDUCTOR_PATCH=33
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
+
+# Set automatically when building with --platform
+ARG TARGETPLATFORM=linux/amd64
 
 ## Set env variables
 ENV PLATFORM=${TARGETPLATFORM}
