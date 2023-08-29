@@ -147,7 +147,7 @@ Rscript -e "BiocManager::install(version='$BIOC_VERSION', update=TRUE, ask=FALSE
 Rscript -e "BiocManager::install(c('devtools'))"
 
 ## Install preprocess core manually to disable threading https://github.com/Bioconductor/bioconductor_docker/issues/22
-Rscript -e 'BiocManager::install("preprocessCore", configure.args = c(preprocessCore = "--disable-threading"))'
+Rscript -e 'BiocManager::install("preprocessCore", configure.args = c(preprocessCore = "--disable-threading"), update=TRUE, force=TRUE, ask=FALSE, type="source")'
 
 ## clean up
 apt-get clean
