@@ -142,9 +142,9 @@ apt-get install -y --no-install-recommends \
 	default-libmysqlclient-dev \
 	libmysqlclient-dev
 
-## Install preprocess core manually to disable threading
-ppcore_version=$(curl https://bioconductor.org/checkResults/3.17/bioc-LATEST/preprocessCore/raw-results/info.dcf | grep Version | sed 's/Version: //g')
-curl -o ppcore.tar.gz curl -O https://bioconductor.org/packages/release/bioc/src/contrib/preprocessCore_$ppcore_version.tar.gz
+## Install preprocess core manually to disable threading https://github.com/Bioconductor/bioconductor_docker/issues/22
+ppcore_version=$(curl https://bioconductor.org/checkResults/$BIOC_VERSION/bioc-LATEST/preprocessCore/raw-results/info.dcf | grep Version | sed 's/Version: //g')
+curl -o ppcore.tar.gz https://bioconductor.org/packages/$BIOC_VERSION/bioc/src/contrib/preprocessCore_$ppcore_version.tar.gz
 tar -xvf ppcore.tar.gz
 cd preprocessCore
 R CMD INSTALL --configure-args="--disable-threading"  .
