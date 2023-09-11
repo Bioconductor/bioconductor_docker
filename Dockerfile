@@ -36,7 +36,7 @@ ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
 ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
 RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
     && echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
-    && curl -O https://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
+    && curl -OL http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
     && sed -i '/^IS_BIOC_BUILD_MACHINE/d' Renviron.bioc \
     && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
     && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
