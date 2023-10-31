@@ -88,7 +88,8 @@ apt-get install -y --no-install-recommends \
 ## new libs
 apt-get install -y --no-install-recommends \
 	libglpk-dev \
-	libeigen3-dev
+	libeigen3-dev \
+ 	liblz4-dev
 
 ## Databases and other software
 apt-get install -y --no-install-recommends \
