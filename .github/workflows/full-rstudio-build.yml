@@ -109,11 +109,20 @@ jobs:
         then
           if [ $((BIOC_MINOR%2)) -eq 0 ];
           then
-              echo "Using latest release R since Bioc devel version is even";
-              sed -i 's#R_VERSION=${{ steps.defs.outputs.rver }}#R_VERSION=latest#g' rocker-versioned2/dockerfiles/r-ver_${{ steps.defs.outputs.rver }}.Dockerfile
+              echo "Using latest pre-release R from release track since Bioc devel version is even";
+              sed -i 's#R_VERSION=${{ steps.defs.outputs.rver }}#R_VERSION=patched#g' rocker-versioned2/dockerfiles/r-ver_${{ steps.defs.outputs.rver }}.Dockerfile
           else
-              echo "Using latest pre-release R since Bioc devel version is odd";
-              sed -i 's#R_VERSION=${{ steps.defs.outputs.rver }}#R_VERSION=devel#g' rocker-versioned2/dockerfiles/r-ver_${{ steps.defs.outputs.rver }}.Dockerfile
+              echo "Using devel pre-release R since Bioc devel version is odd";
+              curl -o ver-info.dcf https://cran.r-project.org/src/base/VERSION-INFO.dcf
+              REL_DATE=$(grep 'Date' ver-info.dcf | awk '{print $2}')
+              REL_VER_PATCH=$(grep 'Release' ver-info.dcf | awk '{print $2}' | awk -F'.' '{print $3}')
+              DEV_VER_PATCH=$(grep 'Devel' ver-info.dcf | awk '{print $2}' | awk -F'.' '{print $3}')
+              DATE_DIFF=$(echo $(date +%s) $(date -d "$REL_DATE" +%s) | awk '{print ($1 - $2) / 86400}')
+              DATE_DIFF="${DATE_DIFF%.*}"
+              # If release is less than a month old, and devel and release are both at patch 0, assume that it is the R release window when new Devel version is prepared but the release is not yet official
+              if [ "$DATE_DIFF" -lt 28 ] && [ "$REL_VER_PATCH" -eq 0 ] && [ "$DEV_VER_PATCH" -eq 0 ]; then
+                  sed -i 's#R_VERSION=${{ steps.defs.outputs.rver }}#R_VERSION=patched#g' rocker-versioned2/dockerfiles/r-ver_${{ steps.defs.outputs.rver }}.Dockerfile
+              fi
           fi
         fi
 
