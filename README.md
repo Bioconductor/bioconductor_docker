@@ -118,11 +118,11 @@ A few of our key goals to migrate to a new set of Docker containers are,
 
 - Make Bioconductor package binaries available to all users of the 
   this container. Users can now install Bioconductor packages as binaries
-  by simply doing, `AnVIL::install(<character vector of packages>)`.
+  by simply doing, `BiocManager::install(<character vector of packages>)`.
   This speeds up installation of Bioconductor packages by avoiding compilation.
 
   To see the latest status of the Bioconductor binary repository, check with
-  `AnVIL:::repository_stats()`.
+  `BiocPkgTools::repositoryStats()`.
 
 <a name="current"></a>
 ## Current Containers
