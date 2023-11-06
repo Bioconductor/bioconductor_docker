@@ -38,6 +38,10 @@ jobs:
             git push
             
   build:
+    outputs:
+      registryuser: ${{ steps.defs.outputs.registryuser }}
+      outname: ${{ steps.defs.outputs.outname }}
+      rver: ${{ steps.defs.outputs.rver }}
     strategy:
       matrix:
         arch: [amd64, arm64]
@@ -163,7 +167,7 @@ jobs:
       - name: Get image name
         id: image
         run: |
-          IMG=$(echo "${{ steps.defs.outputs.registryuser }}/${{ steps.defs.outputs.outname }}:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}")
+          IMG=$(echo "${{needs.build.outputs.registryuser}}/${{ needs.build.outputs.outname }}:${{ needs.build.outputs.rver }}-${{ matrix.arch }}")
           echo name=$IMG >> $GITHUB_OUTPUT
           cat << EOF > test.Dockerfile
           FROM $IMG as test
