@@ -44,7 +44,8 @@ RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
     && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
     && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
     && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
-    && rm -rf Renviron.bioc
+    && rm -rf Renviron.bioc \
+    && sed -i 's/-Werror=format-security/-Wformat-security/g' /usr/local/lib/R/etc/Makeconf
 
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH:-amd64}
