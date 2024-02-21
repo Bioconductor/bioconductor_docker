@@ -21,7 +21,7 @@ ARG BIOCONDUCTOR_VERSION=3.19
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=20
+ARG BIOCONDUCTOR_PATCH=21
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -44,7 +44,8 @@ RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
     && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
     && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
     && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
-    && rm -rf Renviron.bioc
+    && rm -rf Renviron.bioc \
+    && sed -i 's/-Werror=format-security/-Wformat-security/g' /usr/local/lib/R/etc/Makeconf
 
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH:-amd64}
@@ -62,7 +63,7 @@ LABEL name="bioconductor/bioconductor_docker" \
 
 # Reset args in last layer
 ARG BIOCONDUCTOR_VERSION=3.19
-ARG BIOCONDUCTOR_PATCH=20
+ARG BIOCONDUCTOR_PATCH=21
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 # Set automatically when building with --platform
