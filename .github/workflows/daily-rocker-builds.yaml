@@ -38,9 +38,9 @@ jobs:
         if [ "$LATEST_TAG" == "$CURR_TAG" ]; then
           echo "Detected '$LATEST_TAG' == '$CURR_TAG' as latest available tag"
         else
-          cd /tmp
-          git clone https://github.com/${{github.repository}} -b ${{steps.defs.outputs.release-tag}}
-          cd $(basename ${{ github.repository }})
+          mkdir -p ${{github.workspace}}/tmp/${{github.repository}}
+          git clone https://github.com/${{github.repository}} -b ${{steps.defs.outputs.release-tag}} ${{github.workspace}}/tmp/${{github.repository}}
+          cd ${{github.workspace}}/tmp/${{github.repository}}
           AUTO_BRANCH="auto-bump-${LATEST_TAG}"
           sed -i "s/$CURR_TAG/$LATEST_TAG/g" .github/workflows/build_containers.yaml
         fi
@@ -52,6 +52,8 @@ jobs:
           commit-message: Auto-bump ${{steps.rbump.outputs.latest-tag}}
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          base: ${{steps.defs.outputs.release-tag}}
+          path: ${{github.workspace}}/tmp/${{github.repository}}
           branch: auto-bump-bioc-${{steps.defs.outputs.release-tag}}-r-${{steps.rbump.outputs.latest-tag}}
           title: '[Auto] Bumping ${{steps.defs.outputs.release-tag}} branch to R ${{steps.rbump.outputs.latest-tag}}'
           body: |
