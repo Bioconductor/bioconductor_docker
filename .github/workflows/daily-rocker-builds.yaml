@@ -62,8 +62,6 @@ jobs:
             Note that the Bioconductor automatic PR bot is experimental, please make sure to check the changes manually before merging.
           labels: |
             auto-bump
-          assignees: almahmoud
-          reviewers: almahmoud
 
   buildrver:
     strategy:
