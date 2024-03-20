@@ -12,6 +12,10 @@ on:
   schedule:
     - cron: '0 18 * * *'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   check_versions:
     runs-on: ubuntu-latest
