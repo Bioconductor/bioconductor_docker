@@ -43,6 +43,7 @@ jobs:
           cd ${{github.workspace}}/tmp/${{github.repository}}
           AUTO_BRANCH="auto-bump-${LATEST_TAG}"
           sed -i "s/$CURR_TAG/$LATEST_TAG/g" .github/workflows/build_containers.yaml
+          sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
         fi
 
     - name: Open pull request
