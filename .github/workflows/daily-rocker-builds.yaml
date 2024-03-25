@@ -7,10 +7,63 @@ on:
         default: "devel"
       biocver:
         default: "3.19"
+      check-rocker-image:
+        default: "rocker/rstudio"
   schedule:
     - cron: '0 18 * * *'
 
 jobs:
+  check_versions:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set defaults for schedule
+      id: defs
+      run: |
+        echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
+        BIOCVER=$(echo ${{ github.event.inputs.biocver || '3.19' }})
+        echo "biocver=$BIOCVER" >> $GITHUB_OUTPUT
+        echo check-rocker-image=$(echo ${{ github.event.inputs.check-rocker-image || 'rocker/rstudio' }}) >> $GITHUB_OUTPUT
+        RELEASE_VER=$(echo "${BIOCVER%.*}.$((${BIOCVER##*.}-1))")
+        echo release-tag=$(echo "RELEASE_${RELEASE_VER}" | sed 's/\./_/g')  >> $GITHUB_OUTPUT
+
+    - name: Bump R version
+      id: rbump
+      run: |
+        curl https://hub.docker.com/v2/repositories/${{steps.defs.outputs.check-rocker-image}}/tags | jq '.results[].name' | tr -d '"' > /tmp/taglist
+        curl https://raw.githubusercontent.com/${{ github.repository }}/${{steps.defs.outputs.release-tag}}/.github/workflows/build_containers.yaml | grep 'amdtag' | awk -F"'" '/amdtag:/ {print $4}' | uniq > /tmp/currtag
+        LATEST_TAG=$(cat /tmp/taglist | sort -n | tail -n 1)
+        CURR_TAG=$(cat /tmp/currtag | sort -n | tail -n 1)
+        echo latest-tag=$LATEST_TAG >> $GITHUB_OUTPUT
+        if [ "$LATEST_TAG" == "$CURR_TAG" ]; then
+          echo "Detected '$LATEST_TAG' == '$CURR_TAG' as latest available tag"
+        else
+          mkdir -p ${{github.workspace}}/tmp/${{github.repository}}
+          git clone https://github.com/${{github.repository}} -b ${{steps.defs.outputs.release-tag}} ${{github.workspace}}/tmp/${{github.repository}}
+          cd ${{github.workspace}}/tmp/${{github.repository}}
+          AUTO_BRANCH="auto-bump-${LATEST_TAG}"
+          sed -i "s/$CURR_TAG/$LATEST_TAG/g" .github/workflows/build_containers.yaml
+          sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
+        fi
+
+    - name: Open pull request
+      id: cpr
+      uses: peter-evans/create-pull-request@v6
+      with:
+          token: ${{secrets.PAT}}
+          commit-message: Auto-bump ${{steps.rbump.outputs.latest-tag}}
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          base: ${{steps.defs.outputs.release-tag}}
+          path: ${{github.workspace}}/tmp/${{github.repository}}
+          branch: auto-bump-bioc-${{steps.defs.outputs.release-tag}}-r-${{steps.rbump.outputs.latest-tag}}
+          title: '[Auto] Bumping ${{steps.defs.outputs.release-tag}} branch to R ${{steps.rbump.outputs.latest-tag}}'
+          body: |
+            Bumping R version.
+            Note that the Bioconductor automatic PR bot is experimental, please make sure to check the changes manually before merging.
+          labels: |
+            auto-bump
+
   buildrver:
     strategy:
       matrix:
