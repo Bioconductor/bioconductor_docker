@@ -21,7 +21,7 @@ ARG BIOCONDUCTOR_VERSION=3.19
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=27
+ARG BIOCONDUCTOR_PATCH=28
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -63,7 +63,7 @@ LABEL name="bioconductor/bioconductor_docker" \
 
 # Reset args in last layer
 ARG BIOCONDUCTOR_VERSION=3.19
-ARG BIOCONDUCTOR_PATCH=27
+ARG BIOCONDUCTOR_PATCH=28
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 # Set automatically when building with --platform
