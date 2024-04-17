@@ -102,21 +102,7 @@ jobs:
         # Also add alternative without _docker when in name
         echo list=$(if [[ $REPOLIST == *$SUB* ]]; then echo "$REPOLIST,$(echo $REPOLIST | sed 's/_docker//g')"; else echo $REPOLIST; fi) >> $GITHUB_OUTPUT
 
-        ## git clone rocker
-        git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
-        sed -i 's#rocker/r-ver:${{ steps.defs.outputs.rver }}#${{ steps.defs.outputs.rockerintermediateprefix }}-r-ver:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/rstudio_${{ steps.defs.outputs.rver }}.Dockerfile
-        sed -i 's#install_quarto.sh#install_quarto.sh || true#g' rocker-versioned2/dockerfiles/rstudio_${{ steps.defs.outputs.rver }}.Dockerfile
-        echo "Bioconductor Version: ${{ steps.defs.outputs.biocver }}"
-        if [ "${{ steps.defs.outputs.rver }}" = "devel" ]; then
-            echo "Using devel pre-release R since Bioc devel version is odd";
-            DEVEL_R_VER=$(curl https://bioconductor.org/config.yaml | grep '"${{ steps.defs.outputs.rver }}":' | awk '{print $2}' | sed 's/"//g')
-            REL_VER=$(curl https://cran.r-project.org/src/base/VERSION-INFO.dcf | grep "$DEVEL_R_VER" | awk -F':' '{print $1}')
-            # if the matching version is under release rather than devel, use patched pre-release rather than devel pre-release
-            if [ "$REL_VER" == "Release" ]; then 
-                sed -i 's#R_VERSION=${{ steps.defs.outputs.rver }}#R_VERSION=patched#g' rocker-versioned2/dockerfiles/r-ver_${{ steps.defs.outputs.rver }}.Dockerfile
-            fi
-        fi
-
+        bash .github/scripts/rocker_prep.sh "${{ steps.defs.outputs.rver }}" "${{ steps.defs.outputs.biocver }}" "${{ steps.defs.outputs.rockerintermediateprefix }}" "${{ matrix.arch }}"
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
