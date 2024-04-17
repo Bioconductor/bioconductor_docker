@@ -37,6 +37,7 @@ jobs:
         echo latest-tag=$LATEST_TAG >> $GITHUB_OUTPUT
         if [ "$LATEST_TAG" == "$CURR_TAG" ]; then
           echo "Detected '$LATEST_TAG' == '$CURR_TAG' as latest available tag"
+          echo verdict="no"  >> $GITHUB_OUTPUT
         else
           mkdir -p ${{github.workspace}}/tmp/${{github.repository}}
           git clone https://github.com/${{github.repository}} -b ${{steps.defs.outputs.release-tag}} ${{github.workspace}}/tmp/${{github.repository}}
@@ -44,11 +45,13 @@ jobs:
           AUTO_BRANCH="auto-bump-${LATEST_TAG}"
           sed -i "s/$CURR_TAG/$LATEST_TAG/g" .github/workflows/build_containers.yaml
           sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
+          echo verdict="yes" >> $GITHUB_OUTPUT
         fi
 
     - name: Open pull request
       id: cpr
       uses: peter-evans/create-pull-request@v6
+      if: steps.rbump.outputs.verdict == 'yes'
       with:
           token: ${{secrets.PAT}}
           commit-message: Auto-bump ${{steps.rbump.outputs.latest-tag}}
