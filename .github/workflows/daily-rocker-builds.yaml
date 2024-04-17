@@ -268,15 +268,9 @@ jobs:
         sed -i 's#rocker/cuda:${{ steps.defs.outputs.rver }}#${{ steps.defs.outputs.rockerintermediateprefix }}-cuda:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/ml_${{ steps.defs.outputs.rver }}.Dockerfile
         sed -i 's#rocker/ml:${{ steps.defs.outputs.rver }}#${{ steps.defs.outputs.rockerintermediateprefix }}-ml:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/ml-verse_${{ steps.defs.outputs.rver }}.Dockerfile
 
-        BIOC_MINOR=$(echo "${{ steps.defs.outputs.biocver }}" | awk -F'.' '{print $NF}')
         echo "Bioconductor Version: ${{ steps.defs.outputs.biocver }}"
-        if [ "${{ steps.defs.outputs.rver }}" = "devel" ]; then
-            DEVEL_R_VER=$(curl https://bioconductor.org/config.yaml | grep '"${{ steps.defs.outputs.rver }}":' | awk '{print $2}' | sed 's/"//g')
-            REL_VER=$(curl https://cran.r-project.org/src/base/VERSION-INFO.dcf | grep "$DEVEL_R_VER" | awk -F':' '{print $1}')
-            # if the matching version is under release rather than devel, use patched pre-release rather than devel pre-release
-            if [ "$REL_VER" == "Release" ]; then 
-                sed -i 's#R_VERSION=${{ steps.defs.outputs.rver }}#R_VERSION=patched#g' rocker-versioned2/dockerfiles/cuda_${{ steps.defs.outputs.rver }}.Dockerfile
-            fi
+        if [ "${{ steps.defs.outputs.rver }}" == "devel" ]; then
+          bash .github/scripts/devel_or_patched_rversion.sh "${{ steps.defs.outputs.biocver }}" "rocker-versioned2/dockerfiles/cuda_${{ steps.defs.outputs.rver }}.Dockerfile"
         fi
 
     - name: Set up Docker Buildx
