@@ -22,27 +22,30 @@ jobs:
       run: |
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
         BIOCVER=$(echo ${{ github.event.inputs.biocver || '3.19' }})
-        echo "biocver=$BIOCVER" >> $GITHUB_OUTPUT
+        echo "develbiocver=$BIOCVER" >> $GITHUB_OUTPUT
         echo check-rocker-image=$(echo ${{ github.event.inputs.check-rocker-image || 'rocker/rstudio' }}) >> $GITHUB_OUTPUT
-        RELEASE_VER=$(echo "${BIOCVER%.*}.$((${BIOCVER##*.}-1))")
-        echo release-tag=$(echo "RELEASE_${RELEASE_VER}" | sed 's/\./_/g')  >> $GITHUB_OUTPUT
+        RELEASE_BIOC_VER=$(echo "${BIOCVER%.*}.$((${BIOCVER##*.}-1))")
+        echo "releasebiocver=$RELEASE_BIOC_VER" >> $GITHUB_OUTPUT
+        echo release-tag=$(echo "RELEASE_${RELEASE_BIOC_VER}" | sed 's/\./_/g')  >> $GITHUB_OUTPUT
 
     - name: Bump R version
       id: rbump
       run: |
         curl https://hub.docker.com/v2/repositories/${{steps.defs.outputs.check-rocker-image}}/tags | jq '.results[].name' | tr -d '"' > /tmp/taglist
         curl https://raw.githubusercontent.com/${{ github.repository }}/${{steps.defs.outputs.release-tag}}/.github/workflows/build_containers.yaml | grep 'amdtag' | awk -F"'" '/amdtag:/ {print $4}' | uniq > /tmp/currtag
-        LATEST_TAG=$(cat /tmp/taglist | sort -n | tail -n 1)
+        RELEASE_R_VER=$(curl https://bioconductor.org/config.yaml | yq e '.r_ver_for_bioc_ver."${{steps.defs.outputs.releasebiocver}}"')
+        LATEST_TAG=$(cat /tmp/taglist | grep "$RELEASE_R_VER" | sort -n | tail -n 1)
         CURR_TAG=$(cat /tmp/currtag | sort -n | tail -n 1)
         echo latest-tag=$LATEST_TAG >> $GITHUB_OUTPUT
         if [ "$LATEST_TAG" == "$CURR_TAG" ]; then
           echo "Detected '$LATEST_TAG' == '$CURR_TAG' as latest available tag"
           echo verdict="no"  >> $GITHUB_OUTPUT
-        else
+        else 
+          echo "Detected mismatching versions latest '$LATEST_TAG' != '$CURR_TAG' current tag"
           mkdir -p ${{github.workspace}}/tmp/${{github.repository}}
           git clone https://github.com/${{github.repository}} -b ${{steps.defs.outputs.release-tag}} ${{github.workspace}}/tmp/${{github.repository}}
           cd ${{github.workspace}}/tmp/${{github.repository}}
-          AUTO_BRANCH="auto-bump-${LATEST_TAG}"
+          AUTO_BRANCH="auto-bump-${{steps.defs.outputs.releasebiocver}}-for-${LATEST_TAG}"
           sed -i "s/$CURR_TAG/$LATEST_TAG/g" .github/workflows/build_containers.yaml
           sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
           echo verdict="yes" >> $GITHUB_OUTPUT
@@ -307,3 +310,4 @@ jobs:
         push: true
         tags: ${{ steps.defs.outputs.rockerintermediateprefix }}-ml-verse:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}
         platforms: linux/${{ matrix.arch }}
+
