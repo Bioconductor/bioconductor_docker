@@ -1,0 +1,414 @@
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.538610383Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.538621664Z","message":{"role":"assistant","content":"Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.53884769Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.545141695Z","message":{"role":"assistant","content":" Package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.557207198Z","message":{"role":"assistant","content":" Submission"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.569294293Z","message":{"role":"assistant","content":" Guidelines"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.581379555Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.593442164Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.605508651Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.61762985Z","message":{"role":"assistant","content":"1"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.629742463Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.641902987Z","message":{"role":"assistant","content":" General"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.653969674Z","message":{"role":"assistant","content":" Requirements"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.666054505Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.678179872Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.69026345Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.702425647Z","message":{"role":"assistant","content":" Packages"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.714524925Z","message":{"role":"assistant","content":" must"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.726345908Z","message":{"role":"assistant","content":" be"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.736864941Z","message":{"role":"assistant","content":" written"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.747378352Z","message":{"role":"assistant","content":" in"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.757857048Z","message":{"role":"assistant","content":" R"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.768393051Z","message":{"role":"assistant","content":" or"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.77891044Z","message":{"role":"assistant","content":" Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.789411488Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.799939297Z","message":{"role":"assistant","content":"'"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.810419235Z","message":{"role":"assistant","content":"s"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.820959397Z","message":{"role":"assistant","content":" native"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.831493616Z","message":{"role":"assistant","content":" language"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.842010695Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.852490873Z","message":{"role":"assistant","content":" R"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.862982924Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.873492479Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.88400068Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.894495416Z","message":{"role":"assistant","content":" Packages"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.904995292Z","message":{"role":"assistant","content":" must"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.915506188Z","message":{"role":"assistant","content":" be"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.926053824Z","message":{"role":"assistant","content":" compatible"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.936494308Z","message":{"role":"assistant","content":" with"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.947012979Z","message":{"role":"assistant","content":" the"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.95753738Z","message":{"role":"assistant","content":" current"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.968036806Z","message":{"role":"assistant","content":" Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.978539246Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.989038691Z","message":{"role":"assistant","content":" version"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:54.999527126Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.010099468Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.020522468Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.031087927Z","message":{"role":"assistant","content":" Documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.041601479Z","message":{"role":"assistant","content":" must"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.052097768Z","message":{"role":"assistant","content":" be"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.062625988Z","message":{"role":"assistant","content":" comprehensive"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.07317732Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.083705629Z","message":{"role":"assistant","content":" informative"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.094226325Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.104733934Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.115338647Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.125803228Z","message":{"role":"assistant","content":" Tests"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.136311168Z","message":{"role":"assistant","content":" should"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.146843485Z","message":{"role":"assistant","content":" be"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.157387123Z","message":{"role":"assistant","content":" included"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.167896006Z","message":{"role":"assistant","content":" to"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.178432871Z","message":{"role":"assistant","content":" ensure"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.188938137Z","message":{"role":"assistant","content":" functionality"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.199493638Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.209964959Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.220464835Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.230975712Z","message":{"role":"assistant","content":"2"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.241556369Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.252054953Z","message":{"role":"assistant","content":" Structure"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.262581268Z","message":{"role":"assistant","content":" of"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.273098667Z","message":{"role":"assistant","content":" Package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.283627978Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.294135578Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.304641145Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.31517243Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.3256694Z","message":{"role":"assistant","content":"NAMESPACE"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.336203119Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.346716019Z","message":{"role":"assistant","content":" Defines"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.357241333Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.367787857Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.378301989Z","message":{"role":"assistant","content":"specific"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.388785094Z","message":{"role":"assistant","content":" functions"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.399318833Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.409790495Z","message":{"role":"assistant","content":" objects"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.420304498Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.430808451Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.441365565Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.451912019Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.462407225Z","message":{"role":"assistant","content":"R"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.472934112Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.483449887Z","message":{"role":"assistant","content":" Main"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.493961105Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.504463114Z","message":{"role":"assistant","content":" source"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.514975995Z","message":{"role":"assistant","content":" file"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.525472033Z","message":{"role":"assistant","content":" containing"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.536039436Z","message":{"role":"assistant","content":" functions"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.546578095Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.557113127Z","message":{"role":"assistant","content":" code"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.56760625Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.578205203Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.588654633Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.599216346Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.609794349Z","message":{"role":"assistant","content":"data"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.620348366Z","message":{"role":"assistant","content":"/"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.630855996Z","message":{"role":"assistant","content":"**:"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.64152437Z","message":{"role":"assistant","content":" Directory"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.652007033Z","message":{"role":"assistant","content":" for"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.662585246Z","message":{"role":"assistant","content":" datasets"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.673063461Z","message":{"role":"assistant","content":" used"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.683632226Z","message":{"role":"assistant","content":" by"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.694133505Z","message":{"role":"assistant","content":" the"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.70468612Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.715199992Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.725757275Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.736291716Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.74684327Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.757412396Z","message":{"role":"assistant","content":"doc"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.767969259Z","message":{"role":"assistant","content":"/"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.778469776Z","message":{"role":"assistant","content":"**:"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.789084027Z","message":{"role":"assistant","content":" Documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.799617767Z","message":{"role":"assistant","content":" directory"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.810137539Z","message":{"role":"assistant","content":" with"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.820694503Z","message":{"role":"assistant","content":" vignette"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.831273818Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.841817086Z","message":{"role":"assistant","content":" help"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.852364341Z","message":{"role":"assistant","content":" files"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.862905804Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.873486723Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.884027055Z","message":{"role":"assistant","content":" other"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.894585972Z","message":{"role":"assistant","content":" user"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.905100665Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.915694899Z","message":{"role":"assistant","content":"facing"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.926188443Z","message":{"role":"assistant","content":" materials"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.936740868Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.94729174Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.957841068Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.968368636Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.978919799Z","message":{"role":"assistant","content":"src"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:55.989450041Z","message":{"role":"assistant","content":"/"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.000023375Z","message":{"role":"assistant","content":"**:"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.010552637Z","message":{"role":"assistant","content":" Additional"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.021099742Z","message":{"role":"assistant","content":" source"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.03169119Z","message":{"role":"assistant","content":" code"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.042248093Z","message":{"role":"assistant","content":" if"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.052779437Z","message":{"role":"assistant","content":" needed"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.063316834Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.07383799Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.084406876Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.09498602Z","message":{"role":"assistant","content":"3"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.10556193Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.116148027Z","message":{"role":"assistant","content":" Documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.126698779Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.137220156Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.147838885Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.158392773Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.168943164Z","message":{"role":"assistant","content":"Vig"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.179564277Z","message":{"role":"assistant","content":"nette"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.190084381Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.200688343Z","message":{"role":"assistant","content":" Detailed"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.21121044Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.221774267Z","message":{"role":"assistant","content":" user"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.232319819Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.242900016Z","message":{"role":"assistant","content":"friendly"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.253435539Z","message":{"role":"assistant","content":" documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.264063135Z","message":{"role":"assistant","content":" of"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.274590652Z","message":{"role":"assistant","content":" the"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.28513404Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.295672739Z","message":{"role":"assistant","content":"'"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.306236074Z","message":{"role":"assistant","content":"s"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.31675751Z","message":{"role":"assistant","content":" functionality"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.327356172Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.337866718Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.348394487Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.358966959Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.369529923Z","message":{"role":"assistant","content":"Help"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.380107265Z","message":{"role":"assistant","content":" files"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.3907126Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.401367958Z","message":{"role":"assistant","content":" Short"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.411959787Z","message":{"role":"assistant","content":" summaries"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.422536938Z","message":{"role":"assistant","content":" of"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.43308801Z","message":{"role":"assistant","content":" functions"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.443667436Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.454241752Z","message":{"role":"assistant","content":" objects"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.464829643Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.475435428Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.486019734Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.496592036Z","message":{"role":"assistant","content":" **"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.507162113Z","message":{"role":"assistant","content":"Rd"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.517712745Z","message":{"role":"assistant","content":" file"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.528274728Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.538869732Z","message":{"role":"assistant","content":" Package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.549449178Z","message":{"role":"assistant","content":" description"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.560015529Z","message":{"role":"assistant","content":" with"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.570631274Z","message":{"role":"assistant","content":" author"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.581149183Z","message":{"role":"assistant","content":" information"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.591733367Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.602294729Z","message":{"role":"assistant","content":" dependencies"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.612950197Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.623541897Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.634086606Z","message":{"role":"assistant","content":" license"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.644682162Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.655248303Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.665809003Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.676393859Z","message":{"role":"assistant","content":"4"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.686979847Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.697548542Z","message":{"role":"assistant","content":" Testing"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.708135111Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.71872175Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.729272582Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.739848872Z","message":{"role":"assistant","content":" Unit"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.750432776Z","message":{"role":"assistant","content":" tests"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.761036336Z","message":{"role":"assistant","content":" should"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.771585014Z","message":{"role":"assistant","content":" cover"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.782194316Z","message":{"role":"assistant","content":" all"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.792737654Z","message":{"role":"assistant","content":" critical"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.803320826Z","message":{"role":"assistant","content":" functions"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.813843916Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.824419605Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.834989773Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.84560211Z","message":{"role":"assistant","content":" Integration"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.856159555Z","message":{"role":"assistant","content":" tests"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.866723301Z","message":{"role":"assistant","content":" should"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.877286785Z","message":{"role":"assistant","content":" demonstrate"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.887895818Z","message":{"role":"assistant","content":" functionality"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.898479932Z","message":{"role":"assistant","content":" in"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.909072622Z","message":{"role":"assistant","content":" a"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.91963209Z","message":{"role":"assistant","content":" realistic"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.930218249Z","message":{"role":"assistant","content":" setting"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.94078989Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.951404651Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.96195369Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.972582628Z","message":{"role":"assistant","content":" Documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.983107992Z","message":{"role":"assistant","content":" should"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:56.99370988Z","message":{"role":"assistant","content":" be"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.004272274Z","message":{"role":"assistant","content":" tes"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.014842962Z","message":{"role":"assistant","content":"table"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.025409354Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.036018155Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.046652092Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.057275612Z","message":{"role":"assistant","content":"5"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.067917184Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.078532026Z","message":{"role":"assistant","content":" Submission"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.089128645Z","message":{"role":"assistant","content":" Process"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.09971357Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.110363438Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.1209888Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.131641664Z","message":{"role":"assistant","content":" Submit"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.142325446Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.152970735Z","message":{"role":"assistant","content":" through"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.163607429Z","message":{"role":"assistant","content":" Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.174199869Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.184879123Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.195462266Z","message":{"role":"assistant","content":" manager"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.206065746Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.216682071Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.227284511Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.23790329Z","message":{"role":"assistant","content":" Include"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.248534142Z","message":{"role":"assistant","content":" source"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.259141441Z","message":{"role":"assistant","content":" code"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.26977594Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.280398107Z","message":{"role":"assistant","content":" documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.290998932Z","message":{"role":"assistant","content":","},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.301590571Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.312201055Z","message":{"role":"assistant","content":" test"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.322826046Z","message":{"role":"assistant","content":" results"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.333471095Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.344079245Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.354707883Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.365295233Z","message":{"role":"assistant","content":" Provide"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.375926406Z","message":{"role":"assistant","content":" contact"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.386537762Z","message":{"role":"assistant","content":" information"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.397128789Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.407810137Z","message":{"role":"assistant","content":" any"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.418423246Z","message":{"role":"assistant","content":" relevant"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.429043609Z","message":{"role":"assistant","content":" details"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.439703285Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.450319511Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.46097023Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.471539126Z","message":{"role":"assistant","content":"6"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.482204984Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.492834464Z","message":{"role":"assistant","content":" Review"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.503482369Z","message":{"role":"assistant","content":" Process"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.514050403Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.524687427Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.535293242Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.545930877Z","message":{"role":"assistant","content":" Package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.556502608Z","message":{"role":"assistant","content":" undergoes"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.567214433Z","message":{"role":"assistant","content":" review"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.577793719Z","message":{"role":"assistant","content":" by"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.588456552Z","message":{"role":"assistant","content":" Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.599027822Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.609767799Z","message":{"role":"assistant","content":" developers"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.620323981Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.630959512Z","message":{"role":"assistant","content":" community"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.641729277Z","message":{"role":"assistant","content":" members"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.652338148Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.662983017Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.673565467Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.684250612Z","message":{"role":"assistant","content":" Feedback"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.694876696Z","message":{"role":"assistant","content":" is"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.705545619Z","message":{"role":"assistant","content":" provided"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.716163418Z","message":{"role":"assistant","content":" on"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.726786405Z","message":{"role":"assistant","content":" any"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.737458345Z","message":{"role":"assistant","content":" issues"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.748128702Z","message":{"role":"assistant","content":" or"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.758758031Z","message":{"role":"assistant","content":" suggestions"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.769482119Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.780110917Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.790765755Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.80141893Z","message":{"role":"assistant","content":"7"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.812066223Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.822722464Z","message":{"role":"assistant","content":" Acceptance"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.833375718Z","message":{"role":"assistant","content":" Criteria"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.844046466Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.854693148Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.865352353Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.876018963Z","message":{"role":"assistant","content":" Functionality"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.88666226Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.897336133Z","message":{"role":"assistant","content":" robustness"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.90799096Z","message":{"role":"assistant","content":" of"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.918700301Z","message":{"role":"assistant","content":" code"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.929356852Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.939994777Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.950660986Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.961306586Z","message":{"role":"assistant","content":" Comprehensive"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.971997672Z","message":{"role":"assistant","content":" documentation"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.982618937Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:57.99325577Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.003881503Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.014585714Z","message":{"role":"assistant","content":" Effective"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.025222477Z","message":{"role":"assistant","content":" testing"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.035929293Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.046555777Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.05717617Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.067935895Z","message":{"role":"assistant","content":" Ad"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.078617202Z","message":{"role":"assistant","content":"herence"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.089319339Z","message":{"role":"assistant","content":" to"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.099969026Z","message":{"role":"assistant","content":" Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.110710097Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.121323727Z","message":{"role":"assistant","content":" standards"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.132019071Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.142798462Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.153442891Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.164107908Z","message":{"role":"assistant","content":"8"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.174772924Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.185462427Z","message":{"role":"assistant","content":" Post"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.196168421Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.206869335Z","message":{"role":"assistant","content":"Acceptance"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.217568036Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.228218215Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.238843026Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.249541555Z","message":{"role":"assistant","content":" Package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.260203797Z","message":{"role":"assistant","content":" becomes"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.270881208Z","message":{"role":"assistant","content":" available"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.281515626Z","message":{"role":"assistant","content":" through"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.292235076Z","message":{"role":"assistant","content":" Bio"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.302900814Z","message":{"role":"assistant","content":"conductor"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.313547275Z","message":{"role":"assistant","content":" repositories"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.324159634Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.334836792Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.345510766Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.356176915Z","message":{"role":"assistant","content":" Developers"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.366855347Z","message":{"role":"assistant","content":" are"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.377494155Z","message":{"role":"assistant","content":" responsible"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.388157939Z","message":{"role":"assistant","content":" for"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.398884963Z","message":{"role":"assistant","content":" maintenance"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.409600424Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.420306569Z","message":{"role":"assistant","content":" updates"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.431021569Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.441798137Z","message":{"role":"assistant","content":"\n\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.452502287Z","message":{"role":"assistant","content":"**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.463286488Z","message":{"role":"assistant","content":"Additional"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.473973065Z","message":{"role":"assistant","content":" Guidelines"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.484696302Z","message":{"role":"assistant","content":":**"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.495470865Z","message":{"role":"assistant","content":"\n\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.506190865Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.516952905Z","message":{"role":"assistant","content":" Consider"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.527661123Z","message":{"role":"assistant","content":" the"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.538349655Z","message":{"role":"assistant","content":" target"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.549116182Z","message":{"role":"assistant","content":" audience"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.559868222Z","message":{"role":"assistant","content":" when"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.570613812Z","message":{"role":"assistant","content":" designing"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.581309335Z","message":{"role":"assistant","content":" the"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.592022964Z","message":{"role":"assistant","content":" package"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.602817845Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.613554477Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.624285749Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.635039191Z","message":{"role":"assistant","content":" Use"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.645797725Z","message":{"role":"assistant","content":" consistent"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.656502957Z","message":{"role":"assistant","content":" coding"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.667251591Z","message":{"role":"assistant","content":" practices"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.677948127Z","message":{"role":"assistant","content":" and"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.688684699Z","message":{"role":"assistant","content":" design"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.699447961Z","message":{"role":"assistant","content":" patterns"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.710150949Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.72088727Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.731662604Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.742366745Z","message":{"role":"assistant","content":" Keep"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.753126581Z","message":{"role":"assistant","content":" dependencies"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.76384074Z","message":{"role":"assistant","content":" to"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.774554558Z","message":{"role":"assistant","content":" a"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.78525379Z","message":{"role":"assistant","content":" minimum"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.796010118Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.806727324Z","message":{"role":"assistant","content":"\n"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.817483702Z","message":{"role":"assistant","content":"-"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.828200156Z","message":{"role":"assistant","content":" Seek"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.8389225Z","message":{"role":"assistant","content":" feedback"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.849674621Z","message":{"role":"assistant","content":" from"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.860437402Z","message":{"role":"assistant","content":" other"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.87112911Z","message":{"role":"assistant","content":" developers"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.88184928Z","message":{"role":"assistant","content":" before"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.8926751Z","message":{"role":"assistant","content":" submission"},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.903393397Z","message":{"role":"assistant","content":"."},"done":false}
+{"model":"bioc-reviewer","created_at":"2024-04-19T16:33:58.914743524Z","message":{"role":"assistant","content":""},"done":true,"total_duration":4554502647,"load_duration":3424281,"prompt_eval_duration":13465000,"eval_count":414,"eval_duration":4405432000}
