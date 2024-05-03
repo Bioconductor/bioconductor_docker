@@ -277,6 +277,8 @@ jobs:
         echo "Bioconductor Version: ${{ steps.defs.outputs.biocver }}"
         if [ "${{ steps.defs.outputs.rver }}" == "devel" ]; then
           bash .github/scripts/devel_or_patched_rversion.sh "${{ steps.defs.outputs.biocver }}" "rocker-versioned2/dockerfiles/cuda_${{ steps.defs.outputs.rver }}.Dockerfile"
+          bash .github/scripts/devel_or_patched_rversion.sh "${{ steps.defs.outputs.biocver }}" "rocker-versioned2/dockerfiles/ml_${{ steps.defs.outputs.rver }}.Dockerfile"
+          bash .github/scripts/devel_or_patched_rversion.sh "${{ steps.defs.outputs.biocver }}" "rocker-versioned2/dockerfiles/ml-verse_${{ steps.defs.outputs.rver }}.Dockerfile"
         fi
 
     - name: Set up Docker Buildx
