@@ -12,4 +12,6 @@ sed -i "s#install_quarto.sh#install_quarto.sh || true#g" rocker-versioned2/docke
 echo "Bioconductor Version: $BIOCVER"
 if [ "$RVER" == "devel" ]; then
   bash .github/scripts/devel_or_patched_rversion.sh "$BIOCVER" "rocker-versioned2/dockerfiles/r-ver_$RVER.Dockerfile"
+  bash .github/scripts/devel_or_patched_rversion.sh "$BIOCVER" "rocker-versioned2/dockerfiles/rstudio_$RVER.Dockerfile"
+  bash .github/scripts/devel_or_patched_rversion.sh "$BIOCVER" "rocker-versioned2/dockerfiles/tidyverse_$RVER.Dockerfile"
 fi
