@@ -7,7 +7,7 @@ ARCH=$4
 git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
 sed -i "s#rocker/r-ver:$RVER#$ROCKERPREF-r-ver:$RVER-$ARCH#g" rocker-versioned2/dockerfiles/rstudio_$RVER.Dockerfile
 sed -i "s#rocker/rstudio:$RVER#$ROCKERPREF-rstudio:$RVER-$ARCH#g" rocker-versioned2/dockerfiles/tidyverse_$RVER.Dockerfile
-sed -i "s#install_quarto.sh#install_quarto.sh || true#g" rocker-versioned2/dockerfiles/rstudio_$RVER.Dockerfile
+sed -i "s#RUN /rocker_scripts/install_quarto.sh#RUN /rocker_scripts/install_quarto.sh || true#g" rocker-versioned2/dockerfiles/rstudio_$RVER.Dockerfile
 
 echo "Bioconductor Version: $BIOCVER"
 if [ "$RVER" == "devel" ]; then
