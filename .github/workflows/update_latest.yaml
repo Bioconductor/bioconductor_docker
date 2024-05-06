@@ -38,6 +38,7 @@ jobs:
       run: |
         OWNER_REPO="${{steps.defs.outputs.repo}}"
         docker pull $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}}
+        docker pull $OWNER_REPO/${{matrix.image}}:latest
         IMAGEDIFF=$(diff <(docker inspect $OWNER_REPO/${{matrix.image}}:latest) <(docker inspect $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}}))
         if [ -z "$IMAGEDIFF" ]; then
           echo '"latest" tag is already "${{steps.defs.outputs.releasetag}}"'
