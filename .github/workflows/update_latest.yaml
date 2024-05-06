@@ -36,6 +36,7 @@ jobs:
 
     - name: Update latest tag
       run: |
+        OWNER_REPO="${{steps.defs.outputs.repo}}"
         docker pull $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}}
         IMAGEDIFF=$(diff <(docker inspect $OWNER_REPO/${{matrix.image}}:latest) <(docker inspect $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}}))
         if [ -z "$IMAGEDIFF" ]; then
