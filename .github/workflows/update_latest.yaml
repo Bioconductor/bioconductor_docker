@@ -7,12 +7,19 @@ on:
 
 jobs:
   update_latest:
+    name: "Update latest tag"
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ['r-ver', 'bioconductor', 'bioconductor_docker', 'tidyverse', 'ml-verse', 'shiny']
     runs-on: ubuntu-latest
     steps:
     - name: Set defaults for schedule
       id: defs
       run: |
-        echo releasetag=$(curl https://hub.docker.com/v2/repositories/bioconductor/bioconductor/tags?page_size=1000 | jq '.results[].name' | tr -d '"' | grep -v "-" | sort -n | grep RELEASE | tail -n 1)  >> $GITHUB_OUTPUT
+        OWNER_REPO="bioconductor"
+        echo repo="$OWNER_REPO"  >> $GITHUB_OUTPUT
+        echo releasetag=$(curl https://hub.docker.com/v2/repositories/$OWNER_REPO/${{matrix.image}}/tags?page_size=1000 | jq '.results[].name' | tr -d '"' | grep -v "-" | sort -n | grep RELEASE | tail -n 1)  >> $GITHUB_OUTPUT
 
     - name: Login to GHCR
       uses: docker/login-action@v2
@@ -29,16 +36,13 @@ jobs:
 
     - name: Update latest tag
       run: |
-        docker pull bioconductor/bioconductor:${{steps.defs.outputs.releasetag}}
-        IMAGEDIFF=$(diff <(docker inspect bioconductor/bioconductor:latest) <(docker inspect bioconductor/bioconductor:${{steps.defs.outputs.releasetag}}))
+        docker pull $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}}
+        IMAGEDIFF=$(diff <(docker inspect $OWNER_REPO/${{matrix.image}}:latest) <(docker inspect $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}}))
         if [ -z "$IMAGEDIFF" ]; then
           echo '"latest" tag is already "${{steps.defs.outputs.releasetag}}"'
         else
-          cat << "EOF" > /tmp/latest_tag_list
-          bioconductor/bioconductor:latest
-          bioconductor/bioconductor_docker:latest
-          ghcr.io/bioconductor/bioconductor:latest
-          ghcr.io/bioconductor/bioconductor_docker:latest
-          EOF
-          cat /tmp/latest_tag_list | xargs -i bash -c 'docker tag bioconductor/bioconductor:${{steps.defs.outputs.releasetag}} {} && docker push {}'
+          docker tag $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}} $OWNER_REPO/${{matrix.image}}:latest
+          docker push $OWNER_REPO/${{matrix.image}}:latest
+          docker tag $OWNER_REPO/${{matrix.image}}:${{steps.defs.outputs.releasetag}} ghcr.io/$OWNER_REPO/${{matrix.image}}:latest
+          docker push ghcr.io/$OWNER_REPO/${{matrix.image}}:latest
         fi
