@@ -14,10 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: '4.3.2', armtag: '4.3.2', outname: 'r-ver'}
-          - {image: 'rocker/rstudio', amdtag: '4.3.2', armtag: '4.3.2', outname: 'bioconductor_docker'}
-          - {image: 'rocker/tidyverse', amdtag: '4.3.2', armtag: 'N/A', outname: 'tidyverse'}
-          - {image: 'rocker/ml-verse', amdtag: '4.3.2', armtag: 'N/A', outname: 'ml-verse'}
+          - {image: 'rocker/r-ver', amdtag: '4.3.3', armtag: '4.3.3', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', amdtag: '4.3.3', armtag: '4.3.3', outname: 'bioconductor_docker'}
+          - {image: 'rocker/tidyverse', amdtag: '4.3.3', armtag: 'N/A', outname: 'tidyverse'}
+          - {image: 'rocker/ml-verse', amdtag: '4.3.3', armtag: 'N/A', outname: 'ml-verse'}
 
     name: Build branch images
     runs-on: ubuntu-latest
