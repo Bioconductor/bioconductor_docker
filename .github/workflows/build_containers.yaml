@@ -14,8 +14,8 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'ghcr.io/bioconductor/rocker-r-ver', amdtag: 'devel-amd64', armtag: 'devel-arm64', outname: 'r-ver'}
-          - {image: 'ghcr.io/bioconductor/rocker-rstudio', amdtag: 'devel-amd64', armtag: 'devel-arm64', outname: 'bioconductor_docker'}
+          - {image: 'rocker/r-ver', amdtag: '4.4.0', armtag: '4.4.0', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', amdtag: '4.4.0', armtag: '4.4.0', outname: 'bioconductor_docker'}
           - {image: 'ghcr.io/bioconductor/rocker-tidyverse', amdtag: 'devel-amd64', armtag: 'N/A', outname: 'tidyverse'}
           - {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', armtag: 'N/A', outname: 'ml-verse'}
           - {image: 'rocker/shiny', amdtag: 'latest', armtag: 'N/A', outname: 'shiny'}
