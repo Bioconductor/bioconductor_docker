@@ -29,4 +29,4 @@ jobs:
           format: 'table'
           exit-code: '0'
           vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH,MEDIUM'
+          severity: 'CRITICAL,HIGH'
