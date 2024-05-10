@@ -17,7 +17,7 @@ jobs:
           - {image: 'rocker/r-ver', amdtag: '4.4.0', armtag: '4.4.0', outname: 'r-ver'}
           - {image: 'rocker/rstudio', amdtag: '4.4.0', armtag: '4.4.0', outname: 'bioconductor_docker'}
           - {image: 'rocker/tidyverse', amdtag: '4.4.0', armtag: 'N/A', outname: 'tidyverse'}
-          - {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: '4.4.0-amd64', armtag: 'N/A', outname: 'ml-verse'}
+          - {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: '4.4.0', armtag: 'N/A', outname: 'ml-verse'}
           - {image: 'rocker/shiny', amdtag: 'latest', armtag: 'N/A', outname: 'shiny'}
 
     name: Build branch images
