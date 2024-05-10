@@ -4,27 +4,29 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
-  push:
-    branches:
-      - devel
-      - RELEASE_*
-
-env:
-
-  IMAGE_NAME: bioconductor/bioconductor_docker
 jobs:
-  
   scan-images:
-  
-    name: devel vulnerability scan
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ['r-ver', 'bioconductor_docker', 'tidyverse', 'ml-verse', 'shiny']
+
+    name: Scan container images
     runs-on: ubuntu-latest
-
     steps:
-    - name: Extract branch name
-      id: branch
-      run: echo "name=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
-
-    - uses: azure/container-scan@v0
-      name: devel scan
-      with:
-        image-name: ${{ env.IMAGE_NAME }}:${{ steps.branch.outputs.name }}
+      - name: Extract metadata for container image
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ github.repository_owner }}/${{ matrix.image }}
+          tags: |
+            type=raw,value={{branch}}
+  
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ steps.meta.outputs.tags }}'
+          format: 'table'
+          exit-code: '0'
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
