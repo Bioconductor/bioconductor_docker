@@ -28,7 +28,6 @@ or [Microsoft Azure Container Instances](https://azure.microsoft.com/en-us/servi
 - [Modifying Image Container](#modify)
 - [Singularity](#singularity)
 - [Microsoft Azure Container Instances](#msft)
-  * [Using containers hosted on Microsoft Container Registry](#mcr)
   * [Use Azure Container Instances to run bioconductor images on-demand on Azure](#aci)
 - [How to contribute](#contribute)
 - [Deprecation Notice](#deprecation)
@@ -460,54 +459,12 @@ containers and their usage https://www.rocker-project.org/use/singularity/.
 ## Microsoft Azure Container Instances
 
 If you are a Microsoft Azure user, you have an option to run your
-containers using images hosted on [Microsoft Container Registry](https://github.com/microsoft/ContainerRegistry).
-
-> Microsoft Container Registry (MCR) is the primary Registry for all Microsoft Published docker images that offers a reliable and trustworthy delivery of container images with a syndicated catalog
-
-<a name="mcr"></a>
-### Using containers hosted on Microsoft Container Registry
-
-You can learn more about the `bioconductor_docker` image hosted on
-Micosoft Container Registry
-[here](https://hub.docker.com/_/microsoft-bioconductor/).
-
-Pull the `bioconductor_docker` image from Microsoft Container
-Registry, specifying your `tag` of choice.  Check
-[here](https://hub.docker.com/_/microsoft-bioconductor-bioconductor-docker)
-for the list of tags under "Full Tag Listing":
-
-	docker pull mcr.microsoft.com/bioconductor/bioconductor_docker:<tag>
-
-To pull the latest image:
-
-	docker pull mcr.microsoft.com/bioconductor/bioconductor_docker:latest
-
-**Example: Run RStudio interactively from your docker container**
-
-To run RStudio in a web browser session, run the following and access
-it from `127.0.0.1:8787`. The default user name is "rstudio" and you
-can specify your password as the example below (here, it is set to
-'bioc'):
-
-	docker run --name bioconductor_docker_rstudio \
-		-v ~/host-site-library:/usr/local/lib/R/host-site-library \
-		-e PASSWORD='bioc'                               \
-		-p 8787:8787                                     \
-		mcr.microsoft.com/bioconductor/bioconductor_docker:latest
-
-To run RStudio on your terminal:
-
-	docker run --name bioconductor_docker_rstudio \
-		-it                                            \
-		-v ~/host-site-library:/usr/local/lib/R/host-site-library \
-		-e PASSWORD='bioc'                               \
-		-p 8787:8787                                     \
-		mcr.microsoft.com/bioconductor/bioconductor_docker:latest R
+containers using images hosted on Dockerhub.
 
 <p class="back_to_top">[ <a href="#top">Back to top</a> ]</p>
 
 <a name="aci"></a>
-### Use Azure Container Instances to run bioconductor images on-demand on Azure
+## Use Azure Container Instances to run bioconductor images on-demand on Azure
 
 [Azure Container Instances or ACI](https://azure.microsoft.com/en-us/services/container-instances/#features)
 provide a way to run Docker containers on-demand in a managed,
@@ -542,19 +499,19 @@ Follow [this
 tutorial](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart)
 to get familiar with Azure Container Instances.
 
-To run the bioconductor image hosted on Microsoft Container Registry
-or MCR, create a new resource group in your Azure subscription. Then
+To run the bioconductor image hosted on Dockerhub, create a new 
+resource group in your Azure subscription. Then
 run the following command using Azure CLI. You can customize any or
 all of the inputs. This command is adapted to run on an Ubuntu
 machine:
 
 	az container create \
 		--resource-group resourceGroupName \
-		--name mcr-bioconductor \
-		--image mcr.microsoft.com/bioconductor/bioconductor_docker \
+		--name aci-bioconductor \
+		--image bioconductor/bioconductor_docker \
 		--cpu 2 \
 		--memory 4 \
-		--dns-name-label mcr-bioconductor \
+		--dns-name-label aci-bioconductor \
 		--ports 8787 \
 		--environment-variables 'PASSWORD'='bioc'
 
@@ -562,7 +519,7 @@ When completed, run this command to get the fully qualified domain name(FQDN):
 
 	az container show \
 		--resource-group resourceGroupName \
-		--name mcr-bioconductor \
+		--name aci-bioconductor \
 		--query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" \
 		--out table
 
@@ -640,9 +597,9 @@ Here is an example command to mount an Azure file share to an ACI running biocon
 
 	az container create \
 		--resource-group resourceGroupName \
-		--name mcr-bioconductor-fs \
-		--image mcr.microsoft.com/bioconductor/bioconductor_docker \
-		--dns-name-label mcr-bioconductor-fs \
+		--name aci-bioconductor-fs \
+		--image bioconductor/bioconductor_docker \
+		--dns-name-label aci-bioconductor-fs \
 		--cpu 2 \
 		--memory 4 \
 		--ports 8787 \
@@ -656,7 +613,7 @@ When completed, run this command to get the fully qualified domain name or FQDN:
 
 	az container show \
 		--resource-group resourceGroupName \
-		--name mcr-bioconductor-fs \
+		--name aci-bioconductor-fs \
 		--query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" \
 		--out table
 
