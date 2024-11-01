@@ -271,6 +271,7 @@ jobs:
       run: |
         ## git clone rocker
         git clone --depth 1 https://github.com/rocker-org/rocker-versioned2
+        sed -i 's#11.8.0-cudnn8-devel-ubuntu22.04#12.6.2-cudnn-devel-ubuntu24.04#g' rocker-versioned2/dockerfiles/cuda_${{ steps.defs.outputs.rver }}.Dockerfile
         sed -i 's#rocker/cuda:${{ steps.defs.outputs.rver }}#${{ steps.defs.outputs.rockerintermediateprefix }}-cuda:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/ml_${{ steps.defs.outputs.rver }}.Dockerfile
         sed -i 's#rocker/ml:${{ steps.defs.outputs.rver }}#${{ steps.defs.outputs.rockerintermediateprefix }}-ml:${{ steps.defs.outputs.rver }}-${{ matrix.arch }}#g' rocker-versioned2/dockerfiles/ml-verse_${{ steps.defs.outputs.rver }}.Dockerfile
 
