@@ -93,7 +93,7 @@ apt-get install -y --no-install-recommends \
 
 ## Databases and other software
 apt-get install -y --no-install-recommends \
-	sqlite \
+	sqlite3 \
 	openmpi-bin \
 	mpi-default-bin \
 	openmpi-common \
