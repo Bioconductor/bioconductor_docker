@@ -135,7 +135,7 @@ apt-get -y --no-install-recommends install \
 	ocl-icd-opencl-dev
 
 ## Python installations
-pip3 install scikit-learn pandas pyyaml
+pip3 install scikit-learn pandas pyyaml --break-system-packages
 
 ## libgdal is needed for sf
 apt-get install -y --no-install-recommends \
