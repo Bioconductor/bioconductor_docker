@@ -135,7 +135,13 @@ apt-get -y --no-install-recommends install \
 	ocl-icd-opencl-dev
 
 ## Python installations
-pip3 install scikit-learn pandas pyyaml --break-system-packages || pip3 install scikit-learn pandas pyyaml
+# pip3 install scikit-learn pandas pyyaml --break-system-packages || pip3 install scikit-learn pandas pyyaml
+# Replacing old pip installation above with apt install for system-wide installations of packages given the
+# new restrictions breaking system-wide pip install
+apt-get -y --no-install-recommends install \
+        python3-pandas \
+	python3-yaml \
+        python3-sklearn
 
 ## libgdal is needed for sf
 apt-get install -y --no-install-recommends \
