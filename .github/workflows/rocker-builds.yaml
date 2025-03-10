@@ -31,7 +31,7 @@ jobs:
     - name: Bump R version
       id: rbump
       run: |
-        curl https://hub.docker.com/v2/repositories/${{steps.defs.outputs.check-rocker-image}}/tags?page_size=100&page=1&ordering=last_updated | jq '.results[].name' | tr -d '"' > /tmp/taglist
+        curl https://hub.docker.com/v2/repositories/${{steps.defs.outputs.check-rocker-image}}/tags?page_size=1000 | jq '.results[].name' | tr -d '"' > /tmp/taglist
         curl https://raw.githubusercontent.com/${{ github.repository }}/${{steps.defs.outputs.release-tag}}/.github/workflows/build_containers.yaml | grep 'amdtag' | awk -F"'" '/amdtag:/ {print $4}' | uniq > /tmp/currtag
         RELEASE_R_VER=$(curl https://bioconductor.org/config.yaml | yq e '.r_ver_for_bioc_ver."${{steps.defs.outputs.releasebiocver}}"')
         LATEST_TAG=$(cat /tmp/taglist | grep "$RELEASE_R_VER" | sort -n | tail -n 1)
