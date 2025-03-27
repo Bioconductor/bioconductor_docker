@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv bash
+env > /asdf
+
+# Pass some system environment variables to RStudio environment
+echo "Sys.setenv(DEBUG=\"$DEBUG\")
+Sys.setenv(GALAXY_WEB_PORT=\"$GALAXY_WEB_PORT\")
+Sys.setenv(CORS_ORIGIN=\"$CORS_ORIGIN\")
+Sys.setenv(DOCKER_PORT=\"$DOCKER_PORT\")
+Sys.setenv(API_KEY=\"$API_KEY\")
+Sys.setenv(HISTORY_ID=\"$HISTORY_ID\")
+Sys.setenv(REMOTE_HOST=\"$REMOTE_HOST\")
+Sys.setenv(GALAXY_URL=\"$GALAXY_URL\")
+" >> /usr/local/lib/R/etc/Rprofile.site
+
+# And nginx in foreground mode.
+nginx -g 'daemon off;'
