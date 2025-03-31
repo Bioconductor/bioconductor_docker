@@ -237,6 +237,7 @@ jobs:
       - name: Create manifest list and push
         shell: bash
         run: |
+          set -x
           # Prepare tags
           echo '${{ steps.meta2.outputs.tags }}' > /tmp/tags
           cat /tmp/tags | xargs -i bash -c 'printf "%s" "-t {} " >> /tmp/tagargs'
@@ -266,6 +267,8 @@ jobs:
               DIGESTS_ARCH=$(cd /tmp/digests/$eachdir && find . -type f -exec echo "$CONTAINERNAME@sha256{}" \; | sed 's/\.\//:/')
               DIGESTS="$DIGESTS $DIGESTS_ARCH"
           done
+          echo "$TAG_ARGS"
+          echo "$DIGESTS"
           docker buildx imagetools create $TAG_ARGS $DIGESTS
 
       - name: Inspect images
