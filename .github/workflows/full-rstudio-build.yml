@@ -12,8 +12,8 @@ on:
         default: "3.21"
       outname:
         default: "bioconductor_docker"
-  schedule:
-    - cron: '0 18 * * 5'
+  # schedule:
+  #   - cron: '0 18 * * 5'
 
 jobs:
   bump:
