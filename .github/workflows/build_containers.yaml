@@ -234,42 +234,47 @@ jobs:
           tags: |
             type=raw,value={{branch}}
 
-      - name: Create manifest list and push
-        shell: bash
-        run: |
-          set -x
-          # Prepare tags
-          echo '${{ steps.meta2.outputs.tags }}' > /tmp/tags
-          cat /tmp/tags | xargs -i bash -c 'printf "%s" "-t {} " >> /tmp/tagargs'
-          TAG_ARGS="$(cat /tmp/tagargs)"
-          TAGS="$(cat /tmp/tags)"
-
-          R_VER=$(docker pull ${{ matrix.base.image }}:${{ matrix.base.amdtag }} 2>&1 > /dev/null && \
-                  docker inspect ${{ matrix.base.image }}:${{ matrix.base.amdtag }} | \
-                  jq -r '.[].Config.Env[]|select(match("^R_VERSION"))|.[index("=")+1:]')
-          if [ ! -z "$R_VER" ]; then
-            for tag in $TAGS; do
-              TAG_ARGS="$TAG_ARGS -t ${tag}-R-${R_VER} -t ${tag}-r-${R_VER}"
+      - name: Create manifest list and push with retries
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 10
+          shell: bash
+          command: |
+            set -x
+            # Prepare tags
+            echo '${{ steps.meta2.outputs.tags }}' > /tmp/tags
+            rm /tmp/tagargs || true
+            cat /tmp/tags | xargs -i bash -c 'printf "%s" "-t {} " >> /tmp/tagargs'
+            TAG_ARGS="$(cat /tmp/tagargs)"
+            TAGS="$(cat /tmp/tags)"
+  
+            R_VER=$(docker pull ${{ matrix.base.image }}:${{ matrix.base.amdtag }} 2>&1 > /dev/null && \
+                    docker inspect ${{ matrix.base.image }}:${{ matrix.base.amdtag }} | \
+                    jq -r '.[].Config.Env[]|select(match("^R_VERSION"))|.[index("=")+1:]')
+            if [ ! -z "$R_VER" ]; then
+              for tag in $TAGS; do
+                TAG_ARGS="$TAG_ARGS -t ${tag}-R-${R_VER} -t ${tag}-r-${R_VER}"
+              done
+            fi
+  
+            # Add alternative tags without _docker in name
+            if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
+              ALT_TAG=$(echo $TAG_ARGS | sed 's/_docker//g')
+              TAG_ARGS="$TAG_ARGS $ALT_TAG"
+            fi
+            
+            CONTAINERNAME=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $1}')
+  
+            # Create manifest list
+            DIGESTS=""
+            for eachdir in $(ls /tmp/digests); do
+                DIGESTS_ARCH=$(cd /tmp/digests/$eachdir && find . -type f -exec echo "$CONTAINERNAME@sha256{}" \; | sed 's/\.\//:/')
+                DIGESTS="$DIGESTS $DIGESTS_ARCH"
             done
-          fi
-
-          # Add alternative tags without _docker in name
-          if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
-            ALT_TAG=$(echo $TAG_ARGS | sed 's/_docker//g')
-            TAG_ARGS="$TAG_ARGS $ALT_TAG"
-          fi
-          
-          CONTAINERNAME=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $1}')
-
-          # Create manifest list
-          DIGESTS=""
-          for eachdir in $(ls /tmp/digests); do
-              DIGESTS_ARCH=$(cd /tmp/digests/$eachdir && find . -type f -exec echo "$CONTAINERNAME@sha256{}" \; | sed 's/\.\//:/')
-              DIGESTS="$DIGESTS $DIGESTS_ARCH"
-          done
-          echo "$TAG_ARGS"
-          echo "$DIGESTS"
-          docker buildx imagetools create $TAG_ARGS $DIGESTS
+            echo "$TAG_ARGS"
+            echo "$DIGESTS"
+            docker buildx imagetools create $TAG_ARGS $DIGESTS
 
       - name: Inspect images
         run: |
