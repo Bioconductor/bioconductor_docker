@@ -1,4 +1,4 @@
-name: Build container image for GHCR
+name: Build container images for GHCR and Dockerhub
 on:
   push:
     branches:
