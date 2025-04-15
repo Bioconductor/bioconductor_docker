@@ -1,0 +1,91 @@
+name: Build Singularity Images
+
+on:
+  workflow_run:
+    workflows: ["Build container images for GHCR and Dockerhub"]
+    types:
+      - completed
+
+jobs:
+  build-singularity:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base:
+          - {image: 'ghcr.io/bioconductor/r-ver', outname: 'r-ver'}
+          - {image: 'ghcr.io/bioconductor/bioconductor', outname: 'bioconductor'}
+          - {image: 'ghcr.io/bioconductor/tidyverse', outname: 'tidyverse'}
+          - {image: 'ghcr.io/bioconductor/cuda', outname: 'cuda'}
+          - {image: 'ghcr.io/bioconductor/ml', outname: 'ml'}
+          - {image: 'ghcr.io/bioconductor/ml-verse', outname: 'ml-verse'}
+          - {image: 'ghcr.io/bioconductor/shiny', outname: 'shiny'}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Singularity deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+             autoconf \
+             automake \
+             cryptsetup \
+             fuse2fs \
+             git \
+             fuse \
+             libfuse-dev \
+             libseccomp-dev \
+             libtool \
+             pkg-config \
+             runc \
+             squashfs-tools \
+             squashfs-tools-ng \
+             uidmap \
+             wget \
+             zlib1g-dev \
+             libsubid-dev
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24.1
+
+      - name: Setup Singularity
+        run: |
+          export VERSION=4.3.0 && # adjust this as necessary \
+          wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-ce-${VERSION}.tar.gz && \
+          tar -xzf singularity-ce-${VERSION}.tar.gz && \
+          cd singularity-ce-${VERSION}
+          ./mconfig && \
+          make -C ./builddir && \
+          sudo make -C ./builddir install
+          
+      - name: Singularity build config
+        run: singularity buildcfg
+
+      - name: Get branch name
+        id: vars
+        shell: bash
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          PROCESSED_NAME="$BRANCH_NAME"
+          
+          if [[ $BRANCH_NAME == RELEASE_* ]]; then
+            PROCESSED_NAME=${BRANCH_NAME#RELEASE_}
+            PROCESSED_NAME=${PROCESSED_NAME//_/.}
+          fi
+          
+          echo "origbranch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "procbranch=$PROCESSED_NAME" >> $GITHUB_OUTPUT
+
+      - name: Build Singularity Image
+        run: |
+          singularity build --fakeroot \
+            "${{matrix.base.outname}}-$(date +%s).sif" \
+            docker://${{ matrix.base.image }}:${{steps.vars.origbranch}}
+
+      - name: Push to GitHub Packages
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ github.actor }} --password-stdin oras://ghcr.io
+          singularity push *.sif oras://ghcr.io/${{github.repository_owner}}/${{matrix.base.outname}}:${{steps.vars.origbranch}}
+          singularity push *.sif oras://ghcr.io/${{github.repository_owner}}/${{matrix.base.outname}}:${{steps.vars.procbranch}}
