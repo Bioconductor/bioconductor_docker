@@ -1,6 +1,7 @@
 name: Build Apptainer Images
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Build container images for GHCR and Dockerhub"]
     types:
