@@ -279,3 +279,86 @@ jobs:
       - name: Inspect images
         run: |
           cat /tmp/tags | xargs -i bash -c 'docker buildx imagetools inspect {}'
+
+  extensions:
+    needs: [merge]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Free root space
+        uses: almahmoud/free-root-space@main
+        with:
+          verbose: true
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to Dockerhub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Find extensions
+        id: find_extensions
+        run: |
+          echo "extensions=$(find extensions -name 'bioc-extension.yaml' | sort)" >> $GITHUB_OUTPUT
+
+      - name: Process extensions
+        run: |
+          mkdir -p /tmp/extension_builds
+          branch="${GITHUB_REF##*/}"
+          
+          for ext_file in $(echo "${{ steps.find_extensions.outputs.extensions }}"); do
+            ext_dir=$(dirname "$ext_file")
+            ext_name=$(basename "$ext_dir")
+            
+            echo "Processing extension: $ext_name from $ext_file"
+            
+            # Parse the YAML file to get outname and base image details
+            outname=$(grep -A2 outname "$ext_file" | grep -v outname | grep -v ":" | tr -d ' ' | tr -d '"' | tr -d "'")
+            base_image=$(grep -A2 image "$ext_file" | grep -v image | grep -v ":" | tr -d ' ' | tr -d '"' | tr -d "'")
+            
+            # Handle tags - could be a single tag or a list
+            tags=$(grep -A5 tag "$ext_file" | grep -v tag | grep -v ":" | tr -d ' ' | tr -d '"' | tr -d "'" | tr -d "{" | tr -d "}" | tr "," " ")
+            
+            if [ -z "$tags" ]; then
+              tags="$branch"
+            fi
+            
+            echo "Building extension $ext_name: $outname from $base_image with tags: $tags"
+            
+            # Process each tag
+            for tag in $tags; do
+              echo "Building for tag: $tag"
+              
+              # Check for Dockerfile in extension directory
+              if [ -f "$ext_dir/Dockerfile" ]; then
+                echo "Using extension Dockerfile at $ext_dir/Dockerfile"
+                
+                docker buildx build --platform linux/amd64 \
+                  -t "ghcr.io/${{ github.repository_owner }}/$outname:$tag" \
+                  -t "docker.io/${{ github.repository_owner }}/$outname:$tag" \
+                  --build-arg BASE_IMAGE=$base_image \
+                  --build-arg TAG=$tag \
+                  --push \
+                  "$ext_dir"
+                
+                echo "Successfully built and pushed $outname:$tag"
+              else
+                echo "No Dockerfile found for extension $ext_name"
+              fi
+            done
+          done
