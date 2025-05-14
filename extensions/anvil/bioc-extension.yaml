@@ -1,0 +1,6 @@
+container:
+  outname: anvil-rstudio
+  base:
+    image: us.gcr.io/broad-dsp-gcr-public/terra-jupyter-bioconductor
+    tag:
+      - "2.2.7"

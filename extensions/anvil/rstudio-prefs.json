@@ -1,0 +1,6 @@
+{
+    "save_workspace": "always",
+    "always_save_history": true,
+    "reuse_sessions_for_project_links": true,
+    "posix_terminal_shell": "bash"
+}
