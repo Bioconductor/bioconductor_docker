@@ -10,7 +10,7 @@ ENV BIOCONDUCTOR_NAME="bioconductor_docker-arm64"
 FROM ${BASE_IMAGE}:${amd64_tag} AS base-amd64
 # This will persist in final image
 ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=TRUE
-ENV BIOCONDUCTOR_NAME="bioconductor_docker-amd64"
+ENV BIOCONDUCTOR_NAME="bioconductor_docker"
 
 # Set automatically when building with --platform
 ARG TARGETARCH
