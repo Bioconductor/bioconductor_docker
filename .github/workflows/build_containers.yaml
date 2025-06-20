@@ -21,7 +21,7 @@ jobs:
           #- {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda'}
           #- {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml'}
           #- {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse'}
-          - {image: 'rocker/shiny', amdtag: '4.5.0', outname: 'shiny'}
+          - {image: 'rocker/shiny', amdtag: '4.5.1', outname: 'shiny'}
     steps:
       - uses: actions/checkout@v4
       
@@ -176,7 +176,7 @@ jobs:
           #- {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda', platforms: 'amd64'}
           #- {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml', platforms: 'amd64'}
           #- {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse', platforms: 'amd64'}
-          - {image: 'rocker/shiny', amdtag: '4.5.0', outname: 'shiny', platforms: 'amd64'}
+          - {image: 'rocker/shiny', amdtag: '4.5.1', outname: 'shiny', platforms: 'amd64'}
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
