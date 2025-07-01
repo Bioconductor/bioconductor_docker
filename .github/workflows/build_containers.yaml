@@ -248,6 +248,19 @@ jobs:
             cat /tmp/tags | xargs -i bash -c 'printf "%s" "-t {} " >> /tmp/tagargs'
             TAG_ARGS="$(cat /tmp/tagargs)"
             TAGS="$(cat /tmp/tags)"
+            
+            # Add version tags for RELEASE branches (e.g., RELEASE_3_21 -> 3.21)
+            for tag in $TAGS; do
+              if [[ "$tag" == *"RELEASE_"* ]]; then
+                # Extract the version number (e.g., RELEASE_3_21 -> 3.21)
+                VERSION=$(echo "$tag" | sed -E 's/.*RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
+                if [ ! -z "$VERSION" ]; then
+                  # Add the numeric version tag (e.g., 3.21)
+                  REGISTRY=$(echo "$tag" | cut -d':' -f1)
+                  TAG_ARGS="$TAG_ARGS -t ${REGISTRY}:${VERSION}"
+                fi
+              fi
+            done
   
             R_VER=$(docker pull ${{ matrix.base.image }}:${{ matrix.base.amdtag }} 2>&1 > /dev/null && \
                     docker inspect ${{ matrix.base.image }}:${{ matrix.base.amdtag }} | \
@@ -255,21 +268,59 @@ jobs:
             if [ ! -z "$R_VER" ]; then
               for tag in $TAGS; do
                 TAG_ARGS="$TAG_ARGS -t ${tag}-R-${R_VER} -t ${tag}-r-${R_VER}"
+                
+                # For RELEASE branches, also add version-R tags
+                if [[ "$tag" == *"RELEASE_"* ]]; then
+                  VERSION=$(echo "$tag" | sed -E 's/.*RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
+                  if [ ! -z "$VERSION" ]; then
+                    REGISTRY=$(echo "$tag" | cut -d':' -f1)
+                    TAG_ARGS="$TAG_ARGS -t ${REGISTRY}:${VERSION}-R-${R_VER} -t ${REGISTRY}:${VERSION}-r-${R_VER}"
+                  fi
+                fi
               done
             fi
   
             # Add alternative tags without _docker in name
             if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
-              ALT_TAG=$(echo $TAG_ARGS | sed 's/_docker//g')
-              TAG_ARGS="$TAG_ARGS $ALT_TAG"
+              for tag in $TAGS; do
+                # Extract registry and branch/version from tag
+                REGISTRY=$(echo "$tag" | cut -d':' -f1)
+                VERSION=$(echo "$tag" | cut -d':' -f2)
+                
+                # Create new registry without _docker suffix
+                NEW_REGISTRY=$(echo "$REGISTRY" | sed 's/_docker//g')
+                
+                # Add tag without _docker in name
+                TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${VERSION}"
+                
+                # If it's a release branch, also add the numeric version tag
+                if [[ "$VERSION" == RELEASE_* ]]; then
+                  NUM_VERSION=$(echo "$VERSION" | sed -E 's/RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
+                  if [ ! -z "$NUM_VERSION" ]; then
+                    TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${NUM_VERSION}"
+                  fi
+                fi
+                
+                # If R_VER exists, add R version tags for the non-_docker version
+                if [ ! -z "$R_VER" ]; then
+                  TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${VERSION}-R-${R_VER} -t ${NEW_REGISTRY}:${VERSION}-r-${R_VER}"
+                  
+                  # If it's a release branch, also add R version tags for numeric version
+                  if [[ "$VERSION" == RELEASE_* ]]; then
+                    NUM_VERSION=$(echo "$VERSION" | sed -E 's/RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
+                    if [ ! -z "$NUM_VERSION" ]; then
+                      TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${NUM_VERSION}-R-${R_VER} -t ${NEW_REGISTRY}:${NUM_VERSION}-r-${R_VER}"
+                    fi
+                  fi
+                fi
+              done
             fi
             
-            CONTAINERNAME=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $1}')
-  
             # Create manifest list
             DIGESTS=""
+            BASE_REGISTRY=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $1}')
             for eachdir in $(ls /tmp/digests); do
-                DIGESTS_ARCH=$(cd /tmp/digests/$eachdir && find . -type f -exec echo "$CONTAINERNAME@sha256{}" \; | sed 's/\.\//:/')
+                DIGESTS_ARCH=$(cd /tmp/digests/$eachdir && find . -type f -exec echo "$BASE_REGISTRY@sha256{}" \; | sed 's/\.\//:/')
                 DIGESTS="$DIGESTS $DIGESTS_ARCH"
             done
             echo "$TAG_ARGS"
@@ -278,4 +329,35 @@ jobs:
 
       - name: Inspect images
         run: |
-          cat /tmp/tags | xargs -i bash -c 'docker buildx imagetools inspect {}'
+          # Get registry prefixes
+          REGISTRY_PREFIXES=$(cat /tmp/tags | awk -F':' '{print $1}' | sort -u)
+          BRANCH=$(cat /tmp/tags | head -1 | awk -F':' '{print $2}')
+          
+          # Inspect all created tags
+          for prefix in $REGISTRY_PREFIXES; do
+            # Base tag
+            echo "Inspecting: $prefix:$BRANCH"
+            docker buildx imagetools inspect "$prefix:$BRANCH"
+            
+            # Without _docker suffix if applicable
+            if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
+              NO_DOCKER_PREFIX=$(echo "$prefix" | sed 's/_docker//g')
+              echo "Inspecting: $NO_DOCKER_PREFIX:$BRANCH"
+              docker buildx imagetools inspect "$NO_DOCKER_PREFIX:$BRANCH"
+            fi
+            
+            # Version tag for release branches
+            if [[ "$BRANCH" == RELEASE_* ]]; then
+              VERSION=$(echo "$BRANCH" | sed -E 's/RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
+              if [ ! -z "$VERSION" ]; then
+                echo "Inspecting: $prefix:$VERSION"
+                docker buildx imagetools inspect "$prefix:$VERSION"
+                
+                # Without _docker suffix if applicable
+                if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
+                  echo "Inspecting: $NO_DOCKER_PREFIX:$VERSION"
+                  docker buildx imagetools inspect "$NO_DOCKER_PREFIX:$VERSION"
+                fi
+              fi
+            fi
+          done
