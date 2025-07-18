@@ -61,6 +61,9 @@ or [Microsoft Azure Container Instances](https://azure.microsoft.com/en-us/servi
 
 	The user is logged into the `rstudio` user by default.
 
+1. **Alternatively** instead of 2: Use the [bioc-run](https://github.com/Bioconductor/bioc-run) command-line tool
+for greater simplicity in common usage scenarios.
+
 <a name="intro"></a>
 ## Why use Containers
 
