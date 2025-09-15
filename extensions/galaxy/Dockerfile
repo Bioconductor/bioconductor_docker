@@ -3,7 +3,7 @@ ARG TAG=RELEASE_3_21
 
 FROM ${BASE_IMAGE}:${TAG}
 RUN apt update -y && apt install -y net-tools python3-bioblend nginx && \
-    Rscript -e 'BiocManager::install(c("Biobase", "BiocGenerics", "Biostrings", "cummeRbund", "DESeq2", "dplyr", "edgeR", "GenomeInfoDb", "ggplot2", "ggvis", "Gviz", "hexylena/rGalaxyConnector", "IRanges", "limma", "RCurl", "reshape2", "Rgraphviz", "RODBC", "Rsamtools", "S4Vectors", "shiny", "SummarizedExperiment", "tidyr", "XML"))' && \
+    Rscript -e 'BiocManager::install(c("Biobase", "BiocGenerics", "Biostrings", "cummeRbund", "DESeq2", "dplyr", "edgeR", "GenomeInfoDb", "ggplot2", "ggvis", "Gviz", "hexylena/rGalaxyConnector", "impute", "IRanges", "limma", "RCurl", "reshape2", "Rgraphviz", "RODBC", "Rsamtools", "S4Vectors", "shiny", "SummarizedExperiment", "tidyr", "XML"))' && \
     pip3 install galaxy-ie-helpers --break-system-packages && \
     chown -R rstudio:rstudio /usr/local/lib/R/library && \
     chown -R rstudio:rstudio /usr/local/lib/R/doc && \
