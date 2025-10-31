@@ -17,10 +17,10 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: '4.5.1', outname: 'r-ver'}
-          - {image: 'rocker/rstudio', amdtag: '4.5.1', outname: 'bioconductor_docker'}
-          - {image: 'rocker/tidyverse', amdtag: '4.5.1', outname: 'tidyverse'}
-          - {image: 'rocker/shiny', amdtag: '4.5.1', outname: 'shiny'}
+          - {image: 'rocker/r-ver', amdtag: '4.5.2', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', amdtag: '4.5.2', outname: 'bioconductor_docker'}
+          - {image: 'rocker/tidyverse', amdtag: '4.5.2', outname: 'tidyverse'}
+          - {image: 'rocker/shiny', amdtag: '4.5.2', outname: 'shiny'}
          # - {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda'}
          # - {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml'}
          # - {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse'}
@@ -96,8 +96,8 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', armtag: '4.5.1', outname: 'r-ver'}
-          - {image: 'rocker/rstudio', armtag: '4.5.1', outname: 'bioconductor_docker'}
+          - {image: 'rocker/r-ver', armtag: '4.5.2', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', armtag: '4.5.2', outname: 'bioconductor_docker'}
     steps:
       - uses: actions/checkout@v3
 
@@ -172,10 +172,10 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: '4.5.1', outname: 'r-ver', platforms: 'amd64,arm64'}
-          - {image: 'rocker/rstudio', amdtag: '4.5.1', outname: 'bioconductor_docker', platforms: 'amd64,arm64'}
-          - {image: 'rocker/tidyverse', amdtag: '4.5.1', outname: 'tidyverse', platforms: 'amd64'}
-          - {image: 'rocker/shiny', amdtag: '4.5.1', outname: 'shiny', platforms: 'amd64'}
+          - {image: 'rocker/r-ver', amdtag: '4.5.2', outname: 'r-ver', platforms: 'amd64,arm64'}
+          - {image: 'rocker/rstudio', amdtag: '4.5.2', outname: 'bioconductor_docker', platforms: 'amd64,arm64'}
+          - {image: 'rocker/tidyverse', amdtag: '4.5.2', outname: 'tidyverse', platforms: 'amd64'}
+          - {image: 'rocker/shiny', amdtag: '4.5.2', outname: 'shiny', platforms: 'amd64'}
           #- {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda', platforms: 'amd64'}
           #- {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml', platforms: 'amd64'}
           #- {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse', platforms: 'amd64'}
