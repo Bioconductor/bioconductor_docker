@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=bioconductor/bioconductor_docker
-ARG TAG=RELEASE_3_21
+ARG TAG=RELEASE_3_22
 
 FROM ${BASE_IMAGE}:${TAG}
 RUN apt update -y && apt install -y net-tools python3-bioblend nginx && \
