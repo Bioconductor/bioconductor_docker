@@ -5,3 +5,4 @@ container:
     tag:
       - "RELEASE_3_22"
       - "devel"
+      - "latest"
