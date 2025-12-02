@@ -330,16 +330,11 @@ jobs:
         R_VER="${{ steps.versions.outputs.r_version }}"
         CUDA_VER="${{ steps.versions.outputs.cuda_version }}"
         
-        # Tag with architecture
-        docker tag "$SOURCE_IMAGE" "${BASE_TAG}:${ARCH}"
-        docker push "${BASE_TAG}:${ARCH}"
-        echo "Pushed: ${BASE_TAG}:${ARCH}"
-        
         # Tag with R version
         if [ ! -z "$R_VER" ] && [ "$R_VER" != "unknown" ]; then
-          docker tag "$SOURCE_IMAGE" "${BASE_TAG}:r-${R_VER}-${ARCH}"
-          docker push "${BASE_TAG}:r-${R_VER}-${ARCH}"
-          echo "Pushed: ${BASE_TAG}:r-${R_VER}-${ARCH}"
+          docker tag "$SOURCE_IMAGE" "${BASE_TAG}:${R_VER}-${ARCH}"
+          docker push "${BASE_TAG}:${R_VER}-${ARCH}"
+          echo "Pushed: ${BASE_TAG}:${R_VER}-${ARCH}"
         fi
         
         # Tag with CUDA version
@@ -351,7 +346,7 @@ jobs:
         
         # Tag with both R and CUDA versions
         if [ ! -z "$R_VER" ] && [ "$R_VER" != "unknown" ] && [ ! -z "$CUDA_VER" ] && [ "$CUDA_VER" != "unknown" ]; then
-          docker tag "$SOURCE_IMAGE" "${BASE_TAG}:r-${R_VER}-cuda-${CUDA_VER}-${ARCH}"
-          docker push "${BASE_TAG}:r-${R_VER}-cuda-${CUDA_VER}-${ARCH}"
-          echo "Pushed: ${BASE_TAG}:r-${R_VER}-cuda-${CUDA_VER}-${ARCH}"
+          docker tag "$SOURCE_IMAGE" "${BASE_TAG}:${R_VER}-cuda-${CUDA_VER}-${ARCH}"
+          docker push "${BASE_TAG}:${R_VER}-cuda-${CUDA_VER}-${ARCH}"
+          echo "Pushed: ${BASE_TAG}:${R_VER}-cuda-${CUDA_VER}-${ARCH}"
         fi
