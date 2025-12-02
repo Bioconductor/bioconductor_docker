@@ -19,6 +19,7 @@ jobs:
         base:
           - {image: 'rocker/r-ver', amdtag: '4.5.2', outname: 'r-ver'}
           - {image: 'rocker/rstudio', amdtag: '4.5.2', outname: 'bioconductor_docker'}
+          - {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: '4.5.2-amd64', outname: 'jupyterlab-ml'}
           - {image: 'rocker/tidyverse', amdtag: '4.5.2', outname: 'tidyverse'}
           - {image: 'rocker/shiny', amdtag: '4.5.2', outname: 'shiny'}
          # - {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda'}
@@ -98,6 +99,7 @@ jobs:
         base:
           - {image: 'rocker/r-ver', armtag: '4.5.2', outname: 'r-ver'}
           - {image: 'rocker/rstudio', armtag: '4.5.2', outname: 'bioconductor_docker'}
+          - {image: 'ghcr.io/bioconductor/rocker-cuda', armtag: '4.5.2-arm64', outname: 'jupyterlab-ml'}
     steps:
       - uses: actions/checkout@v3
 
@@ -176,6 +178,7 @@ jobs:
           - {outname: 'bioconductor_docker', platforms: 'amd64,arm64'}
           - {outname: 'tidyverse', platforms: 'amd64'}
           - {outname: 'shiny', platforms: 'amd64'}
+          - {outname: 'jupyterlab-ml', platforms: 'amd64,arm64'}
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
