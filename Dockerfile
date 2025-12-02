@@ -29,6 +29,9 @@ ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 ## Avoid using binaries produced for older version of same container
 ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
 
+# Ensure we're running as root for apt operations
+USER root
+
 # Add Bioconductor system dependencies
 # Add host-site-library# DEVEL: Add sys env variables to DEVEL image
 # Variables in Renviron.site are made available inside of R.
