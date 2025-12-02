@@ -38,15 +38,16 @@ USER root
 # Add libsbml CFLAGS
 ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
 RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
-    && echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
+    && export R_ENVIRON_SITE=$([ -d /usr/local/lib/R/etc ] && echo /usr/local/lib/R/etc/Renviron.site || ([ -d /usr/lib/R/etc ] && echo /usr/lib/R/etc/Renviron.site || (mkdir -p /usr/local/lib/R/etc && echo /usr/local/lib/R/etc/Renviron.site))) \
+    && echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > $R_ENVIRON_SITE \
     && curl -OL http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
     && sed -i '/^IS_BIOC_BUILD_MACHINE/d' Renviron.bioc \
     && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
-    && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
-    && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-    && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-    && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
-    && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
+    && cat Renviron.bioc >> $R_ENVIRON_SITE \
+    && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> $R_ENVIRON_SITE \
+    && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> $R_ENVIRON_SITE \
+    && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> $R_ENVIRON_SITE \
+    && echo 'LIBSBML_LIBS="-lsbml"' >> $R_ENVIRON_SITE \
     && rm -rf Renviron.bioc
 
 ARG TARGETARCH
