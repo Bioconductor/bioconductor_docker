@@ -11,30 +11,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0
-
-    - name: Find Latest Release Branch
-      id: find-branch
-      run: |
-        latest_version=$(git branch -r | grep 'origin/RELEASE_' | sed 's|origin/||' | grep -oP 'RELEASE_\K\d+_\d+' | sort -Vr | head -n1)
-        latest_branch=$(echo "RELEASE_${latest_version}" | sed 's/\./_/g')
-        echo "Detected latest release branch: $latest_branch"
-        echo "branch=$latest_branch" >> $GITHUB_OUTPUT
-
-    - uses: actions/checkout@v4
-      with:
-        ref: ${{ steps.find-branch.outputs.branch }}
+        ref: devel
         token: ${{ secrets.PAT }}
+        fetch-depth: 0
 
     - name: Run patch bump script and push
       run: |
-        git checkout ${{ steps.find-branch.outputs.branch }}
-
         sed -r -i 's/(^ARG BIOCONDUCTOR_PATCH=)([0-9]+)$/echo "\1$((\2+1))"/ge' Dockerfile
         
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add Dockerfile
         
-        git commit -m "Weekly auto-bump Dockerfile patch version for latest release" || exit 0
-        git push origin ${{ steps.find-branch.outputs.branch }}
+        git commit -m "Weekly auto-bump Dockerfile patch version for devel" || exit 0
+        git push origin devel

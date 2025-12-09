@@ -1,0 +1,150 @@
+name: Build Bioconductor Extension Images
+on:
+  push:
+    branches:
+      - devel
+      - RELEASE_*
+    paths:
+      - 'extensions/**'
+  workflow_dispatch:
+    inputs:
+      specific_extension:
+        description: 'Build only a specific extension (folder name in extensions/)'
+        required: false
+        type: string
+  schedule:
+    - cron: '0 20 * * 5'  # Run every Friday at 8PM UTC
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yq
+        run: |
+          wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          chmod +x /usr/local/bin/yq
+
+      - name: Generate build matrix
+        id: set-matrix
+        run: |
+          # Get branch name
+          branch="${GITHUB_REF##*/}"
+          
+          # Find extensions based on input or search all
+          if [[ -n "${{ github.event.inputs.specific_extension }}" ]]; then
+            if [[ ! -d "extensions/${{ github.event.inputs.specific_extension }}" ]]; then
+              echo "::error::Extension directory not found: extensions/${{ github.event.inputs.specific_extension }}"
+              exit 1
+            fi
+            extension_files=$(find extensions/${{ github.event.inputs.specific_extension }} -name 'bioc-extension.yaml')
+          else
+            extension_files=$(find extensions -name 'bioc-extension.yaml' | sort)
+          fi
+          
+          # Build JSON array of extension/tag combinations
+          builds="[]"
+          
+          for ext_file in $extension_files; do
+            ext_dir=$(dirname "$ext_file")
+            ext_name=$(basename "$ext_dir")
+            
+            # Check if Dockerfile exists
+            if [[ ! -f "$ext_dir/Dockerfile" ]]; then
+              echo "::warning::No Dockerfile found for extension $ext_name, skipping"
+              continue
+            fi
+            
+            # Parse YAML
+            outname=$(yq '.container.outname' "$ext_file" | tr '[:upper:]' '[:lower:]')
+            base_image=$(yq '.container.base.image' "$ext_file" | tr '[:upper:]' '[:lower:]')
+            tags_count=$(yq '.container.base.tag | length' "$ext_file")
+            
+            # Get tags array
+            if [[ $tags_count -eq 0 ]]; then
+              tags=("$branch")
+            else
+              tags=()
+              for (( i=0; i<$tags_count; i++ )); do
+                tags+=("$(yq ".container.base.tag[$i]" "$ext_file")")
+              done
+            fi
+            
+            # Add each tag combination to matrix
+            for tag in "${tags[@]}"; do
+              # Sanitize job name (replace special chars with dash)
+              job_name=$(echo "${outname}-${tag}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+              
+              # Add to builds array
+              builds=$(echo "$builds" | jq --arg dir "$ext_dir" \
+                                           --arg name "$ext_name" \
+                                           --arg outname "$outname" \
+                                           --arg base "$base_image" \
+                                           --arg tag "$tag" \
+                                           --arg jobname "$job_name" \
+                                           '. += [{"dir": $dir, "name": $name, "outname": $outname, "base_image": $base, "tag": $tag, "job_name": $jobname}]')
+            done
+          done
+          
+          # Output matrix in proper format for GitHub Actions
+          matrix_json=$(jq -c -n --argjson builds "$builds" '{"include": $builds}')
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
+          echo "Generated matrix:"
+          echo "$builds" | jq .
+
+  build-extension:
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.matrix != '{"include":[]}'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    name: build-${{ matrix.job_name }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Free root space
+        uses: almahmoud/free-root-space@main
+        with:
+          verbose: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to Dockerhub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Convert repository owner to lowercase
+        id: repo
+        run: |
+          REPO_OWNER="${{ github.repository_owner }}"
+          echo "owner_lower=$(echo "$REPO_OWNER" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+
+      - name: Build and push extension
+        run: |
+          echo "Building ${{ matrix.outname }}:${{ matrix.tag }}"
+          echo "Base image: ${{ matrix.base_image }}:${{ matrix.tag }}"
+          echo "Dockerfile location: ${{ matrix.dir }}"
+          
+          docker buildx build --platform linux/amd64 \
+            -t "ghcr.io/${{ steps.repo.outputs.owner_lower }}/${{ matrix.outname }}:${{ matrix.tag }}" \
+            -t "docker.io/${{ steps.repo.outputs.owner_lower }}/${{ matrix.outname }}:${{ matrix.tag }}" \
+            --build-arg BASE_IMAGE=${{ matrix.base_image }} \
+            --build-arg TAG=${{ matrix.tag }} \
+            --push \
+            "${{ matrix.dir }}"
+          
+          echo "Successfully built and pushed ${{ matrix.outname }}:${{ matrix.tag }}"

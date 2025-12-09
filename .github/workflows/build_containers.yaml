@@ -4,6 +4,8 @@ on:
     branches:
       - devel
       - RELEASE_*
+    paths-ignore:
+      - 'extensions/**'
   workflow_dispatch:
   schedule:
     - cron: '0 18 * * 5'
@@ -17,14 +19,15 @@ jobs:
         base:
           - {image: 'rocker/r-ver', amdtag: '4.5.2', outname: 'r-ver'}
           - {image: 'rocker/rstudio', amdtag: '4.5.2', outname: 'bioconductor_docker'}
+          - {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: '4.5.2-amd64', outname: 'jupyterlab-ml'}
           - {image: 'rocker/tidyverse', amdtag: '4.5.2', outname: 'tidyverse'}
-          #- {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda'}
-          #- {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml'}
-          #- {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse'}
           - {image: 'rocker/shiny', amdtag: '4.5.2', outname: 'shiny'}
+         # - {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda'}
+         # - {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml'}
+         # - {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse'}
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Free root space
         uses: almahmoud/free-root-space@main
         with:
@@ -96,6 +99,7 @@ jobs:
         base:
           - {image: 'rocker/r-ver', armtag: '4.5.2', outname: 'r-ver'}
           - {image: 'rocker/rstudio', armtag: '4.5.2', outname: 'bioconductor_docker'}
+          - {image: 'ghcr.io/bioconductor/rocker-cuda', armtag: '4.5.2-arm64', outname: 'jupyterlab-ml'}
     steps:
       - uses: actions/checkout@v3
 
@@ -170,13 +174,11 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: '4.5.2', outname: 'r-ver', platforms: 'amd64,arm64'}
-          - {image: 'rocker/rstudio', amdtag: '4.5.2', outname: 'bioconductor_docker', platforms: 'amd64,arm64'}
-          - {image: 'rocker/tidyverse', amdtag: '4.5.2', outname: 'tidyverse', platforms: 'amd64'}
-          #- {image: 'ghcr.io/bioconductor/rocker-cuda', amdtag: 'devel-amd64', outname: 'cuda', platforms: 'amd64'}
-          #- {image: 'ghcr.io/bioconductor/rocker-ml', amdtag: 'devel-amd64', outname: 'ml', platforms: 'amd64'}
-          #- {image: 'ghcr.io/bioconductor/rocker-ml-verse', amdtag: 'devel-amd64', outname: 'ml-verse', platforms: 'amd64'}
-          - {image: 'rocker/shiny', amdtag: '4.5.2', outname: 'shiny', platforms: 'amd64'}
+          - {outname: 'r-ver', platforms: 'amd64,arm64'}
+          - {outname: 'bioconductor_docker', platforms: 'amd64,arm64'}
+          - {outname: 'tidyverse', platforms: 'amd64'}
+          - {outname: 'shiny', platforms: 'amd64'}
+          - {outname: 'jupyterlab-ml', platforms: 'amd64,arm64'}
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -248,7 +250,7 @@ jobs:
             cat /tmp/tags | xargs -i bash -c 'printf "%s" "-t {} " >> /tmp/tagargs'
             TAG_ARGS="$(cat /tmp/tagargs)"
             TAGS="$(cat /tmp/tags)"
-            
+
             # Add version tags for RELEASE branches (e.g., RELEASE_3_21 -> 3.21)
             for tag in $TAGS; do
               if [[ "$tag" == *"RELEASE_"* ]]; then
@@ -261,14 +263,45 @@ jobs:
                 fi
               fi
             done
-  
-            R_VER=$(docker pull ${{ matrix.base.image }}:${{ matrix.base.amdtag }} 2>&1 > /dev/null && \
-                    docker inspect ${{ matrix.base.image }}:${{ matrix.base.amdtag }} | \
-                    jq -r '.[].Config.Env[]|select(match("^R_VERSION"))|.[index("=")+1:]')
+
+            # Extract R version by running Rscript in containers from all architectures
+            BASE_REGISTRY=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $1}')
+            BRANCH=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $2}')
+
+            # Extract R version from each architecture
+            R_VER=""
+            for archdir in $(cd /tmp/digests && find . -type d -mindepth 1 -maxdepth 1 | sort); do
+              ARCH_NAME=$(basename "$archdir")
+              DIGEST_FILE=$(cd /tmp/digests/$archdir && ls | head -1)
+
+              if [ ! -z "$DIGEST_FILE" ]; then
+                echo "Extracting R version from $ARCH_NAME architecture..."
+                CONTAINER_ID=$(docker run -d "${BASE_REGISTRY}@sha256:${DIGEST_FILE}" sleep infinity 2>/dev/null || echo "")
+
+                if [ ! -z "$CONTAINER_ID" ]; then
+                  ARCH_R_VER=$(docker exec "$CONTAINER_ID" Rscript -e 'cat(as.character(getRversion()))' 2>/dev/null || echo "")
+                  docker stop "$CONTAINER_ID" >/dev/null 2>&1
+                  docker rm "$CONTAINER_ID" >/dev/null 2>&1
+
+                  echo "R version for $ARCH_NAME: $ARCH_R_VER"
+
+                  # Set R_VER from first successful extraction
+                  if [ -z "$R_VER" ]; then
+                    R_VER="$ARCH_R_VER"
+                  elif [ "$R_VER" != "$ARCH_R_VER" ]; then
+                    echo "ERROR: R version mismatch! $ARCH_NAME has $ARCH_R_VER but expected $R_VER"
+                    exit 1
+                  fi
+                fi
+              fi
+            done
+
+            echo "Verified R version across all architectures: $R_VER"
+
             if [ ! -z "$R_VER" ]; then
               for tag in $TAGS; do
                 TAG_ARGS="$TAG_ARGS -t ${tag}-R-${R_VER} -t ${tag}-r-${R_VER}"
-                
+
                 # For RELEASE branches, also add version-R tags
                 if [[ "$tag" == *"RELEASE_"* ]]; then
                   VERSION=$(echo "$tag" | sed -E 's/.*RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
@@ -279,20 +312,20 @@ jobs:
                 fi
               done
             fi
-  
+
             # Add alternative tags without _docker in name
             if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
               for tag in $TAGS; do
                 # Extract registry and branch/version from tag
                 REGISTRY=$(echo "$tag" | cut -d':' -f1)
                 VERSION=$(echo "$tag" | cut -d':' -f2)
-                
+
                 # Create new registry without _docker suffix
                 NEW_REGISTRY=$(echo "$REGISTRY" | sed 's/_docker//g')
-                
+
                 # Add tag without _docker in name
                 TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${VERSION}"
-                
+
                 # If it's a release branch, also add the numeric version tag
                 if [[ "$VERSION" == RELEASE_* ]]; then
                   NUM_VERSION=$(echo "$VERSION" | sed -E 's/RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
@@ -300,11 +333,11 @@ jobs:
                     TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${NUM_VERSION}"
                   fi
                 fi
-                
+
                 # If R_VER exists, add R version tags for the non-_docker version
                 if [ ! -z "$R_VER" ]; then
                   TAG_ARGS="$TAG_ARGS -t ${NEW_REGISTRY}:${VERSION}-R-${R_VER} -t ${NEW_REGISTRY}:${VERSION}-r-${R_VER}"
-                  
+
                   # If it's a release branch, also add R version tags for numeric version
                   if [[ "$VERSION" == RELEASE_* ]]; then
                     NUM_VERSION=$(echo "$VERSION" | sed -E 's/RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
@@ -315,7 +348,7 @@ jobs:
                 fi
               done
             fi
-            
+
             # Create manifest list
             DIGESTS=""
             BASE_REGISTRY=$(echo '${{ steps.meta1.outputs.tags }}' | awk -F':' '{print $1}')
@@ -332,27 +365,27 @@ jobs:
           # Get registry prefixes
           REGISTRY_PREFIXES=$(cat /tmp/tags | awk -F':' '{print $1}' | sort -u)
           BRANCH=$(cat /tmp/tags | head -1 | awk -F':' '{print $2}')
-          
+
           # Inspect all created tags
           for prefix in $REGISTRY_PREFIXES; do
             # Base tag
             echo "Inspecting: $prefix:$BRANCH"
             docker buildx imagetools inspect "$prefix:$BRANCH"
-            
+
             # Without _docker suffix if applicable
             if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
               NO_DOCKER_PREFIX=$(echo "$prefix" | sed 's/_docker//g')
               echo "Inspecting: $NO_DOCKER_PREFIX:$BRANCH"
               docker buildx imagetools inspect "$NO_DOCKER_PREFIX:$BRANCH"
             fi
-            
+
             # Version tag for release branches
             if [[ "$BRANCH" == RELEASE_* ]]; then
               VERSION=$(echo "$BRANCH" | sed -E 's/RELEASE_([0-9]+)_([0-9]+).*/\1.\2/')
               if [ ! -z "$VERSION" ]; then
                 echo "Inspecting: $prefix:$VERSION"
                 docker buildx imagetools inspect "$prefix:$VERSION"
-                
+
                 # Without _docker suffix if applicable
                 if [[ "${{ matrix.base.outname }}" == *"_docker"* ]]; then
                   echo "Inspecting: $NO_DOCKER_PREFIX:$VERSION"
@@ -361,3 +394,22 @@ jobs:
               fi
             fi
           done
+
+  trigger-extensions:
+    needs: [merge]
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Trigger extensions workflow
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = context.ref.replace('refs/heads/', '');
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'build_extensions.yaml',
+              ref: branch
+            });
+            console.log(`Triggered build_extensions.yaml workflow on branch ${branch}`)
