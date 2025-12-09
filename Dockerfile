@@ -21,7 +21,7 @@ ARG BIOCONDUCTOR_VERSION=3.21
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=43
+ARG BIOCONDUCTOR_PATCH=44
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -29,21 +29,25 @@ ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 ## Avoid using binaries produced for older version of same container
 ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
 
+# Ensure we're running as root for apt operations
+USER root
+
 # Add Bioconductor system dependencies
 # Add host-site-library# DEVEL: Add sys env variables to DEVEL image
 # Variables in Renviron.site are made available inside of R.
 # Add libsbml CFLAGS
 ADD bioc_scripts/install_bioc_sysdeps.sh /tmp/
 RUN bash /tmp/install_bioc_sysdeps.sh $BIOCONDUCTOR_VERSION \
-    && echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > /usr/local/lib/R/etc/Renviron.site \
+    && export R_ENVIRON_SITE=$([ -d /usr/local/lib/R/etc ] && echo /usr/local/lib/R/etc/Renviron.site || ([ -d /usr/lib/R/etc ] && echo /usr/lib/R/etc/Renviron.site || (mkdir -p /usr/local/lib/R/etc && echo /usr/local/lib/R/etc/Renviron.site))) \
+    && echo "R_LIBS=/usr/local/lib/R/host-site-library:\${R_LIBS}" > $R_ENVIRON_SITE \
     && curl -OL http://bioconductor.org/checkResults/devel/bioc-LATEST/Renviron.bioc \
     && sed -i '/^IS_BIOC_BUILD_MACHINE/d' Renviron.bioc \
     && cat Renviron.bioc | grep -o '^[^#]*' | sed 's/export //g' >>/etc/environment \
-    && cat Renviron.bioc >> /usr/local/lib/R/etc/Renviron.site \
-    && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-    && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> /usr/local/lib/R/etc/Renviron.site \
-    && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> /usr/local/lib/R/etc/Renviron.site \
-    && echo 'LIBSBML_LIBS="-lsbml"' >> /usr/local/lib/R/etc/Renviron.site \
+    && cat Renviron.bioc >> $R_ENVIRON_SITE \
+    && echo BIOCONDUCTOR_VERSION=${BIOCONDUCTOR_VERSION} >> $R_ENVIRON_SITE \
+    && echo BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_DOCKER_VERSION} >> $R_ENVIRON_SITE \
+    && echo 'LIBSBML_CFLAGS="-I/usr/include"' >> $R_ENVIRON_SITE \
+    && echo 'LIBSBML_LIBS="-lsbml"' >> $R_ENVIRON_SITE \
     && rm -rf Renviron.bioc
 
 ARG TARGETARCH
@@ -52,6 +56,11 @@ ENV TARGETARCH=${TARGETARCH:-amd64}
 FROM base-$TARGETARCH AS final
 COPY --from=base / /
 
+# Reset args in last layer
+ARG BIOCONDUCTOR_VERSION=3.21
+ARG BIOCONDUCTOR_PATCH=44
+ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
+
 LABEL name="bioconductor/bioconductor_docker" \
       version=$BIOCONDUCTOR_DOCKER_VERSION \
       url="https://github.com/Bioconductor/bioconductor_docker" \
@@ -59,11 +68,6 @@ LABEL name="bioconductor/bioconductor_docker" \
       maintainer="maintainer@bioconductor.org" \
       description="Bioconductor docker image with system dependencies to install all packages." \
       license="Artistic-2.0"
-
-# Reset args in last layer
-ARG BIOCONDUCTOR_VERSION=3.21
-ARG BIOCONDUCTOR_PATCH=43
-ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 # Set automatically when building with --platform
 ARG TARGETPLATFORM
