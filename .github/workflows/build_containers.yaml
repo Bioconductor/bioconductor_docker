@@ -25,9 +25,9 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: 'devel', outname: 'r-ver'}
-          - {image: 'rocker/rstudio', amdtag: 'devel', outname: 'bioconductor_docker'}
-          - {image: 'rocker/tidyverse', amdtag: 'devel', outname: 'tidyverse'}
+          - {image: 'rocker/r-ver', amdtag: '4.6.0', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', amdtag: '4.6.0', outname: 'bioconductor_docker'}
+          - {image: 'rocker/tidyverse', amdtag: '4.6.0', outname: 'tidyverse'}
           - {image: 'ghcr.io/bioconductor/rocker-shiny', amdtag: 'devel-amd64', outname: 'shiny'}
     steps:
       - uses: actions/checkout@v4
@@ -101,8 +101,8 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'ghcr.io/bioconductor/rocker-r-ver', armtag: 'devel-arm64', outname: 'r-ver'}
-          - {image: 'ghcr.io/bioconductor/rocker-rstudio', armtag: 'devel-arm64', outname: 'bioconductor_docker'}
+          - {image: 'rocker/r-ver', armtag: '4.6.0', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', armtag: '4.6.0', outname: 'bioconductor_docker'}
     steps:
       - uses: actions/checkout@v3
 
