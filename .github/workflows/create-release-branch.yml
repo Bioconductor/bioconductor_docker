@@ -1,0 +1,93 @@
+name: Create Release Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Bioconductor version (e.g., 3.23) or "devel" to bump the devel branch'
+        required: true
+        default: 'devel'
+      r_version:
+        description: 'R version tag for base image (e.g., 4.4.2). Used for numbered releases; leave as "latest" for devel.'
+        required: false
+        default: 'latest'
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout devel branch
+        uses: actions/checkout@v4
+        with:
+          ref: devel
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Create branch, update Dockerfile, and open PR
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          R_VERSION: ${{ github.event.inputs.r_version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$VERSION" == "devel" ]; then
+            # Read current BIOCONDUCTOR_VERSION and increment the minor version
+            CURRENT_VER=$(grep -oP '(?<=^ARG BIOCONDUCTOR_VERSION=)[0-9.]+' Dockerfile | head -1)
+            if [ -z "$CURRENT_VER" ]; then
+              echo "ERROR: Could not find BIOCONDUCTOR_VERSION in Dockerfile" >&2
+              exit 1
+            fi
+            MAJOR=$(echo "$CURRENT_VER" | cut -d. -f1)
+            MINOR=$(echo "$CURRENT_VER" | cut -d. -f2)
+            NEW_MINOR=$((MINOR + 1))
+            NEW_VER="${MAJOR}.${NEW_MINOR}"
+
+            BRANCH_NAME="bump-bioc-devel-${NEW_VER}"
+            git checkout -b "$BRANCH_NAME"
+
+            # Update both occurrences of BIOCONDUCTOR_VERSION in the Dockerfile
+            sed -i "s/^ARG BIOCONDUCTOR_VERSION=.*/ARG BIOCONDUCTOR_VERSION=${NEW_VER}/" Dockerfile
+            # Reset BIOCONDUCTOR_PATCH to 0
+            sed -i "s/^ARG BIOCONDUCTOR_PATCH=.*/ARG BIOCONDUCTOR_PATCH=0/" Dockerfile
+
+            PR_TITLE="Bump devel Bioconductor version to ${NEW_VER}"
+            cat > /tmp/pr_body.md << EOF
+          Automated bump of the devel \`BIOCONDUCTOR_VERSION\` from ${CURRENT_VER} to ${NEW_VER} and reset of \`BIOCONDUCTOR_PATCH\` to 0.
+          EOF
+            PR_BASE="devel"
+          else
+            # Derive release branch name from version (e.g., 3.23 -> RELEASE_3_23)
+            BRANCH_NAME="RELEASE_$(echo "$VERSION" | tr '.' '_')"
+            git checkout -b "$BRANCH_NAME"
+
+            # Update amd64_tag and arm64_tag to the specific R version for this release
+            sed -i "s/^ARG amd64_tag=.*/ARG amd64_tag=${R_VERSION}/" Dockerfile
+            sed -i "s/^ARG arm64_tag=.*/ARG arm64_tag=${R_VERSION}/" Dockerfile
+            # Reset BIOCONDUCTOR_PATCH to 0
+            sed -i "s/^ARG BIOCONDUCTOR_PATCH=.*/ARG BIOCONDUCTOR_PATCH=0/" Dockerfile
+
+            PR_TITLE="Create ${BRANCH_NAME} for Bioconductor ${VERSION}"
+            cat > /tmp/pr_body.md << EOF
+          Automated creation of the \`${BRANCH_NAME}\` release branch for Bioconductor ${VERSION}.
+
+          Changes:
+          - \`amd64_tag\` and \`arm64_tag\` set to \`${R_VERSION}\`
+          - \`BIOCONDUCTOR_PATCH\` reset to 0
+          EOF
+            PR_BASE="devel"
+          fi
+
+          git add Dockerfile
+          git commit -m "$PR_TITLE"
+          git push --force-with-lease origin "$BRANCH_NAME"
+
+          gh pr create \
+            --title "$PR_TITLE" \
+            --body-file /tmp/pr_body.md \
+            --head "$BRANCH_NAME" \
+            --base "$PR_BASE" \
+          || echo "PR already exists for branch ${BRANCH_NAME}, skipping creation."
