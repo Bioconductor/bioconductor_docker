@@ -1,7 +1,7 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
 ARG BASE_IMAGE=rocker/rstudio
-ARG arm64_tag=latest
-ARG amd64_tag=latest
+ARG arm64_tag=4.6.0
+ARG amd64_tag=4.6.0
 FROM ${BASE_IMAGE}:${arm64_tag} AS base-arm64
 # This will persist in final image
 ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
@@ -21,7 +21,7 @@ ARG BIOCONDUCTOR_VERSION=3.23
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=28
+ARG BIOCONDUCTOR_PATCH=0
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -55,7 +55,7 @@ COPY --from=base / /
 
 # Reset args in last layer
 ARG BIOCONDUCTOR_VERSION=3.23
-ARG BIOCONDUCTOR_PATCH=28
+ARG BIOCONDUCTOR_PATCH=0
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
