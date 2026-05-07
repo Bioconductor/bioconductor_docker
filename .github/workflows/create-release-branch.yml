@@ -81,7 +81,11 @@ jobs:
 
           git add Dockerfile
           git commit -m "$PR_TITLE"
-          git push origin "$BRANCH_NAME"
+          if [ "$VERSION" == "devel" ]; then
+            git push --force-with-lease origin "$BRANCH_NAME"
+          else
+            git push origin "$BRANCH_NAME"
+          fi
 
           if [ "$VERSION" == "devel" ]; then
             gh pr create \
