@@ -25,9 +25,9 @@ jobs:
       fail-fast: false
       matrix:
         base:
-          - {image: 'rocker/r-ver', amdtag: '4.6.0', outname: 'r-ver'}
-          - {image: 'rocker/rstudio', amdtag: '4.6.0', outname: 'bioconductor_docker'}
-          - {image: 'rocker/tidyverse', amdtag: '4.6.0', outname: 'tidyverse'}
+          - {image: 'rocker/r-ver', amdtag: '4.6', outname: 'r-ver'}
+          - {image: 'rocker/rstudio', amdtag: '4.6', outname: 'bioconductor_docker'}
+          - {image: 'rocker/tidyverse', amdtag: '4.6', outname: 'tidyverse'}
           - {image: 'ghcr.io/bioconductor/rocker-shiny', amdtag: 'devel-amd64', outname: 'shiny'}
     steps:
       - uses: actions/checkout@v4
