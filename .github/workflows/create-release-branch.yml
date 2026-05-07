@@ -70,16 +70,30 @@ jobs:
             fi
             git checkout -b "$BRANCH_NAME"
 
-            # Update amd64_tag and arm64_tag to the specific R version for this release
-            sed -i "s/^ARG amd64_tag=.*/ARG amd64_tag=${R_VERSION}/" Dockerfile
-            sed -i "s/^ARG arm64_tag=.*/ARG arm64_tag=${R_VERSION}/" Dockerfile
+            # Use only major.minor for rocker tags (e.g., 4.6.0 -> 4.6)
+            R_MAJOR_MINOR=$(echo "$R_VERSION" | awk -F. '{print $1 "." $2}')
+            if [ -z "$R_MAJOR_MINOR" ] || [ "$R_MAJOR_MINOR" = "." ]; then
+              echo "ERROR: Invalid R version '${R_VERSION}'. Expected format like 4.6.0." >&2
+              exit 1
+            fi
+
+            # Update amd64_tag and arm64_tag in Dockerfile
+            sed -i "s/^ARG amd64_tag=.*/ARG amd64_tag=${R_MAJOR_MINOR}/" Dockerfile
+            sed -i "s/^ARG arm64_tag=.*/ARG arm64_tag=${R_MAJOR_MINOR}/" Dockerfile
+
+            # Update build matrix tags in build_containers workflow
+            sed -i -E "/image: 'rocker\\/r-ver'/ s/amdtag: '[^']*'/amdtag: '${R_MAJOR_MINOR}'/" .github/workflows/build_containers.yaml
+            sed -i -E "/image: 'rocker\\/rstudio'/ s/amdtag: '[^']*'/amdtag: '${R_MAJOR_MINOR}'/" .github/workflows/build_containers.yaml
+            sed -i -E "/image: 'rocker\\/tidyverse'/ s/amdtag: '[^']*'/amdtag: '${R_MAJOR_MINOR}'/" .github/workflows/build_containers.yaml
+            sed -i -E "/image: 'rocker\\/r-ver'/ s/armtag: '[^']*'/armtag: '${R_MAJOR_MINOR}'/" .github/workflows/build_containers.yaml
+            sed -i -E "/image: 'rocker\\/rstudio'/ s/armtag: '[^']*'/armtag: '${R_MAJOR_MINOR}'/" .github/workflows/build_containers.yaml
             # Reset BIOCONDUCTOR_PATCH to 0
             sed -i "s/^ARG BIOCONDUCTOR_PATCH=.*/ARG BIOCONDUCTOR_PATCH=0/" Dockerfile
 
             PR_TITLE="Create ${BRANCH_NAME} for Bioconductor ${VERSION}"
           fi
 
-          git add Dockerfile
+          git add Dockerfile .github/workflows/build_containers.yaml
           git commit -m "$PR_TITLE"
           if [ "$VERSION" == "devel" ]; then
             git push --force-with-lease origin "$BRANCH_NAME"
