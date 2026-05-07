@@ -28,7 +28,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-      - name: Create branch, update Dockerfile, and open PR
+      - name: Create branch and update Dockerfile
         env:
           VERSION: ${{ github.event.inputs.version }}
           R_VERSION: ${{ github.event.inputs.r_version }}
@@ -58,7 +58,6 @@ jobs:
             cat > /tmp/pr_body.md << EOF
           Automated bump of the devel \`BIOCONDUCTOR_VERSION\` from ${CURRENT_VER} to ${NEW_VER} and reset of \`BIOCONDUCTOR_PATCH\` to 0.
           EOF
-            PR_BASE="devel"
           else
             # Derive release branch name from version (e.g., 3.23 -> RELEASE_3_23)
             BRANCH_NAME="RELEASE_$(echo "$VERSION" | tr '.' '_')"
@@ -71,23 +70,19 @@ jobs:
             sed -i "s/^ARG BIOCONDUCTOR_PATCH=.*/ARG BIOCONDUCTOR_PATCH=0/" Dockerfile
 
             PR_TITLE="Create ${BRANCH_NAME} for Bioconductor ${VERSION}"
-            cat > /tmp/pr_body.md << EOF
-          Automated creation of the \`${BRANCH_NAME}\` release branch for Bioconductor ${VERSION}.
-
-          Changes:
-          - \`amd64_tag\` and \`arm64_tag\` set to \`${R_VERSION}\`
-          - \`BIOCONDUCTOR_PATCH\` reset to 0
-          EOF
-            PR_BASE="devel"
           fi
 
           git add Dockerfile
           git commit -m "$PR_TITLE"
           git push --force-with-lease origin "$BRANCH_NAME"
 
-          gh pr create \
-            --title "$PR_TITLE" \
-            --body-file /tmp/pr_body.md \
-            --head "$BRANCH_NAME" \
-            --base "$PR_BASE" \
-          || echo "PR already exists for branch ${BRANCH_NAME}, skipping creation."
+          if [ "$VERSION" == "devel" ]; then
+            gh pr create \
+              --title "$PR_TITLE" \
+              --body-file /tmp/pr_body.md \
+              --head "$BRANCH_NAME" \
+              --base "devel" \
+            || echo "PR already exists for branch ${BRANCH_NAME}, skipping creation."
+          else
+            echo "Release branch ${BRANCH_NAME} created and pushed; no PR will be opened."
+          fi
