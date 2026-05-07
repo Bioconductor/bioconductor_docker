@@ -33,7 +33,6 @@ jobs:
           VERSION: ${{ github.event.inputs.version }}
           R_VERSION: ${{ github.event.inputs.r_version }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_ID: ${{ github.run_id }}
         run: |
           if [ "$VERSION" == "devel" ]; then
             # Read current BIOCONDUCTOR_VERSION and increment the minor version
@@ -61,23 +60,15 @@ jobs:
           EOF
           else
             # Derive release branch name from version (e.g., 3.23 -> RELEASE_3_23)
-            RELEASE_BRANCH="RELEASE_$(echo "$VERSION" | tr '.' '_')"
-            WORK_BRANCH="update-${RELEASE_BRANCH}-${RUN_ID}"
-            BRANCH_NAME="$WORK_BRANCH"
+            BRANCH_NAME="RELEASE_$(echo "$VERSION" | tr '.' '_')"
 
-            # Create the release branch from devel with no changes first, then push it.
-            # If it already exists, use the existing remote branch as the base.
+            # Create the release branch from devel only if it does not already exist.
             git checkout devel
-            if git ls-remote --exit-code --heads origin "$RELEASE_BRANCH" >/dev/null; then
-              git fetch origin "$RELEASE_BRANCH"
-              git checkout -B "$RELEASE_BRANCH" "origin/$RELEASE_BRANCH"
-            else
-              git checkout -b "$RELEASE_BRANCH"
-              git push origin "$RELEASE_BRANCH"
+            if git ls-remote --exit-code --heads origin "$BRANCH_NAME" >/dev/null; then
+              echo "Release branch ${BRANCH_NAME} already exists; skipping."
+              exit 0
             fi
-
-            # Apply release-specific updates in a separate working branch
-            git checkout -b "$WORK_BRANCH"
+            git checkout -b "$BRANCH_NAME"
 
             # Update amd64_tag and arm64_tag to the specific R version for this release
             sed -i "s/^ARG amd64_tag=.*/ARG amd64_tag=${R_VERSION}/" Dockerfile
@@ -85,10 +76,7 @@ jobs:
             # Reset BIOCONDUCTOR_PATCH to 0
             sed -i "s/^ARG BIOCONDUCTOR_PATCH=.*/ARG BIOCONDUCTOR_PATCH=0/" Dockerfile
 
-            PR_TITLE="Update ${RELEASE_BRANCH} for Bioconductor ${VERSION}"
-            cat > /tmp/pr_body.md << EOF
-          This PR applies release-specific Dockerfile updates on top of \`${RELEASE_BRANCH}\`, which was created from \`devel\` with no differences.
-          EOF
+            PR_TITLE="Create ${BRANCH_NAME} for Bioconductor ${VERSION}"
           fi
 
           git add Dockerfile
@@ -103,10 +91,5 @@ jobs:
               --base "devel" \
             || echo "PR already exists for branch ${BRANCH_NAME}, skipping creation."
           else
-            gh pr create \
-              --title "$PR_TITLE" \
-              --body-file /tmp/pr_body.md \
-              --head "$WORK_BRANCH" \
-              --base "$RELEASE_BRANCH" \
-            || echo "PR already exists for branch ${WORK_BRANCH}, skipping creation."
+            echo "Release branch ${BRANCH_NAME} created and pushed; no PR will be opened."
           fi
