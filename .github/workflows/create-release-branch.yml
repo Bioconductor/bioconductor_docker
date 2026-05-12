@@ -70,7 +70,7 @@ jobs:
             fi
             git checkout -b "$BRANCH_NAME"
 
-            if [ -z "$R_VERSION" ] || ! echo "$R_VERSION" | grep -qP '^\d+\.\d+\.\d+$'; then
+            if [ -z "$R_VERSION" ] || ! echo "$R_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
               echo "ERROR: Invalid R version '${R_VERSION}'. Expected format like 4.6.0." >&2
               exit 1
             fi
