@@ -66,6 +66,7 @@ apt-get install -y --no-install-recommends \
 	librdf0-dev \
 	libmagick++-dev \
 	libsasl2-dev \
+	libsecret-1-dev \
 	libpoppler-cpp-dev \
 	libprotobuf-dev \
 	libpq-dev \
