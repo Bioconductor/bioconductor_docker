@@ -1,5 +1,6 @@
 [![license](https://img.shields.io/badge/license-Artistic--2.0-blue)](https://opensource.org/licenses/Artistic-2.0)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Weekly Release Patch Bump](https://github.com/Bioconductor/bioconductor_docker/actions/workflows/weekly-release-bump.yaml/badge.svg?branch=devel)](https://github.com/Bioconductor/bioconductor_docker/actions/workflows/weekly-release-bump.yaml)
 
 # Docker containers for Bioconductor
 
