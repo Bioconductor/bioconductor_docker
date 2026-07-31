@@ -5,6 +5,9 @@ on:
     - cron: '0 6 * * 1'  # 2 AM EST (UTC-4) on Monday mornings
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   bump-patch:
     runs-on: ubuntu-latest
@@ -12,7 +15,6 @@ jobs:
     - uses: actions/checkout@v7
       with:
         ref: devel
-        token: ${{ secrets.PAT }}
         fetch-depth: 0
 
     - name: Run patch bump script and push
