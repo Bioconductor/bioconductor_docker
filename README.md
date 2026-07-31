@@ -523,11 +523,10 @@ When completed, run this command to get the Fully Qualified Domain Name (FQDN):
 
 Here we expose port `8787` on this publicly accessible FQDN. You may
 have to choose a different "dns-name-label" to avoid conflicts. By
-default, the username for RStudio is "rstudio" (similar to the
-official bioconductor docker image). Here we set the password for
-RStudio to 'bioc' in the environment variable configuration. The
+default, the username for RStudio is "rstudio". Here we set the password for
+user "rstudio" to "bioc" in the environment variable configuration. The
 `--cpu` and `--memory` (in GB) configurations can also be customized
-to your needs. By default, ACI have 1 cpu core and 1.5GB of memory
+to your needs. By default, ACI have 1 CPU core and 1.5 GB of memory
 assigned.
 
 To learn more about what you can configure and customize when creating
@@ -618,11 +617,10 @@ When completed, run this command to get the Fully Qualified Domain Name (FQDN):
 
 Here we expose port 8787 on this publicly accessible FQDN. You may
 have to choose a different "dns-name-label" to avoid conflicts. By
-default, the username for RStudio is "rstudio" (similar to the
-official bioconductor docker image). Here we set the password for
-RStudio to 'bioc' in the environment variable configuration. The
+default, the username for RStudio is "rstudio". Here we set the password for
+user "rstudio" to "bioc" in the environment variable configuration. The
 "--cpu" and "--memory" (in GB) configurations can also be customized
-to your needs. By default, ACI have 1 cpu core and 1.5GB of memory
+to your needs. By default, ACI have 1 CPU core and 1.5 GB of memory
 assigned. Here, we also mount RStudio "/home/rstudio" directory to a
 persistent Azure file share named "fileShareName" in the storage
 account specified. When you stop or restart an ACI, this data will not
