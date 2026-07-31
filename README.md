@@ -118,7 +118,7 @@ A few of our key goals to migrate to a new set of Docker containers are,
    be used by maintainers who wish to reproduce errors seen on the
    Bioconductor Linux build machine and as a helpful debugging tool.
 
-- Make Bioconductor package binaries available to all users of the 
+- Make Bioconductor package binaries available to all users of the
   this container. Users can now install Bioconductor packages as binaries
   by simply doing, `BiocManager::install(<character vector of packages>)`.
   This speeds up installation of Bioconductor packages by avoiding compilation.
@@ -490,7 +490,7 @@ documentation
 You can run [Azure CLI or "az cli"
 commands](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
 to create, stop, restart or delete container instances running any
-bioconductor image.  To get
+Bioconductor image.  To get
 started, ensure you have an Azure account and a subscription or
 [create a free account](https://azure.microsoft.com/en-us/free/).
 
@@ -498,7 +498,7 @@ Follow [this
 tutorial](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-quickstart)
 to get familiar with Azure Container Instances.
 
-To run a bioconductor image, create a new resource group in your Azure
+To run a Bioconductor image, create a new resource group in your Azure
 subscription. Then run the following command using Azure CLI. You can
 customize any or all of the inputs. This command is adapted to run on
 an Ubuntu machine:
@@ -513,7 +513,7 @@ an Ubuntu machine:
 		--ports 8787 \
 		--environment-variables 'PASSWORD'='bioc'
 
-When completed, run this command to get the fully qualified domain name(FQDN):
+When completed, run this command to get the Fully Qualified Domain Name (FQDN):
 
 	az container show \
 		--resource-group resourceGroupName \
@@ -591,7 +591,8 @@ STORAGE_KEY=$(az storage account keys list \
 echo $STORAGE_KEY
 ```
 
-Here is an example command to mount an Azure file share to an ACI running bioconductor. This command is adapted to run on an Ubuntu machine:
+Here is an example command to mount an Azure file share to an ACI running
+Bioconductor. This command is adapted to run on an Ubuntu machine:
 
 	az container create \
 		--resource-group resourceGroupName \
@@ -607,7 +608,7 @@ Here is an example command to mount an Azure file share to an ACI running biocon
 		--azure-file-volume-share-name fileShareName \
 		--azure-file-volume-mount-path /home/rstudio
 
-When completed, run this command to get the fully qualified domain name or FQDN:
+When completed, run this command to get the Fully Qualified Domain Name (FQDN):
 
 	az container show \
 		--resource-group resourceGroupName \
