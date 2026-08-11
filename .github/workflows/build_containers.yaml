@@ -28,7 +28,7 @@ jobs:
           - {image: 'rocker/r-ver', amdtag: '4.6.1', outname: 'r-ver'}
           - {image: 'rocker/rstudio', amdtag: '4.6.1', outname: 'bioconductor_docker'}
           - {image: 'rocker/tidyverse', amdtag: '4.6.1', outname: 'tidyverse'}
-          - {image: 'ghcr.io/bioconductor/rocker-shiny', amdtag: 'devel-amd64', outname: 'shiny'}
+          - {image: 'rocker/shiny', amdtag: '4.6.1', outname: 'shiny'}
     steps:
       - uses: actions/checkout@v4
 
