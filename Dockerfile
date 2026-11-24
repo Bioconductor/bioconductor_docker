@@ -1,7 +1,7 @@
 # The suggested name for this image is: bioconductor/bioconductor_docker:devel
 ARG BASE_IMAGE=rocker/rstudio
-ARG arm64_tag=latest
-ARG amd64_tag=latest
+ARG arm64_tag=4.6.2
+ARG amd64_tag=4.6.2
 FROM ${BASE_IMAGE}:${arm64_tag} AS base-arm64
 # This will persist in final image
 ENV BIOCONDUCTOR_USE_CONTAINER_REPOSITORY=FALSE
@@ -21,7 +21,7 @@ ARG BIOCONDUCTOR_VERSION=3.24
 ##### IMPORTANT ########
 ## The PATCH version number should be incremented each time
 ## there is a change in the Dockerfile.
-ARG BIOCONDUCTOR_PATCH=26
+ARG BIOCONDUCTOR_PATCH=0
 
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
@@ -55,7 +55,7 @@ COPY --from=base / /
 
 # Reset args in last layer
 ARG BIOCONDUCTOR_VERSION=3.24
-ARG BIOCONDUCTOR_PATCH=26
+ARG BIOCONDUCTOR_PATCH=0
 ARG BIOCONDUCTOR_DOCKER_VERSION=${BIOCONDUCTOR_VERSION}.${BIOCONDUCTOR_PATCH}
 
 LABEL name="bioconductor/bioconductor_docker" \
@@ -78,7 +78,7 @@ ENV LIBSBML_CFLAGS="-I/usr/include"
 ENV LIBSBML_LIBS="-lsbml"
 ENV BIOCONDUCTOR_DOCKER_VERSION=$BIOCONDUCTOR_DOCKER_VERSION
 ENV BIOCONDUCTOR_VERSION=$BIOCONDUCTOR_VERSION
-ENV BIOCONDUCTOR_NAME="bioconductor_docker_devel-$TARGETARCH"
+ENV BIOCONDUCTOR_NAME="bioconductor_docker"
 
 # Init command for s6-overlay
 CMD ["/init"]
