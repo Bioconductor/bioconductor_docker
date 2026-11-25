@@ -6,7 +6,7 @@ on:
       rver:
         default: "devel"
       biocver:
-        default: "3.21"
+        default: "3.25"
       check-rocker-image:
         default: "rocker/rstudio"
   schedule:
@@ -21,7 +21,7 @@ jobs:
       id: defs
       run: |
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
-        BIOCVER=$(echo ${{ github.event.inputs.biocver || '3.21' }})
+        BIOCVER=$(echo ${{ github.event.inputs.biocver || '3.25' }})
         echo "develbiocver=$BIOCVER" >> $GITHUB_OUTPUT
         echo check-rocker-image=$(echo ${{ github.event.inputs.check-rocker-image || 'rocker/rstudio' }}) >> $GITHUB_OUTPUT
         RELEASE_BIOC_VER=$(echo "${BIOCVER%.*}.$((${BIOCVER##*.}-1))")
@@ -89,7 +89,7 @@ jobs:
       id: defs
       run: |
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
-        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.21' }}) >> $GITHUB_OUTPUT
+        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.25' }}) >> $GITHUB_OUTPUT
         echo registryuser=$(echo ${{ github.repository_owner }} | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
         echo rockerintermediateprefix=$(echo "ghcr.io/${{ github.repository_owner }}/rocker" | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
 
@@ -137,7 +137,7 @@ jobs:
       id: defs
       run: |
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
-        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.21' }}) >> $GITHUB_OUTPUT
+        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.25' }}) >> $GITHUB_OUTPUT
         echo registryuser=$(echo ${{ github.repository_owner }} | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
         echo rockerintermediateprefix=$(echo "ghcr.io/${{ github.repository_owner }}/rocker" | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
 
@@ -192,7 +192,7 @@ jobs:
       id: defs
       run: |
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
-        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.21' }}) >> $GITHUB_OUTPUT
+        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.25' }}) >> $GITHUB_OUTPUT
         echo registryuser=$(echo ${{ github.repository_owner }} | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
         echo rockerintermediateprefix=$(echo "ghcr.io/${{ github.repository_owner }}/rocker" | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
 
@@ -240,7 +240,7 @@ jobs:
       id: defs
       run: |
         echo rver=$(echo ${{ github.event.inputs.rver || 'devel' }}) >> $GITHUB_OUTPUT
-        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.21' }}) >> $GITHUB_OUTPUT
+        echo biocver=$(echo ${{ github.event.inputs.biocver || '3.25' }}) >> $GITHUB_OUTPUT
         echo registryuser=$(echo ${{ github.repository_owner }} | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
         echo rockerintermediateprefix=$(echo "ghcr.io/${{ github.repository_owner }}/rocker" | awk '{print tolower($0)}') >> $GITHUB_OUTPUT
 
