@@ -104,7 +104,6 @@ apt-get install -y --no-install-recommends \
 	default-jdk \
 	imagemagick \
 	tabix \
-	ggobi \
 	graphviz \
 	protobuf-compiler \
 	jags \
