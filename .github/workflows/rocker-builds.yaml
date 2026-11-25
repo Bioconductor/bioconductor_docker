@@ -31,9 +31,15 @@ jobs:
     - name: Bump R version
       id: rbump
       run: |
+        # The release branch may not exist yet (devel is bumped before the release branch is created)
+        if ! git ls-remote --exit-code --heads https://github.com/${{ github.repository }} ${{steps.defs.outputs.release-tag}} >/dev/null; then
+          echo "::warning::Branch ${{steps.defs.outputs.release-tag}} not found; skipping R version bump check"
+          echo verdict="no" >> $GITHUB_OUTPUT
+          exit 0
+        fi
         curl https://hub.docker.com/v2/repositories/${{steps.defs.outputs.check-rocker-image}}/tags?page_size=1000 | jq '.results[].name' | tr -d '"' > /tmp/taglist
         curl https://raw.githubusercontent.com/${{ github.repository }}/${{steps.defs.outputs.release-tag}}/.github/workflows/build_containers.yaml | grep 'amdtag' | awk -F"'" '/amdtag:/ {print $4}' | uniq > /tmp/currtag
-        RELEASE_R_VER=$(curl https://bioconductor.org/config.yaml | yq e '.r_ver_for_bioc_ver."${{steps.defs.outputs.releasebiocver}}"')
+        RELEASE_R_VER=$(curl https://master.bioconductor.org/config.yaml | yq e '.r_ver_for_bioc_ver."${{steps.defs.outputs.releasebiocver}}"')
         LATEST_TAG=$(cat /tmp/taglist | grep "$RELEASE_R_VER" | sort -n | tail -n 1)
         CURR_TAG=$(cat /tmp/currtag | sort -n | tail -n 1 | cut -d'-' -f1)
         echo latest-tag=$LATEST_TAG >> $GITHUB_OUTPUT
