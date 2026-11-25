@@ -3,7 +3,7 @@ BIOCVER=$1
 FILETOPATCH=$2
 
 # R version (x.y.z) that Bioconductor devel builds against
-DEVEL_R_VER=$(curl -s https://bioconductor.org/config.yaml | awk -F'"' '/^r_version_associated_with_devel:/ {print $2}')
+DEVEL_R_VER=$(curl -s https://master.bioconductor.org/config.yaml | awk -F'"' '/^r_version_associated_with_devel:/ {print $2}')
 # R version currently under development on CRAN (x.y.z)
 CRAN_DEVEL_VER=$(curl -s https://cran.r-project.org/src/base/VERSION-INFO.dcf | awk '/^Devel:/ {print $2}')
 echo "Bioconductor devel R: $DEVEL_R_VER; CRAN R-devel: $CRAN_DEVEL_VER"
