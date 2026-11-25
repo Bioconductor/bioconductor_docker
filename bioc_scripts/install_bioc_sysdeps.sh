@@ -150,6 +150,14 @@ apt-get install -y --no-install-recommends \
 	default-libmysqlclient-dev \
 	libmysqlclient-dev
 
+## During the image build, use master.bioconductor.org rather than the
+## CloudFront-cached bioconductor.org, which can lag behind for hours around
+## releases. Scoped to this script; runtime defaults are unchanged.
+export BIOCONDUCTOR_CONFIG_FILE="https://master.bioconductor.org/config.yaml"
+BUILD_RPROFILE=$(mktemp --suffix=.Rprofile)
+echo 'options(BioC_mirror = "https://master.bioconductor.org")' > "$BUILD_RPROFILE"
+export R_PROFILE_USER="$BUILD_RPROFILE"
+
 Rscript -e 'install.packages("BiocManager", repos="https://cran.rstudio.com")'
 Rscript -e "BiocManager::install(version='$BIOC_VERSION', update=TRUE, ask=FALSE)"
 Rscript -e "BiocManager::install(c('devtools'))"
@@ -158,6 +166,8 @@ Rscript -e "BiocManager::install(c('devtools'))"
 Rscript -e 'BiocManager::install("preprocessCore", configure.args = c(preprocessCore = "--disable-threading"), update=TRUE, force=TRUE, ask=FALSE, type="source")'
 
 ## clean up
+rm -f "$BUILD_RPROFILE"
+unset R_PROFILE_USER BIOCONDUCTOR_CONFIG_FILE
 apt-get clean
 apt-get autoremove -y
 apt-get autoclean -y
