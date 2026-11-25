@@ -155,6 +155,25 @@ apt-get install -y --no-install-recommends \
 export BIOCONDUCTOR_CONFIG_FILE="https://master.bioconductor.org/config.yaml"
 BUILD_RPROFILE=$(mktemp --suffix=.Rprofile)
 echo 'options(BioC_mirror = "https://master.bioconductor.org")' > "$BUILD_RPROFILE"
+
+## Posit Package Manager has no binaries for R-devel, so the devel images
+## compile every CRAN package (and update) from source. R-universe builds
+## CRAN binaries for R-devel on Ubuntu; prefer them during the build when
+## available for this distro, architecture, and R version.
+R_STATUS=$(Rscript -e 'cat(R.version$status)')
+if [[ "$R_STATUS" == *"devel"* ]]; then
+    R_MAJMIN=$(Rscript -e 'cat(R.version$major, sub("\\..*", "", R.version$minor), sep = ".")')
+    . /etc/os-release
+    RUNIVERSE_REPO="https://cran.r-universe.dev/bin/linux/${VERSION_CODENAME}-$(uname -m)/${R_MAJMIN}"
+    # Check with R; curl is not available in all base images
+    if Rscript -e "quit(status = tryCatch({ con <- url('${RUNIVERSE_REPO}/src/contrib/PACKAGES.gz', 'rb'); close(con); 0 }, error = function(e) 1))" 2>/dev/null; then
+        echo "Using R-universe CRAN binaries: ${RUNIVERSE_REPO}"
+        echo "options(repos = c(RUNIVERSE = \"${RUNIVERSE_REPO}\", getOption(\"repos\")))" >> "$BUILD_RPROFILE"
+    else
+        echo "No R-universe CRAN binaries at ${RUNIVERSE_REPO}; installing from source"
+    fi
+fi
+
 export R_PROFILE_USER="$BUILD_RPROFILE"
 
 Rscript -e 'install.packages("BiocManager", repos="https://cran.rstudio.com")'
